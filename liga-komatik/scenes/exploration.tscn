@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://i3hypxykcult"]
+
+[ext_resource type="Script" uid="uid://cy53pn6ljbgf4" path="res://scenes/exploration.gd" id="1_26ty4"]
+[ext_resource type="Texture2D" uid="uid://bydcojbdc47n0" path="res://textures/tiles/dirt_2.png" id="1_g8a2e"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_26ty4"]
+texture = ExtResource("1_g8a2e")
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_htemk"]
+sources/1 = SubResource("TileSetAtlasSource_26ty4")
+
+[node name="exploration" type="Node2D" unique_id=1527149665]
+script = ExtResource("1_26ty4")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1454337304]
+texture_filter = 1
+tile_set = SubResource("TileSet_htemk")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1321165422]
+position = Vector2(128, 72)
