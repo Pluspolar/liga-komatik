@@ -1,38 +1,18 @@
 [gd_scene format=3 uid="uid://i3hypxykcult"]
 
 [ext_resource type="Script" uid="uid://cy53pn6ljbgf4" path="res://scenes/exploration.gd" id="1_26ty4"]
-[ext_resource type="Texture2D" uid="uid://ppiayt4cyppi" path="res://textures/tiles/terrain_palette_0.png" id="2_u082n"]
+[ext_resource type="Texture2D" uid="uid://bydcojbdc47n0" path="res://textures/tiles/dirt_2.png" id="1_g8a2e"]
 [ext_resource type="PackedScene" uid="uid://dxmns207wwbdx" path="res://scenes/player.tscn" id="3_u082n"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m07rl"]
-texture = ExtResource("2_u082n")
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_26ty4"]
+texture = ExtResource("1_g8a2e")
 0:0/0 = 0
 1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-4:0/0 = 0
-6:0/0 = 0
-7:0/0 = 0
 0:1/0 = 0
 1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-6:1/0 = 0
-7:1/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_htemk"]
-sources/0 = SubResource("TileSetAtlasSource_m07rl")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_14cdr"]
-noise_type = 0
-seed = 16
-frequency = 0.0007
-fractal_octaves = 4
-fractal_lacunarity = 1.825
-fractal_gain = 0.115
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_htemk"]
-noise = SubResource("FastNoiseLite_14cdr")
+sources/1 = SubResource("TileSetAtlasSource_26ty4")
 
 [node name="exploration" type="Node2D" unique_id=1527149665]
 script = ExtResource("1_26ty4")
@@ -46,7 +26,3 @@ position = Vector2(128, 72)
 position_smoothing_enabled = true
 
 [node name="player" parent="." unique_id=278813971 instance=ExtResource("3_u082n")]
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=779630262]
-visible = false
-texture = SubResource("NoiseTexture2D_htemk")
