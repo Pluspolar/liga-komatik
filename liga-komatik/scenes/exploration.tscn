@@ -50,14 +50,15 @@ sources/1 = SubResource("TileSetAtlasSource_2a5b4")
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_14cdr"]
 noise_type = 2
 seed = 46
-frequency = 0.003
-fractal_octaves = 3
+frequency = 0.0214
+fractal_octaves = 1
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_htemk"]
 noise = SubResource("FastNoiseLite_14cdr")
 
 [node name="exploration" type="Node2D" unique_id=1527149665]
 script = ExtResource("1_26ty4")
+boundary_x = 1000
 
 [node name="tilemap" type="TileMapLayer" parent="." unique_id=1454337304]
 y_sort_enabled = true

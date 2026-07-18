@@ -20,7 +20,7 @@ func _process(delta: float) -> void:
 		is_dragging = false
 		Global.is_mouse_dragging = false
 	
-	if (Input.is_action_pressed("right_click") and is_mouse_entered and !Global.is_mouse_dragging) or (position.y > get_viewport_rect().size.y or position.x > get_viewport_rect().size.x or position.x < 0):
+	if (Input.is_action_pressed("right_click") and is_mouse_entered and !Global.is_mouse_dragging) or (position.y > get_viewport_rect().size.y or position.x > get_viewport_rect().size.x or position.x < 0 or position.y < -15):
 		Global.drop_item(item_id)
 		call_deferred("queue_free")
 
