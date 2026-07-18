@@ -1,0 +1,104 @@
+[gd_scene format=3 uid="uid://cw23mt2nx3v4p"]
+
+[ext_resource type="FontFile" uid="uid://bpmogubtg5vj" path="res://textures/fonts/Snowbell-Wp4g9.ttf" id="1_3n4vj"]
+[ext_resource type="Script" uid="uid://c2uedcuewy71w" path="res://scenes/dialogue.gd" id="1_bfpow"]
+[ext_resource type="FontFile" uid="uid://ba6udwdfjc0ht" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="2_bfpow"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pj0hq"]
+
+[node name="dialogue" type="CanvasLayer" unique_id=31305971]
+script = ExtResource("1_bfpow")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=607180016]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -52.0
+offset_right = 128.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 9
+theme_override_constants/margin_top = -5
+theme_override_constants/margin_right = 9
+theme_override_constants/margin_bottom = 11
+
+[node name="Panel" type="Panel" parent="MarginContainer" unique_id=1074255754]
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer" unique_id=251357035]
+layout_mode = 2
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = -2
+
+[node name="Panel" type="Panel" parent="MarginContainer/MarginContainer2" unique_id=1315268963]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pj0hq")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer2" unique_id=1331474214]
+layout_mode = 2
+
+[node name="text" type="RichTextLabel" parent="MarginContainer/MarginContainer2/HBoxContainer" unique_id=787563750]
+layout_mode = 2
+size_flags_horizontal = 3
+offset_transform_enabled = true
+offset_transform_position = Vector2(1.135, 0)
+offset_transform_position_ratio = Vector2(0.005, -0.2)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("1_3n4vj")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "[shake] 
+aaaaaaaaaaaa"
+fit_content = true
+scroll_active = false
+
+[node name="end" type="RichTextLabel" parent="MarginContainer/MarginContainer2/HBoxContainer" unique_id=12739484]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.02
+offset_transform_enabled = true
+offset_transform_position = Vector2(-1.745, 0.9)
+offset_transform_rotation = 0.12391838
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("2_bfpow")
+theme_override_font_sizes/normal_font_size = 13
+bbcode_enabled = true
+text = "[wave]
+!"
+scroll_active = false
+autowrap_mode = 1
+horizontal_alignment = 1
+
+[node name="char" type="Label" parent="." unique_id=130516697]
+offset_left = 15.0
+offset_top = 78.0
+offset_right = 77.0
+offset_bottom = 95.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 3
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("1_3n4vj")
+theme_override_font_sizes/font_size = 12
+text = "-"

@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://c6j1xmu1fuu1o"]
+
+[ext_resource type="Script" uid="uid://bn22y5ivgcrt3" path="res://scenes/item.gd" id="1_pag02"]
+[ext_resource type="Texture2D" uid="uid://dt8kygabq64na" path="res://textures/sprites/can_1.png" id="2_pag02"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ugcl7"]
+size = Vector2(4.67, 6.55)
+
+[node name="item_1" type="RigidBody2D" unique_id=56445709]
+collision_layer = 4
+collision_mask = 4
+input_pickable = true
+gravity_scale = 0.15
+can_sleep = false
+script = ExtResource("1_pag02")
+
+[node name="sprite" type="Sprite2D" parent="." unique_id=1019661729]
+texture_filter = 1
+position = Vector2(-3.8146973e-06, 0)
+scale = Vector2(2.09, 2)
+texture = ExtResource("2_pag02")
+offset = Vector2(0.57175636, 0.19497108)
+
+[node name="col_shape" type="CollisionShape2D" parent="." unique_id=1043071412]
+position = Vector2(0, -0.685)
+scale = Vector2(4, 4)
+shape = SubResource("RectangleShape2D_ugcl7")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

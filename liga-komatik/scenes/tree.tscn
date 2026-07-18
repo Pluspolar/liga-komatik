@@ -2,10 +2,22 @@
 
 [ext_resource type="Texture2D" uid="uid://d074x6sfu2byf" path="res://textures/sprites/tree.png" id="1_avsvi"]
 
-[node name="tree" type="StaticBody2D" unique_id=984791682]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_htemk"]
+size = Vector2(5, 1)
+
+[node name="tree" type="StaticBody2D" unique_id=1753390028]
+z_as_relative = false
+y_sort_enabled = true
+collision_layer = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=569358984]
 texture_filter = 1
+position = Vector2(0, 10)
 texture = ExtResource("1_avsvi")
+offset = Vector2(0, -10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1746158076]
+position = Vector2(-0.5, 10.5)
+shape = SubResource("RectangleShape2D_htemk")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=862871199]
