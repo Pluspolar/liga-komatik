@@ -8,7 +8,7 @@ size = Vector2(4.67, 6.55)
 
 [node name="item_1" type="RigidBody2D" unique_id=56445709]
 collision_layer = 4
-collision_mask = 4
+collision_mask = 20
 input_pickable = true
 gravity_scale = 0.15
 can_sleep = false
@@ -25,6 +25,3 @@ offset = Vector2(0.57175636, 0.19497108)
 position = Vector2(0, -0.685)
 scale = Vector2(4, 4)
 shape = SubResource("RectangleShape2D_ugcl7")
-
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

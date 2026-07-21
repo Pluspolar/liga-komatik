@@ -1,15 +1,18 @@
 [gd_scene format=3 uid="uid://dieahdtlcoflx"]
 
 [ext_resource type="Texture2D" uid="uid://d074x6sfu2byf" path="res://textures/sprites/tree.png" id="1_avsvi"]
+[ext_resource type="Script" uid="uid://dn40g7bnudn2a" path="res://scenes/tree.gd" id="1_vplca"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_htemk"]
 size = Vector2(5, 1)
 
 [node name="tree" type="StaticBody2D" unique_id=1753390028]
+visible = false
 z_as_relative = false
 y_sort_enabled = true
 position = Vector2(0, -10.61)
 collision_layer = 2
+script = ExtResource("1_vplca")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=569358984]
 texture_filter = 1

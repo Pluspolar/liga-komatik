@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*uid://djfuadrq7jcew"
+MousePointer="*uid://bejbkghrxnt1j"
 
 [display]
 
@@ -69,6 +70,7 @@ right_click={
 2d_physics/layer_2="terrain"
 2d_physics/layer_3="backpack"
 2d_physics/layer_4="item"
+2d_physics/layer_5="backpack_region"
 2d_physics/size/viewport_height=144
 2d_physics/size/viewport_width=256
 

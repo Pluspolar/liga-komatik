@@ -2,12 +2,18 @@ extends Node
 
 var inventory : Array = []
 var item_id : int = 0
+var cam_coords : Vector2 = Vector2(0,0)
 var item_drop = preload("res://scenes/item_drop.tscn")
 var items := {"item_1" : preload("res://scenes/item_1.tscn")}
-@onready var viewport = get_tree().root.get_visible_rect()
+@onready var viewport_tree = get_tree().root.get_visible_rect()
+#@onready var viewport_x_tile : int = 16
+#@onready var viewport_y_tile : int = 9
+@onready var viewport_x_tile : int = viewport_tree.size.x/16
+@onready var viewport_y_tile : int = viewport_tree.size.y/16
 var is_mouse_dragging = false
 var player_pos : Vector2
 var backpack_weight : float = 0
+var show_tiles : Array = []
 	
 func spawn_new_item(pos: Vector2, item_name: String, item_weight: float):
 	var drop_item = item_drop.instantiate()
@@ -29,7 +35,7 @@ func spawn_item(_item_id: String, pos: Vector2, item_name: String, item_weight: 
 
 func add_item(_item_id: String, item_name: String, item_weight: float):
 	var item_backpack = items["item_1"].instantiate()
-	item_backpack.position = Vector2(randf_range(viewport.size.x/2-20, viewport.size.x/2+20), 0)
+	item_backpack.position = Vector2(randf_range(viewport_tree.size.x/2-20, viewport_tree.size.x/2+20), 0)
 	#print(item_backpack.position)
 	item_backpack.item_id = _item_id
 	inventory.append(_item_id)

@@ -45,14 +45,13 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_pj0hq")
 layout_mode = 2
 
 [node name="text" type="RichTextLabel" parent="MarginContainer/MarginContainer2/HBoxContainer" unique_id=787563750]
-clip_contents = false
 layout_mode = 2
 size_flags_horizontal = 3
 offset_transform_enabled = true
 offset_transform_position = Vector2(1.135, 0)
+offset_transform_position_ratio = Vector2(0.005, -0.2)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/line_separation = 1
 theme_override_constants/shadow_outline_size = 1
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
@@ -60,11 +59,12 @@ theme_override_constants/outline_size = 3
 theme_override_fonts/normal_font = ExtResource("1_3n4vj")
 theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
-text = "Also, we got some info from other sources that [wave]Gurt[/wave] Town has been restocked."
+text = "[shake] 
+aaaaaaaaaaaa"
+fit_content = true
 scroll_active = false
 
 [node name="end" type="RichTextLabel" parent="MarginContainer/MarginContainer2/HBoxContainer" unique_id=12739484]
-clip_contents = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.02
@@ -82,7 +82,6 @@ theme_override_font_sizes/normal_font_size = 13
 bbcode_enabled = true
 text = "[wave]
 !"
-fit_content = true
 scroll_active = false
 autowrap_mode = 1
 horizontal_alignment = 1
@@ -102,4 +101,4 @@ theme_override_constants/outline_size = 3
 theme_override_constants/shadow_outline_size = 1
 theme_override_fonts/font = ExtResource("1_3n4vj")
 theme_override_font_sizes/font_size = 12
-text = "Radio"
+text = "-"

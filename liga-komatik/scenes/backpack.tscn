@@ -3,20 +3,14 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_htemk"]
 size = Vector2(142, 17)
 
-[node name="backpack" type="CanvasLayer" unique_id=2078199131]
+[node name="backpack" type="CanvasLayer" unique_id=1402109859]
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1166452057]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="StaticBody2D" type="StaticBody2D" parent="MarginContainer" unique_id=1908373885]
-collision_layer = 4
-collision_mask = 4
+position = Vector2(128, 72)
+collision_layer = 16
+collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MarginContainer/StaticBody2D" unique_id=1039517136]
 polygon = PackedVector2Array(-73, -169, -55, -169, -55, 48, 52, 48, 52, -169, 71, -170, 70, 60, -73, 60)

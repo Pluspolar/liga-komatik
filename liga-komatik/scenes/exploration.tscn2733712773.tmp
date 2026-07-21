@@ -5,9 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://lg1h786whlnn" path="res://textures/tiles/terrain_palette_1.png" id="3_03514"]
 [ext_resource type="PackedScene" uid="uid://dxmns207wwbdx" path="res://scenes/player.tscn" id="3_u082n"]
 [ext_resource type="Script" uid="uid://nrdf6lwvo0y8" path="res://scenes/player.gd" id="4_m07rl"]
-[ext_resource type="Texture2D" uid="uid://cbnnh8ovne1sb" path="res://textures/sprites/warung_finished.png" id="6_62eou"]
-[ext_resource type="PackedScene" uid="uid://cw23mt2nx3v4p" path="res://scenes/dialogue.tscn" id="7_2a5b4"]
-[ext_resource type="PackedScene" uid="uid://rxqck54a35se" path="res://scenes/backpack.tscn" id="7_62eou"]
+[ext_resource type="PackedScene" uid="uid://rxqck54a35se" path="res://scenes/backpack.tscn" id="5_g1cw7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m07rl"]
 texture = ExtResource("2_u082n")
@@ -60,7 +58,7 @@ noise = SubResource("FastNoiseLite_14cdr")
 
 [node name="exploration" type="Node2D" unique_id=1527149665]
 script = ExtResource("1_26ty4")
-boundary_x = 100
+boundary_x = 1000
 
 [node name="tilemap" type="TileMapLayer" parent="." unique_id=1454337304]
 y_sort_enabled = true
@@ -84,13 +82,4 @@ script = ExtResource("4_m07rl")
 position = Vector2(128, 72)
 position_smoothing_enabled = true
 
-[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1198702980]
-visible = false
-texture_filter = 1
-position = Vector2(128, 72)
-scale = Vector2(2.1, 2.1)
-texture = ExtResource("6_62eou")
-
-[node name="dialogue" parent="." unique_id=31305971 instance=ExtResource("7_2a5b4")]
-
-[node name="backpack" parent="." unique_id=1402109859 instance=ExtResource("7_62eou")]
+[node name="backpack" parent="." unique_id=521577961 instance=ExtResource("5_g1cw7")]
