@@ -1,7 +1,11 @@
 extends CanvasLayer
+
 @onready var text = $MarginContainer/MarginContainer2/HBoxContainer/text
 @onready var end_text = $MarginContainer/MarginContainer2/HBoxContainer/end
 @onready var char_text = $char
+@onready var cur_state = state.READY
+
+var char_text_ : String
 var tween: Tween
 var text_array: Array = []
 
@@ -11,22 +15,11 @@ enum state {
 	END
 }
 
-@onready var cur_state = state.READY
-var char_text_ : String
-
 func add_text(_text: String, speed: float = 15, _char: String = ""):
 	if _char != "": char_text_ = _char
 	text_array.append([_text, speed, char_text_])
-	#text_array.append(["\n" + _text, speed, char_text_])
-
-#func _ready() -> void:
-#	add_text("So gurt", 10, "name")
-#	add_text("So umm, [shake]YOGURT[/shake] town has been decimated, good luck", 10)
-
-
-func _process(delta: float) -> void:
-	#if Input.is_action_just_pressed("down"):
-	#	add_text("So gurt", 10, "Yogurt Monster")
+	
+func _process(_delta: float) -> void:
 	match cur_state:
 		state.READY:
 			if !text_array.is_empty(): 
@@ -55,9 +48,6 @@ func display_text():
 	
 	tween = create_tween()
 	tween.set_trans(Tween.TRANS_LINEAR)
-	#tween.tween_property(text, )
-	#tween.tween_property(text, "visible_ratio", 1, 1)
-	#tween.tween_property(text, "visible_ratio", text_len, text_len / text_array[0][1])
 	tween.tween_property(text, "visible_characters", text_len, text_len / text_array[0][1])
 	tween.play()
 	text_array.remove_at(0)

@@ -60,7 +60,7 @@ theme_override_constants/outline_size = 3
 theme_override_fonts/normal_font = ExtResource("1_3n4vj")
 theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
-text = "Also, we got some info from other sources that [wave]Gurt[/wave] Town has been restocked."
+text = "Also, adwasdwa"
 scroll_active = false
 
 [node name="end" type="RichTextLabel" parent="MarginContainer/MarginContainer2/HBoxContainer" unique_id=12739484]
@@ -88,10 +88,17 @@ autowrap_mode = 1
 horizontal_alignment = 1
 
 [node name="char" type="Label" parent="." unique_id=130516697]
-offset_left = 15.0
-offset_top = 78.0
-offset_right = 77.0
-offset_bottom = 95.0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -119.0
+offset_top = -66.0
+offset_right = -57.0
+offset_bottom = -49.0
+grow_horizontal = 2
+grow_vertical = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)

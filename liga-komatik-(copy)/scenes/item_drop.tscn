@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bqfhgcjjnvh6a"]
+
+[ext_resource type="Texture2D" uid="uid://dt8kygabq64na" path="res://textures/sprites/can_1.png" id="1_e8wxw"]
+[ext_resource type="Script" uid="uid://tn7y16mmubn7" path="res://scenes/item_drop.gd" id="1_gvv6n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gvv6n"]
+size = Vector2(3.96, 5.065)
+
+[node name="item_drop" type="Area2D" unique_id=758389323]
+y_sort_enabled = true
+collision_layer = 8
+script = ExtResource("1_gvv6n")
+
+[node name="sprite" type="Sprite2D" parent="." unique_id=1728151872]
+texture_filter = 1
+position = Vector2(0, -4)
+scale = Vector2(0.4, 0.383)
+texture = ExtResource("1_e8wxw")
+offset = Vector2(0.48842, 10.443867)
+
+[node name="col_sprite" type="CollisionShape2D" parent="." unique_id=1627007358]
+position = Vector2(0, -0.22)
+shape = SubResource("RectangleShape2D_gvv6n")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
