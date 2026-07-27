@@ -13,8 +13,8 @@ func _process(delta: float) -> void:
 		Global.add_item(self, chunk_pos, item_id, item_name, item_weight)
 		call_deferred("queue_free")
 
-func _on_area_entered(area: Area2D) -> void:
+func _on_area_entered(_area: Area2D) -> void:
 	_area_entered = true
 
-func _on_area_exited(area: Area2D) -> void:
+func _on_area_exited(_area: Area2D) -> void:
 	_area_entered = false

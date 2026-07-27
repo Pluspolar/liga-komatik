@@ -41,7 +41,19 @@ noise = SubResource("FastNoiseLite_14cdr")
 
 [node name="exploration" type="Node2D" unique_id=1527149665]
 script = ExtResource("1_26ty4")
-speed = 10000.0
+speed = 2000.0
+
+[node name="background" type="CanvasLayer" parent="." unique_id=2111901761]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="background" unique_id=1701401091]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 8
+color = Color(0, 0, 0, 1)
 
 [node name="tilemap" type="TileMapLayer" parent="." unique_id=1454337304]
 y_sort_enabled = true

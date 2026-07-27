@@ -72,6 +72,6 @@ func _drop_item(_item_id: String):
 
 func change_scene_to(to_scene, interior):
 	cur_scene = to_scene
-	cur_interior = interior
+	if interior != Node: cur_interior = interior
 	changing_scene = true
 	

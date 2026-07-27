@@ -33,7 +33,7 @@ func _process(_delta: float) -> void:
 				new_hovered = _body
 				break
 			
-	if new_hovered != null and (not is_dragging) and Input.is_action_pressed("click"):
+	if new_hovered != null and (not is_dragging) and Input.is_action_pressed("left_click"):
 		is_dragging = true
 		hovered = new_hovered
 	elif !Input.is_action_pressed("left_click") and is_dragging:

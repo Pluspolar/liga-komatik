@@ -2,7 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://bpmogubtg5vj" path="res://textures/fonts/Snowbell-Wp4g9.ttf" id="1_3n4vj"]
 [ext_resource type="Script" uid="uid://c2uedcuewy71w" path="res://scenes/dialogue.gd" id="1_bfpow"]
-[ext_resource type="FontFile" uid="uid://ba6udwdfjc0ht" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="2_bfpow"]
+[ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="2_bfpow"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pj0hq"]
 
