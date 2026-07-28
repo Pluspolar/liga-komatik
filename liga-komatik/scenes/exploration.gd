@@ -1,21 +1,23 @@
 extends Node2D
 
 @export var boundary_x : int = 300
+@export var map_detail : int = 1 #from 256, higher value better
 @export var speed : float = 1000
 
-var boundary_y : int = boundary_x
-var width : int = boundary_x
-var height : int = boundary_y
-var width_half : int = int(round(float(width)/2))
-var height_half : int = int(round(float(height)/2))
-var interior_tile := Vector2i(boundary_x, boundary_y)+Vector2i(100,100)
-var interior_pos : Vector2
+@onready var boundary_y : int = int(float(boundary_x)/16*9)
+@onready var width : int = boundary_x
+@onready var height : int = boundary_y
+@onready var width_half : int = int(round(float(width)/2))
+@onready var height_half : int = int(round(float(height)/2))
+@onready var interior_tile := Vector2i(boundary_x, boundary_y)+Vector2i(100,100)
+@onready var interior_pos : Vector2
 
 @onready var player := $Ysort/player
 @onready var ysort := $Ysort
 @onready var camera := $cam
 @onready var dialogue := $dialogue
 @onready var tile_map := $tilemap
+@onready var mini_map := $UI/mini_map
 
 var player_last_loc := Vector2(0,0)
 var noise = FastNoiseLite.new()
@@ -23,6 +25,8 @@ var corner_spot
 var thread_1 : Thread
 var cam_global : Vector2
 var int_player_magnitude : int
+
+@onready var map_size: Vector2 = Vector2(256, 144) * map_detail
 
 var biome = {}
 var destruction = {}
@@ -34,7 +38,9 @@ var urban = {}
 var interior_data = {
 	"1_aband_house" : [0, [10,50], {"stone" : 0.9, "dirt" : 0.1}], 
 	"1_aband_apart" : [0, [20,20], {"stone" : 0.9, "dirt" : 0.1}]} #id, tiles, [x_size, y_size]
-var generated_interior = {}
+
+@onready var generated_interior = Global.generated_interior
+@onready var gen_obj_interior = Global.gen_obj_interior
 
 var blocks = {}
 var tile_array = {}
@@ -43,7 +49,7 @@ var cur_chunk : Vector2i
 var cam_middle : Vector2 = Vector2(0,0)
 
 @onready var boundary : Vector2 = Vector2(boundary_x*8 - get_viewport_rect().size.x/2, boundary_y*8 - get_viewport_rect().size.y/2)
-var boundary_player : Vector2 = Vector2(boundary_x*8-6, boundary_y*8-6)
+@onready var boundary_player : Vector2 = Vector2(boundary_x*8-6, boundary_y*8-6)
 
 enum dia_state {
 	READY,
@@ -61,6 +67,13 @@ var noisetype := {
 }
 
 var tiles_data := {}
+var tiles_color = {
+	"dirt" : Color8(104, 61, 43),
+	"sand" : Color8(209, 196, 158),
+	"water" : Color8(94, 125, 182),
+	"grass" : Color8(20, 93, 15),
+	"stone" : Color8(77, 77, 77)
+}
 
 func rand_tiles_data():
 	tiles_data = {
@@ -94,6 +107,7 @@ var objects := { #[x_size, y_vertical_size, how much free space under "y"], scen
 }
 
 var objects_pos := {}
+var minimap_image : Image = Image.create(512, 288, false, Image.FORMAT_RGB8)
 @onready var chunk_size = Global.chunk_size
 @onready var chunks = Global.chunks
 @onready var chunks_obj = Global.chunks_obj
@@ -107,7 +121,9 @@ func _ready() -> void:
 	urban = generate_noise(0.006, 3, "simplex", 1, 0.36)
 	destruction = generate_noise(0.003, 3, "cellular", 1, 0.2)
 	_set_tile()
+	_player_minimap()
 	
+	print(boundary)
 	thread_1.start(_create_cell_chunk)
 	
 func _exit_tree() -> void:
@@ -138,6 +154,7 @@ func generate_noise(freq : float, oct : int, noise_type: String, multiplier: flo
 		return grid_noise
 	
 func _set_tile():
+	minimap_image.fill(Color.BLACK)
 	for x in range(-width_half, width_half):
 		for y in range(-height_half, height_half):
 			var pos = Vector2i(x, y)
@@ -161,11 +178,27 @@ func _set_tile():
 				else:
 					if temp > 0.3: place_tile_biome(pos, "eucalyptus")
 					else: place_tile_biome(pos, "plains")
+					
+	mini_map.texture = ImageTexture.create_from_image(minimap_image)
+		
+func _player_minimap():
+	var new_sprite = Sprite2D.new()
+	new_sprite.texture = preload("res://textures/sprites/icon.svg")
+	new_sprite.scale = Vector2(1,1)*0.05/1.5
+	player.map_sprite = new_sprite
+	mini_map.add_child(new_sprite)
+	
+func _update_player_minimap():
+	player.map_sprite.position = player.global_position/(16*float(boundary_x)/512)+Vector2(256, 144)
 		
 func place_tile_biome(pos : Vector2i, _biome: String):
 	rand_tiles_data()
 	biome[pos] = _biome
 	var tile = random_tiles(biomes_data, _biome)
+	var minimap_pos : Vector2i = pos + Vector2i(width_half, height_half)
+	minimap_pos.x = (minimap_pos.x*512/width)
+	minimap_pos.y = (minimap_pos.y*288/height)
+	minimap_image.set_pixel(minimap_pos.x, minimap_pos.y, tiles_color[tile])
 	blocks[pos] = tile
 	chunks[cur_chunk].append([pos, tiles_data[tile]])
 	create_object(pos, _biome)
@@ -197,6 +230,7 @@ func tile_to_map(pos, random_obj):
 	var obj_behav = obj_data[1]
 	if obj_behav != null:
 		generated_interior[obj] = create_interior(interior_data[obj_behav][1], interior_data[obj_behav][2])
+		gen_obj_interior[obj] = []
 	chunks_obj[cur_chunk].append(obj)
 	ysort.add_child(obj)
 	
@@ -204,6 +238,7 @@ func create_interior(room_size, palette):
 	var cur_interior = []
 	var x_range = room_size[0] - 1
 	var y_range = room_size[1] - 1
+	var middle : Vector2i = Vector2i(Vector2(x_range, y_range)/2)
 	var tile
 	for x in range(0, x_range+1):
 		for y in range(0, y_range+1):
@@ -211,6 +246,7 @@ func create_interior(room_size, palette):
 			if x == 0 or x == x_range or y == 0 or y == y_range: 
 				tile = "grass"
 			else: tile = random_tiles(palette)
+			#print(round(sin(Vector2(x,y).angle_to_point(Vector2(middle)))))
 			cur_interior.append([Vector2i(x,y)+interior_tile, tile, tiles_data[tile]])
 	return cur_interior
 
@@ -235,8 +271,12 @@ func _create_cell_chunk():
 			camera.position = player.position
 			camera.position = Vector2(clamp(camera.position.x, -boundary.x, boundary.x), clamp(camera.position.y, -boundary.y, boundary.y))
 			var tiles_interior = generated_interior[Global.cur_interior]
-			for _tile in tiles_interior:
-				tile_map.set_cell(_tile[0], -1)
+			var obj_interior = gen_obj_interior[Global.cur_interior]
+			for _tile in tiles_interior: tile_map.set_cell(_tile[0], -1)
+			for _obj in obj_interior: 
+				if _obj != null:
+					_obj.col_sprite.call_deferred("set_disabled", true)
+					_obj.hide()
 		
 		if Global.cur_scene == "outside":
 			corner_spot = (cam_global) - (Global.viewport_tree.size/2) + Vector2(-16, -16)
@@ -258,9 +298,11 @@ func _create_cell_chunk():
 				generated_chunks.erase(_chunk)
 				
 		elif Global.changing_scene and Global.cur_scene == "interior":
-			Global.changing_scene = false
 			erase_all_chunks()
+			Global.changing_scene = false
+			
 			var tiles_interior = generated_interior[Global.cur_interior]
+			var obj_interior = gen_obj_interior[Global.cur_interior]
 			Global.cur_interior_size = tiles_interior.size()
 			
 			var first_pos = tile_map.map_to_local(tiles_interior[0][0])
@@ -272,11 +314,15 @@ func _create_cell_chunk():
 			camera.zoom = Vector2(1,1)/camera_equation
 			player_last_loc = player.position
 			player.position = Vector2((last_pos.x - first_pos.x)/2 + interior_pos.x, last_pos.y-16) 
-			#print(camera.zoom)
 			
 			for _tile in tiles_interior:
 				tile_map.set_cell(_tile[0], 1, _tile[2])
 				
+			for _obj in obj_interior: 
+				if _obj != null:
+					_obj.col_sprite.call_deferred("set_disabled", false)
+					_obj.show()
+			
 		await get_tree().process_frame
 		
 func erase_all_chunks():
@@ -332,3 +378,4 @@ func _physics_process(delta: float) -> void:
 		
 		player.position = Vector2(clamp(player.position.x, first_pos.x, last_pos.x), clamp(player.position.y, first_pos.y, last_pos.y))
 	
+	_update_player_minimap()

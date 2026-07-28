@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://d074x6sfu2byf" path="res://textures/sprites/tree.png" id="1_avsvi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_htemk"]
-size = Vector2(5, 12)
+size = Vector2(5, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_14cdr"]
 size = Vector2(14, 14)
@@ -20,9 +20,8 @@ texture = ExtResource("1_avsvi")
 offset = Vector2(0, -10)
 
 [node name="static_col" type="CollisionShape2D" parent="." unique_id=1746158076]
-position = Vector2(-0.565, 0)
+position = Vector2(-0.565, 2)
 shape = SubResource("RectangleShape2D_htemk")
-metadata/_edit_lock_ = true
 
 [node name="interaction" type="Area2D" parent="." unique_id=862871199]
 metadata/_edit_lock_ = true
