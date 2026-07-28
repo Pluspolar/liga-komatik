@@ -23,7 +23,7 @@ position = Vector2(0, 5.5)
 shape = SubResource("RectangleShape2D_g2els")
 
 [node name="Interaction" type="Area2D" parent="." unique_id=1540956186]
-collision_mask = 2
+collision_mask = 10
 
 [node name="area_collision" type="CollisionShape2D" parent="Interaction" unique_id=1119838664]
 shape = SubResource("RectangleShape2D_htemk")
