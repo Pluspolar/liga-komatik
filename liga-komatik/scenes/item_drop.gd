@@ -4,22 +4,17 @@ var item_name : String
 var item_id : String
 var item_weight: float
 var chunk_pos : Vector2i
-var interior = null
 var item_dur : float = 2
-@onready var col_sprite = $col_sprite
+var _area_entered : bool = false
 
-func _ready():
-	if item_dur != 0: 
-		await get_tree().create_timer(item_dur).timeout
-		item_dur = 0
+func _process(delta: float) -> void:
+	item_dur -= 1 * delta
+	if item_dur <= 0 and _area_entered:
+		Global.add_item(self, chunk_pos, item_id, item_name, item_weight)
+		call_deferred("queue_free")
 
-#func _process(_delta: float) -> void:
-	'''if interior != null:
-		
-		if Global.cur_scene == "interior" and Global.cur_interior == interior:
-			col_sprite.disabled = false
-			show()
-		else: 
-			col_sprite.disabled = true
-			hide()'''
-		
+func _on_area_entered(_area: Area2D) -> void:
+	_area_entered = true
+
+func _on_area_exited(_area: Area2D) -> void:
+	_area_entered = false

@@ -6,8 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gvv6n"]
 size = Vector2(3.96, 5.065)
 
-[node name="item_drop" type="Area2D" unique_id=758389323 groups=["item_drop"]]
-visible = false
+[node name="item_drop" type="Area2D" unique_id=758389323]
 y_sort_enabled = true
 collision_layer = 8
 script = ExtResource("1_gvv6n")
@@ -22,3 +21,6 @@ offset = Vector2(0.48842, 10.443867)
 [node name="col_sprite" type="CollisionShape2D" parent="." unique_id=1627007358]
 position = Vector2(0, -0.22)
 shape = SubResource("RectangleShape2D_gvv6n")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]

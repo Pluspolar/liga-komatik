@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://bu2dhh3lgyhe8" path="res://textures/sprites/radio.png" id="5_2a5b4"]
 [ext_resource type="PackedScene" uid="uid://cw23mt2nx3v4p" path="res://scenes/dialogue.tscn" id="7_2a5b4"]
 [ext_resource type="PackedScene" uid="uid://rxqck54a35se" path="res://scenes/backpack.tscn" id="7_62eou"]
-[ext_resource type="PackedScene" uid="uid://dkg6yxrv8tsf0" path="res://scenes/ui.tscn" id="7_bhvn3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2a5b4"]
 texture = ExtResource("3_03514")
@@ -42,8 +41,7 @@ noise = SubResource("FastNoiseLite_14cdr")
 
 [node name="exploration" type="Node2D" unique_id=1527149665]
 script = ExtResource("1_26ty4")
-boundary_x = 800
-speed = 10000.0
+speed = 2000.0
 
 [node name="background" type="CanvasLayer" parent="." unique_id=2111901761]
 layer = -1
@@ -88,5 +86,3 @@ texture = ExtResource("5_2a5b4")
 [node name="dialogue" parent="." unique_id=31305971 instance=ExtResource("7_2a5b4")]
 
 [node name="backpack" parent="." unique_id=1402109859 instance=ExtResource("7_62eou")]
-
-[node name="UI" parent="." unique_id=1472598883 instance=ExtResource("7_bhvn3")]
