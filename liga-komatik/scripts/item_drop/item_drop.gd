@@ -6,7 +6,7 @@ var item_weight: float
 var chunk_pos : Vector2i
 var interior = null
 var item_dur : float = 0
-@onready var col_sprite = $col_sprite
+@onready var col_shape = $col_shape
 
 func _ready():
 	if item_dur != 0: 

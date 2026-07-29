@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://c6j1xmu1fuu1o"]
 
-[ext_resource type="Script" uid="uid://bn22y5ivgcrt3" path="res://scenes/item.gd" id="1_pag02"]
+[ext_resource type="Script" uid="uid://bn22y5ivgcrt3" path="res://scripts/item_inventory/item_inventory.gd" id="1_pag02"]
 [ext_resource type="Texture2D" uid="uid://dt8kygabq64na" path="res://textures/sprites/can_1.png" id="2_pag02"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ugcl7"]
 size = Vector2(4.67, 6.55)
 
-[node name="item_1" type="RigidBody2D" unique_id=56445709]
+[node name="can_inv" type="RigidBody2D" unique_id=56445709]
 collision_layer = 4
 collision_mask = 20
 input_pickable = true

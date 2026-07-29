@@ -104,9 +104,9 @@ var objects_data := {
 }
 
 var objects := { #[x_size, y_vertical_size, how much free space under "y"], scene
-	"tree" : [[1,1,0], null, preload("res://scenes/tree.tscn")],
-	"abandoned_house" : [[3,1,0], "1_aband_house", preload("res://scenes/abandoned_house.tscn")],
-	"abandoned_apartment" : [[3,1,0], "1_aband_apart", preload("res://scenes/abandoned_apartment.tscn")]
+	"tree" : [[1,1,0], null, preload("res://scenes/structures/tree.tscn")],
+	"abandoned_house" : [[3,1,0], "1_aband_house", preload("res://scenes/structures/abandoned_house.tscn")],
+	"abandoned_apartment" : [[3,1,0], "1_aband_apart", preload("res://scenes/structures/abandoned_apartment.tscn")]
 }
 
 var objects_pos := {}
@@ -228,8 +228,8 @@ func place_tile_biome(pos : Vector2i, _biome: String):
 	biome[pos] = _biome
 	var tile = random_tiles(biomes_data, _biome)
 	var minimap_pos : Vector2i = pos + Vector2i(width_half, height_half)
-	minimap_pos.x = (minimap_pos.x*512/width)
-	minimap_pos.y = (minimap_pos.y*288/height)
+	minimap_pos.x = int(float(minimap_pos.x)*512/width)
+	minimap_pos.y = int(float(minimap_pos.y)*288/height)
 	minimap_image.set_pixel(minimap_pos.x, minimap_pos.y, tiles_color[tile])
 	blocks[pos] = tile
 	chunks[cur_chunk].append([pos, tiles_data[tile]])
@@ -270,7 +270,7 @@ func create_interior(room_size, palette):
 	var cur_interior = []
 	var x_range = room_size[0] - 1
 	var y_range = room_size[1] - 1
-	var middle : Vector2i = Vector2i(Vector2(x_range, y_range)/2)
+	#var middle : Vector2i = Vector2i(Vector2(x_range, y_range)/2)
 	var tile
 	for x in range(0, x_range+1):
 		for y in range(0, y_range+1):

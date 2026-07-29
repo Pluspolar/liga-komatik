@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://rxqck54a35se"]
 
-[ext_resource type="Script" uid="uid://ci6xtupggivlp" path="res://scenes/backpack_border.gd" id="1_q7lps"]
+[ext_resource type="Script" uid="uid://ci6xtupggivlp" path="res://scripts/inventory/backpack_border.gd" id="1_q7lps"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_htemk"]
 size = Vector2(142, 17)

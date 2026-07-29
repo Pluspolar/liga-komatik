@@ -1,15 +1,15 @@
 [gd_scene format=3 uid="uid://i3hypxykcult"]
 
-[ext_resource type="Script" uid="uid://cy53pn6ljbgf4" path="res://scenes/exploration.gd" id="1_26ty4"]
-[ext_resource type="Texture2D" uid="uid://lg1h786whlnn" path="res://textures/tiles/terrain_palette_1.png" id="3_03514"]
-[ext_resource type="PackedScene" uid="uid://dxmns207wwbdx" path="res://scenes/player.tscn" id="3_u082n"]
-[ext_resource type="Texture2D" uid="uid://bu2dhh3lgyhe8" path="res://textures/sprites/radio.png" id="5_2a5b4"]
-[ext_resource type="PackedScene" uid="uid://cw23mt2nx3v4p" path="res://scenes/dialogue.tscn" id="7_2a5b4"]
-[ext_resource type="PackedScene" uid="uid://rxqck54a35se" path="res://scenes/backpack.tscn" id="7_62eou"]
-[ext_resource type="PackedScene" uid="uid://brrw8jkdg77xa" path="res://scenes/minimap.tscn" id="7_bhvn3"]
+[ext_resource type="Script" uid="uid://cy53pn6ljbgf4" path="res://scripts/main/exploration.gd" id="1_gh8vw"]
+[ext_resource type="Texture2D" uid="uid://lg1h786whlnn" path="res://textures/tiles/terrain_palette_1.png" id="2_iss55"]
+[ext_resource type="PackedScene" uid="uid://dxmns207wwbdx" path="res://scenes/main/player.tscn" id="3_ue0mf"]
+[ext_resource type="Texture2D" uid="uid://bu2dhh3lgyhe8" path="res://textures/sprites/radio.png" id="4_d35ny"]
+[ext_resource type="PackedScene" uid="uid://cw23mt2nx3v4p" path="res://scenes/UI/dialogue.tscn" id="5_6exic"]
+[ext_resource type="PackedScene" uid="uid://rxqck54a35se" path="res://scenes/inventory/backpack.tscn" id="6_ywco0"]
+[ext_resource type="PackedScene" uid="uid://brrw8jkdg77xa" path="res://scenes/UI/minimap.tscn" id="7_stgpn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2a5b4"]
-texture = ExtResource("3_03514")
+texture = ExtResource("2_iss55")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -41,7 +41,7 @@ fractal_octaves = 1
 noise = SubResource("FastNoiseLite_14cdr")
 
 [node name="exploration" type="Node2D" unique_id=1527149665]
-script = ExtResource("1_26ty4")
+script = ExtResource("1_gh8vw")
 speed = 10000.0
 
 [node name="background" type="CanvasLayer" parent="." unique_id=2111901761]
@@ -69,7 +69,7 @@ texture = SubResource("NoiseTexture2D_htemk")
 [node name="Ysort" type="Node2D" parent="." unique_id=1624141549]
 y_sort_enabled = true
 
-[node name="player" parent="Ysort" unique_id=278813971 instance=ExtResource("3_u082n")]
+[node name="player" parent="Ysort" unique_id=278813971 instance=ExtResource("3_ue0mf")]
 z_index = 0
 z_as_relative = false
 
@@ -82,10 +82,10 @@ visible = false
 texture_filter = 1
 position = Vector2(128, 72)
 scale = Vector2(2.05, 2.05)
-texture = ExtResource("5_2a5b4")
+texture = ExtResource("4_d35ny")
 
-[node name="dialogue" parent="." unique_id=31305971 instance=ExtResource("7_2a5b4")]
+[node name="dialogue" parent="." unique_id=31305971 instance=ExtResource("5_6exic")]
 
-[node name="backpack" parent="." unique_id=1402109859 instance=ExtResource("7_62eou")]
+[node name="backpack" parent="." unique_id=1402109859 instance=ExtResource("6_ywco0")]
 
-[node name="minimap" parent="." unique_id=1472598883 instance=ExtResource("7_bhvn3")]
+[node name="minimap" parent="." unique_id=1472598883 instance=ExtResource("7_stgpn")]

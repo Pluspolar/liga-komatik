@@ -15,8 +15,8 @@ var chunks_obj = {}
 var inventory = {}
 var item_id : int = 0
 var cam_coords : Vector2 = Vector2(0,0)
-var item_drop = preload("res://scenes/item_drop.tscn")
-var items := {"item_1" : preload("res://scenes/item_1.tscn")}
+var item_drop = preload("res://scenes/__item_drop/can.tscn")
+var item_inventory := {"can" : preload("res://scenes/_item_inventory/can.tscn")}
 var is_mouse_dragging = false
 var changing_scene = false
 var cur_interior
@@ -66,7 +66,7 @@ func spawn_item(_item_id: String, pos: Vector2, chunk_pos: Vector2i, item_name: 
 	get_tree().current_scene.get_node("Ysort").add_child(drop_item)
 
 func add_item(object, chunk_pos : Vector2i, _item_id: String, item_name: String, item_weight: float):
-	var item_backpack = items["item_1"].instantiate()
+	var item_backpack = item_inventory["can"].instantiate()
 	item_backpack.position = Vector2(randf_range(viewport_tree.size.x/2-20, viewport_tree.size.x/2+20), 0)
 	item_backpack.item_id = _item_id
 	inventory[_item_id] = [item_name, item_weight]

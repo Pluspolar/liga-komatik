@@ -2,11 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://ca7may1jo6xbd" path="res://textures/sprites/house_5.png" id="1_arguf"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_htemk"]
-size = Vector2(39.895, 13.445)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_14cdr"]
 size = Vector2(14, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_htemk"]
+size = Vector2(39.895, 13.445)
 
 [node name="abandoned_house" type="StaticBody2D" unique_id=1753390028]
 visible = false
@@ -14,21 +14,23 @@ z_as_relative = false
 y_sort_enabled = true
 collision_layer = 2
 
-[node name="sprite" type="Sprite2D" parent="." unique_id=569358984]
+[node name="move" type="Node2D" parent="." unique_id=973626682]
+
+[node name="sprite" type="Sprite2D" parent="move" unique_id=569358984]
 texture_filter = 1
 position = Vector2(0, -7)
 texture = ExtResource("1_arguf")
 offset = Vector2(0, -3)
 
+[node name="interior" type="Area2D" parent="move" unique_id=862871199 groups=["interior_interaction"]]
+collision_layer = 2
+metadata/_edit_lock_ = true
+
+[node name="area_col" type="CollisionShape2D" parent="move/interior" unique_id=1294136418]
+shape = SubResource("RectangleShape2D_14cdr")
+debug_color = Color(0.99967283, 0.02300573, 9.62615e-07, 0.41960785)
+
 [node name="static_col" type="CollisionShape2D" parent="." unique_id=1746158076]
 position = Vector2(0, -0.72249985)
 shape = SubResource("RectangleShape2D_htemk")
 metadata/_edit_lock_ = true
-
-[node name="interior" type="Area2D" parent="." unique_id=862871199 groups=["interior_interaction"]]
-collision_layer = 2
-metadata/_edit_lock_ = true
-
-[node name="area_col" type="CollisionShape2D" parent="interior" unique_id=1294136418]
-shape = SubResource("RectangleShape2D_14cdr")
-debug_color = Color(0.99967283, 0.02300573, 9.62615e-07, 0.41960785)

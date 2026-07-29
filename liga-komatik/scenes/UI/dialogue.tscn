@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://cw23mt2nx3v4p"]
 
-[ext_resource type="FontFile" uid="uid://bpmogubtg5vj" path="res://textures/fonts/Snowbell-Wp4g9.ttf" id="1_3n4vj"]
-[ext_resource type="Script" uid="uid://c2uedcuewy71w" path="res://scenes/dialogue.gd" id="1_bfpow"]
-[ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="2_bfpow"]
+[ext_resource type="Script" uid="uid://c2uedcuewy71w" path="res://scripts/UI/dialogue.gd" id="1_rhxqs"]
+[ext_resource type="FontFile" uid="uid://bpmogubtg5vj" path="res://textures/fonts/Snowbell-Wp4g9.ttf" id="2_cnjl0"]
+[ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="3_kewgn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pj0hq"]
 
 [node name="dialogue" type="CanvasLayer" unique_id=31305971]
-script = ExtResource("1_bfpow")
+script = ExtResource("1_rhxqs")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=607180016]
 anchors_preset = 7
@@ -57,7 +57,7 @@ theme_override_constants/shadow_outline_size = 1
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
 theme_override_constants/outline_size = 3
-theme_override_fonts/normal_font = ExtResource("1_3n4vj")
+theme_override_fonts/normal_font = ExtResource("2_cnjl0")
 theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
 text = "Also, adwasdwa"
@@ -77,7 +77,7 @@ theme_override_constants/shadow_outline_size = 1
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
 theme_override_constants/outline_size = 3
-theme_override_fonts/normal_font = ExtResource("2_bfpow")
+theme_override_fonts/normal_font = ExtResource("3_kewgn")
 theme_override_font_sizes/normal_font_size = 13
 bbcode_enabled = true
 text = "[wave]
@@ -107,6 +107,6 @@ theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
 theme_override_constants/outline_size = 3
 theme_override_constants/shadow_outline_size = 1
-theme_override_fonts/font = ExtResource("1_3n4vj")
+theme_override_fonts/font = ExtResource("2_cnjl0")
 theme_override_font_sizes/font_size = 12
 text = "Radio"
