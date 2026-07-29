@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var boundary_x : int = 300
+@export var boundary_x : int = 800
 @export var map_detail : int = 1 #from 256, higher value better
 @export var speed : float = 1000
 
@@ -9,7 +9,7 @@ extends Node2D
 @onready var height : int = boundary_y
 @onready var width_half : int = int(round(float(width)/2))
 @onready var height_half : int = int(round(float(height)/2))
-@onready var interior_tile := Vector2i(boundary_x, boundary_y)+Vector2i(100,100)
+@onready var interior_tile := Vector2i(boundary_x, boundary_y)+Vector2i(200,200)
 @onready var interior_pos : Vector2
 
 @onready var player := $Ysort/player
@@ -17,7 +17,10 @@ extends Node2D
 @onready var camera := $cam
 @onready var dialogue := $dialogue
 @onready var tile_map := $tilemap
-@onready var mini_map := $UI/mini_map
+@onready var mini_map_root := $minimap
+@onready var mini_map := $minimap/mini_map
+@onready var mini_map_explore := $minimap/mini_map_explore
+@onready var backpack := $backpack
 
 var player_last_loc := Vector2(0,0)
 var noise = FastNoiseLite.new()
@@ -107,12 +110,15 @@ var objects := { #[x_size, y_vertical_size, how much free space under "y"], scen
 }
 
 var objects_pos := {}
+var new_minimap_image : Image = Image.create(512, 288, false, Image.FORMAT_RGB8)
 var minimap_image : Image = Image.create(512, 288, false, Image.FORMAT_RGB8)
+var minimap_img_explore : Image = Image.create(512, 288, false, Image.FORMAT_RGB8)
 @onready var chunk_size = Global.chunk_size
 @onready var chunks = Global.chunks
 @onready var chunks_obj = Global.chunks_obj
 
 func _ready() -> void:
+	minimap_img_explore.fill(Color.BLACK)
 	interior_pos = tile_map.map_to_local(interior_tile)
 	thread_1 = Thread.new()
 	altitude = generate_noise(0.03, 3, "perlin", 1, 0.2)
@@ -180,6 +186,7 @@ func _set_tile():
 					else: place_tile_biome(pos, "plains")
 					
 	mini_map.texture = ImageTexture.create_from_image(minimap_image)
+	new_minimap_image = minimap_image.duplicate()
 		
 func _player_minimap():
 	var new_sprite = Sprite2D.new()
@@ -189,8 +196,33 @@ func _player_minimap():
 	mini_map.add_child(new_sprite)
 	
 func _update_player_minimap():
-	player.map_sprite.position = player.global_position/(16*float(boundary_x)/512)+Vector2(256, 144)
-		
+	if Global.cur_scene == "outside" and !Global.changing_scene: 
+		player.map_sprite.position = player.global_position/(16*float(boundary_x)/512)+Vector2(256, 144)
+		map_unlock_section()
+	#min.texture = ImageTexture.create_from_image(minimap_img_explore)
+	
+func map_unlock_section():
+	var pixel_change : bool = false
+	for x in range(-12, 13):
+		for y in range(-12, 13):
+			var map_player = player.map_sprite.position+Vector2(x,y)
+			if map_player.x > 512 or map_player.x < 0 or map_player.y > 288 or map_player.y < 0: continue
+			var new_minimap_pixel = new_minimap_image.get_pixelv(map_player)
+			
+			if (abs(x) <= 8 and abs(y) <= 8) and minimap_image.get_pixelv(map_player) != new_minimap_pixel:
+				minimap_image.set_pixelv(map_player, new_minimap_pixel)
+				if !pixel_change: pixel_change = true
+			
+			if (abs(x) >= 11 or abs(y) >= 11) and minimap_img_explore.get_pixelv(map_player).r < 0.3: 
+				minimap_img_explore.set_pixelv(map_player, Color(0.3,0,0,1))
+			elif (abs(x) >= 8 or abs(y) >= 8) and minimap_img_explore.get_pixelv(map_player).r < 0.5: 
+				minimap_img_explore.set_pixelv(map_player, Color(0.5,0,0,1))
+			else: 
+				minimap_img_explore.set_pixelv(map_player, Color(1,0,0,1))
+					
+	mini_map_explore.texture = ImageTexture.create_from_image(minimap_img_explore)
+	if pixel_change: mini_map.texture = ImageTexture.create_from_image(minimap_image)
+
 func place_tile_biome(pos : Vector2i, _biome: String):
 	rand_tiles_data()
 	biome[pos] = _biome
@@ -265,6 +297,7 @@ func random_tiles(data, _place : String = ""):
 func _create_cell_chunk():
 	while true:
 		if Global.changing_scene and Global.cur_scene == "outside":
+			erase_all_chunks()
 			Global.changing_scene = false
 			camera.zoom = Vector2(1,1)
 			player.position = player_last_loc
@@ -286,11 +319,11 @@ func _create_cell_chunk():
 			for x in range(0, Global.viewport_x_chunk):
 				for y in range(0, Global.viewport_y_chunk):
 					var place_tile = tile_chunk + Vector2i(x,y)
-					if !generated_chunks.has(place_tile):
+					if !generated_chunks.has(place_tile) and chunks.has(place_tile):
 						for _tile in chunks[place_tile]: tile_map.set_cell(_tile[0], 1, _tile[1])
 						for _obj in chunks_obj[place_tile]: _obj.call_deferred("show")
 						generated_chunks.append(place_tile)
-					temp_chunk.erase(place_tile)
+					elif generated_chunks.has(place_tile): temp_chunk.erase(place_tile)
 					
 			for _chunk in temp_chunk:
 				for _tile in chunks[_chunk]: tile_map.set_cell(_tile[0], -1)
@@ -360,6 +393,7 @@ func _physics_process(delta: float) -> void:
 		Global.spawn_new_item(player.position + Vector2(15,0), pos_to_chunk(player.position + Vector2(15,0)), "Test", 1.5)
 		
 	if Input.is_action_just_pressed("right_click"):
+		new_minimap_image.fill(Color.WHITE)
 		pass
 		#dialogue.add_text("Kami mendapatkan info dari beberapa orang bahwa stok di kota [wave]GURT[/wave] telah diisi kembali.", 20, "Radio") #[wave amp=15 freq=5]
 		#dialogue.add_text("[tornado radius=1.5 freq=3]Semoga Beruntung!", 15, "Radio") #[wave amp=15 freq=8]
@@ -379,3 +413,11 @@ func _physics_process(delta: float) -> void:
 		player.position = Vector2(clamp(player.position.x, first_pos.x, last_pos.x), clamp(player.position.y, first_pos.y, last_pos.y))
 	
 	_update_player_minimap()
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("inventory"):
+		if backpack.visible: backpack.hide()
+		else: backpack.show()
+	if event.is_action_pressed("map"):
+		if mini_map_root.visible: mini_map_root.hide()
+		else: mini_map_root.show()

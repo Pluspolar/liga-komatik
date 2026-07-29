@@ -5,7 +5,7 @@ var item_id : String
 var item_weight: float
 var chunk_pos : Vector2i
 var interior = null
-var item_dur : float = 2
+var item_dur : float = 0
 @onready var col_sprite = $col_sprite
 
 func _ready():

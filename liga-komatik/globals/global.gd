@@ -55,6 +55,7 @@ func spawn_item(_item_id: String, pos: Vector2, chunk_pos: Vector2i, item_name: 
 	drop_item.item_name = item_name
 	drop_item.item_weight = item_weight
 	drop_item.item_id = _item_id
+	drop_item.item_dur = 2
 	drop_item.show()
 	if cur_scene == "outside": 
 		drop_item.chunk_pos = chunk_pos

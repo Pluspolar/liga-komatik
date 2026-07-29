@@ -1,11 +1,11 @@
-[gd_scene format=3 uid="uid://dkg6yxrv8tsf0"]
+[gd_scene format=3 uid="uid://brrw8jkdg77xa"]
 
-[ext_resource type="Shader" uid="uid://chgyw53o5oph1" path="res://scenes/mini_map_explore.gdshader" id="1_nt7q6"]
+[ext_resource type="Shader" uid="uid://chgyw53o5oph1" path="res://scenes/mini_map_explore.gdshader" id="1_lj7mc"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_htemk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nt7q6"]
-shader = ExtResource("1_nt7q6")
+shader = ExtResource("1_lj7mc")
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xlq6p"]
 
