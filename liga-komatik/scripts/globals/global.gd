@@ -19,6 +19,7 @@ var item_drop = preload("res://scenes/__item_drop/can.tscn")
 var item_inventory := {"can" : preload("res://scenes/_item_inventory/can.tscn")}
 var is_mouse_dragging = false
 var changing_scene = false
+var is_interacting = false
 var cur_interior
 var cur_interior_size
 var cur_scene = "outside"
@@ -72,7 +73,7 @@ func add_item(object, chunk_pos : Vector2i, _item_id: String, item_name: String,
 	inventory[_item_id] = [item_name, item_weight]
 	backpack_weight += item_weight
 	chunks_obj[chunk_pos].erase(object)
-	get_tree().current_scene.get_node("backpack").call_deferred("add_child", item_backpack)
+	get_tree().current_scene.get_node("UI/backpack").call_deferred("add_child", item_backpack)
 
 func remove_item(_item_id: String):
 	var remove_index = inventory.find(_item_id)

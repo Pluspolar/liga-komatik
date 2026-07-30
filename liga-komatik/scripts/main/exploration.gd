@@ -15,12 +15,13 @@ extends Node2D
 @onready var player := $Ysort/player
 @onready var ysort := $Ysort
 @onready var camera := $cam
-@onready var dialogue := $dialogue
+@onready var dialogue := $UI/dialogue
 @onready var tile_map := $tilemap
-@onready var mini_map_root := $minimap
-@onready var mini_map := $minimap/mini_map
-@onready var mini_map_explore := $minimap/mini_map_explore
-@onready var backpack := $backpack
+@onready var mini_map_root := $UI/minimap
+@onready var mini_map := $UI/minimap/mini_map
+@onready var mini_map_explore := $UI/minimap/mini_map_explore
+@onready var backpack := $UI/backpack
+@onready var hand_interact := $UI/interaction/hand
 
 var player_last_loc := Vector2(0,0)
 var noise = FastNoiseLite.new()
@@ -129,7 +130,6 @@ func _ready() -> void:
 	_set_tile()
 	_player_minimap()
 	
-	print(boundary)
 	thread_1.start(_create_cell_chunk)
 	
 func _exit_tree() -> void:
@@ -190,8 +190,9 @@ func _set_tile():
 		
 func _player_minimap():
 	var new_sprite = Sprite2D.new()
-	new_sprite.texture = preload("res://textures/sprites/icon.svg")
-	new_sprite.scale = Vector2(1,1)*0.05/1.5
+	new_sprite.texture = preload("res://textures/sprites/UI/map_player_2.png")
+	new_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	new_sprite.scale = Vector2(1,1)*0.5
 	player.map_sprite = new_sprite
 	mini_map.add_child(new_sprite)
 	
@@ -199,7 +200,6 @@ func _update_player_minimap():
 	if Global.cur_scene == "outside" and !Global.changing_scene: 
 		player.map_sprite.position = player.global_position/(16*float(boundary_x)/512)+Vector2(256, 144)
 		map_unlock_section()
-	#min.texture = ImageTexture.create_from_image(minimap_img_explore)
 	
 func map_unlock_section():
 	var pixel_change : bool = false
@@ -270,17 +270,47 @@ func create_interior(room_size, palette):
 	var cur_interior = []
 	var x_range = room_size[0] - 1
 	var y_range = room_size[1] - 1
+	var interior_availability = []
 	#var middle : Vector2i = Vector2i(Vector2(x_range, y_range)/2)
 	var tile
 	for x in range(0, x_range+1):
 		for y in range(0, y_range+1):
-			rand_tiles_data()
-			if x == 0 or x == x_range or y == 0 or y == y_range: 
-				tile = "grass"
-			else: tile = random_tiles(palette)
+			var _pos = Vector2i(x,y)+interior_tile
+			if interior_availability.has(_pos): 
+				continue
+			
+			if (x == 0 or x == x_range or y == 0 or y == y_range) and randf_range(0,1) <= 0.1: 
+				create_room(interior_availability, cur_interior, _pos, x_range, y_range)
+			else:
+				rand_tiles_data()
+				tile = random_tiles(palette)
+				interior_availability.append(_pos)
+				cur_interior.append([_pos, tile, tiles_data[tile]])
 			#print(round(sin(Vector2(x,y).angle_to_point(Vector2(middle)))))
-			cur_interior.append([Vector2i(x,y)+interior_tile, tile, tiles_data[tile]])
+			
 	return cur_interior
+
+func create_room(interior_availability, cur_interior, _pos, x_range, y_range):
+	var tile
+	var room_size : Vector2i = Vector2i(4, 4)
+	
+	for x in range(room_size.x):
+		var y = room_size.y-1
+		var local_pos = _pos+Vector2i(x,y)
+		if x > x_range or y > y_range: continue
+		rand_tiles_data()
+		tile = "grass"
+		interior_availability.append(local_pos)
+		cur_interior.append([local_pos, tile, tiles_data[tile]])
+	
+	for y in range(room_size.y):
+		var x = room_size.x-1
+		var local_pos = _pos+Vector2i(x,y)
+		if x > x_range or y > y_range: continue
+		rand_tiles_data()
+		tile = "grass"
+		interior_availability.append(local_pos)
+		cur_interior.append([local_pos, tile, tiles_data[tile]])
 
 func random_tiles(data, _place : String = ""):
 	var cur_place
@@ -413,6 +443,15 @@ func _physics_process(delta: float) -> void:
 		player.position = Vector2(clamp(player.position.x, first_pos.x, last_pos.x), clamp(player.position.y, first_pos.y, last_pos.y))
 	
 	_update_player_minimap()
+	check_interaction()
+
+func check_interaction():
+	if Global.is_interacting: 
+		hand_interact.show()
+		hand_interact.rotation_degrees = cos(Global._timer*6.5)*6
+		hand_interact.scale.x = 2+cos(Global._timer*13)*0.05
+		hand_interact.scale.y = 2+sin(Global._timer*13)*0.05
+	else: hand_interact.hide()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("inventory"):

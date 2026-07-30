@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c6j1xmu1fuu1o"]
 
-[ext_resource type="Script" uid="uid://bn22y5ivgcrt3" path="res://scripts/item_inventory/item_inventory.gd" id="1_pag02"]
-[ext_resource type="Texture2D" uid="uid://dt8kygabq64na" path="res://textures/sprites/can_1.png" id="2_pag02"]
+[ext_resource type="Script" uid="uid://bn22y5ivgcrt3" path="res://scripts/_item_inventory/item_inventory.gd" id="1_vyivj"]
+[ext_resource type="Texture2D" uid="uid://dt8kygabq64na" path="res://textures/sprites/item/can.png" id="2_drruv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ugcl7"]
 size = Vector2(4.67, 6.55)
@@ -12,13 +12,13 @@ collision_mask = 20
 input_pickable = true
 gravity_scale = 0.15
 can_sleep = false
-script = ExtResource("1_pag02")
+script = ExtResource("1_vyivj")
 
 [node name="sprite" type="Sprite2D" parent="." unique_id=1019661729]
 texture_filter = 1
 position = Vector2(-3.8146973e-06, 0)
 scale = Vector2(2.09, 2)
-texture = ExtResource("2_pag02")
+texture = ExtResource("2_drruv")
 offset = Vector2(0.57175636, 0.19497108)
 
 [node name="col_shape" type="CollisionShape2D" parent="." unique_id=1043071412]

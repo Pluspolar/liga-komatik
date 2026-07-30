@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://cy53pn6ljbgf4" path="res://scripts/main/exploration.gd" id="1_gh8vw"]
 [ext_resource type="Texture2D" uid="uid://lg1h786whlnn" path="res://textures/tiles/terrain_palette_1.png" id="2_iss55"]
 [ext_resource type="PackedScene" uid="uid://dxmns207wwbdx" path="res://scenes/main/player.tscn" id="3_ue0mf"]
-[ext_resource type="Texture2D" uid="uid://bu2dhh3lgyhe8" path="res://textures/sprites/radio.png" id="4_d35ny"]
 [ext_resource type="PackedScene" uid="uid://cw23mt2nx3v4p" path="res://scenes/UI/dialogue.tscn" id="5_6exic"]
 [ext_resource type="PackedScene" uid="uid://rxqck54a35se" path="res://scenes/inventory/backpack.tscn" id="6_ywco0"]
+[ext_resource type="PackedScene" uid="uid://ckj6wchsv4182" path="res://scenes/UI/interaction.tscn" id="7_gh8vw"]
 [ext_resource type="PackedScene" uid="uid://brrw8jkdg77xa" path="res://scenes/UI/minimap.tscn" id="7_stgpn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2a5b4"]
@@ -62,10 +62,6 @@ texture_filter = 1
 tile_set = SubResource("TileSet_htemk")
 y_sort_origin = 1
 
-[node name="noise" type="Sprite2D" parent="." unique_id=779630262]
-visible = false
-texture = SubResource("NoiseTexture2D_htemk")
-
 [node name="Ysort" type="Node2D" parent="." unique_id=1624141549]
 y_sort_enabled = true
 
@@ -74,18 +70,21 @@ z_index = 0
 z_as_relative = false
 
 [node name="cam" type="Camera2D" parent="." unique_id=1321165422]
-position = Vector2(128, 72)
 limit_enabled = false
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1665129773]
+[node name="noise" type="Sprite2D" parent="." unique_id=779630262]
 visible = false
-texture_filter = 1
-position = Vector2(128, 72)
-scale = Vector2(2.05, 2.05)
-texture = ExtResource("4_d35ny")
+texture = SubResource("NoiseTexture2D_htemk")
 
-[node name="dialogue" parent="." unique_id=31305971 instance=ExtResource("5_6exic")]
+[node name="UI" type="Node2D" parent="." unique_id=564675393]
 
-[node name="backpack" parent="." unique_id=1402109859 instance=ExtResource("6_ywco0")]
+[node name="dialogue" parent="UI" unique_id=31305971 instance=ExtResource("5_6exic")]
+visible = false
 
-[node name="minimap" parent="." unique_id=1472598883 instance=ExtResource("7_stgpn")]
+[node name="backpack" parent="UI" unique_id=1402109859 instance=ExtResource("6_ywco0")]
+visible = false
+
+[node name="minimap" parent="UI" unique_id=1472598883 instance=ExtResource("7_stgpn")]
+visible = false
+
+[node name="interaction" parent="UI" unique_id=817276631 instance=ExtResource("7_gh8vw")]

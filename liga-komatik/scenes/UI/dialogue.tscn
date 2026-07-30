@@ -60,7 +60,7 @@ theme_override_constants/outline_size = 3
 theme_override_fonts/normal_font = ExtResource("2_cnjl0")
 theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
-text = "Also, adwasdwa"
+text = "-"
 scroll_active = false
 
 [node name="end" type="RichTextLabel" parent="MarginContainer/MarginContainer2/HBoxContainer" unique_id=12739484]
@@ -109,4 +109,4 @@ theme_override_constants/outline_size = 3
 theme_override_constants/shadow_outline_size = 1
 theme_override_fonts/font = ExtResource("2_cnjl0")
 theme_override_font_sizes/font_size = 12
-text = "Radio"
+text = "Testificate"
