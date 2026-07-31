@@ -8,8 +8,10 @@ extends Node
 @onready var viewport_y_chunk : int = round(float(viewport_y_tile)/chunk_size)+1
 
 var generated_interior = {}
+var gen_wall_interior = {}
 var gen_obj_interior = {}
 var chunks = {}
+var chunks_wall = {}
 var chunks_obj = {}
 #var cur_chunk : Vector2i
 var inventory = {}

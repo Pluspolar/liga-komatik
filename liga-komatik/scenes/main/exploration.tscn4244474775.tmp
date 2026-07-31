@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cy53pn6ljbgf4" path="res://scripts/main/exploration.gd" id="1_gh8vw"]
 [ext_resource type="Texture2D" uid="uid://lg1h786whlnn" path="res://textures/tiles/terrain_palette_1.png" id="2_iss55"]
-[ext_resource type="Texture2D" uid="uid://b3qiimxygx5xr" path="res://textures/tiles/wall_2.png" id="3_iss55"]
+[ext_resource type="Texture2D" uid="uid://bde7amsm6s1rv" path="res://textures/tiles/wall_!.png" id="2_ue0mf"]
 [ext_resource type="PackedScene" uid="uid://dxmns207wwbdx" path="res://scenes/main/player.tscn" id="3_ue0mf"]
 [ext_resource type="PackedScene" uid="uid://cw23mt2nx3v4p" path="res://scenes/UI/dialogue.tscn" id="5_6exic"]
 [ext_resource type="PackedScene" uid="uid://rxqck54a35se" path="res://scenes/inventory/backpack.tscn" id="6_ywco0"]
@@ -32,16 +32,17 @@ texture = ExtResource("2_iss55")
 0:3/0 = 0
 1:3/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ue0mf"]
-texture = ExtResource("3_iss55")
-texture_region_size = Vector2i(16, 48)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d35ny"]
+texture = ExtResource("2_ue0mf")
+texture_region_size = Vector2i(16, 32)
 0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 8)
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSet" id="TileSet_htemk"]
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_2a5b4")
-sources/1 = SubResource("TileSetAtlasSource_ue0mf")
+sources/1 = SubResource("TileSetAtlasSource_d35ny")
 pattern_0 = SubResource("TileMapPattern_iss55")
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_14cdr"]

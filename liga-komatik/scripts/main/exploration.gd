@@ -17,6 +17,7 @@ extends Node2D
 @onready var camera := $cam
 @onready var dialogue := $UI/dialogue
 @onready var tile_map := $tilemap
+@onready var tilemap_wall := $Ysort/tilemap_wall
 @onready var mini_map_root := $UI/minimap
 @onready var mini_map := $UI/minimap/mini_map
 @onready var mini_map_explore := $UI/minimap/mini_map_explore
@@ -39,11 +40,8 @@ var moisture = {}
 var temperature = {}
 var urban = {}
 
-var interior_data = {
-	"1_aband_house" : [0, [10,50], {"stone" : 0.9, "dirt" : 0.1}], 
-	"1_aband_apart" : [0, [20,20], {"stone" : 0.9, "dirt" : 0.1}]} #id, tiles, [x_size, y_size]
-
 @onready var generated_interior = Global.generated_interior
+@onready var gen_wall_interior = Global.gen_wall_interior
 @onready var gen_obj_interior = Global.gen_obj_interior
 
 var blocks = {}
@@ -71,12 +69,20 @@ var noisetype := {
 }
 
 var tiles_data := {}
+var walls_data := {}
+var interior_data = {} #id, tiles, [x_size, y_size]
+
+
 var tiles_color = {
 	"dirt" : Color8(104, 61, 43),
 	"sand" : Color8(209, 196, 158),
 	"water" : Color8(94, 125, 182),
 	"grass" : Color8(20, 93, 15),
 	"stone" : Color8(77, 77, 77)
+}
+
+var walls_color = {
+	"crate" : Color8(104, 61, 43)
 }
 
 func rand_tiles_data():
@@ -86,7 +92,23 @@ func rand_tiles_data():
 	"water" : Vector2i(4,0),
 	"grass" : Vector2i(randi_range(6,7), randi_range(0,1)),
 	"stone" : Vector2i(randi_range(0,1), randi_range(2,3))
-}
+	}
+
+func rand_interior_data():
+	interior_data = {
+	"1_aband_house" : [0, [randi_range(10,20), randi_range(10,20)], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}], 
+	"1_aband_apart" : [0, [randi_range(20,35), randi_range(20,35)], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}]
+	} #id, tiles, [x_size, y_size]
+
+#	interior_data = {
+#	"1_aband_house" : [0, [10,50], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}], 
+#	"1_aband_apart" : [0, [20,20], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}]
+#	} #id, tiles, [x_size, y_size]
+
+func rand_walls_data():
+	walls_data = {
+		"crate" : Vector2i(0, 0)
+	}
 
 var biomes_data := {
 	"plains" : {"grass" : 1, "dirt" : 0},
@@ -94,6 +116,14 @@ var biomes_data := {
 	"ocean" : {"water" : 1},
 	"eucalyptus" : {"grass" : 0.05, "dirt" : 0.95},
 	"city_1" : {"stone" : 0.997, "dirt" : 0.003}
+}
+
+var biomes_wall_data := {
+	"plains" : {"crate" : 0.05},
+	"beach" : {},
+	"ocean" : {},
+	"eucalyptus" : {},
+	"city_1" : {}
 }
 
 var objects_data := {
@@ -114,11 +144,19 @@ var objects_pos := {}
 var new_minimap_image : Image = Image.create(512, 288, false, Image.FORMAT_RGB8)
 var minimap_image : Image = Image.create(512, 288, false, Image.FORMAT_RGB8)
 var minimap_img_explore : Image = Image.create(512, 288, false, Image.FORMAT_RGB8)
+
 @onready var chunk_size = Global.chunk_size
 @onready var chunks = Global.chunks
+@onready var chunks_wall = Global.chunks_wall
 @onready var chunks_obj = Global.chunks_obj
 
+func _ready_rand():
+	rand_tiles_data()
+	rand_walls_data()
+	rand_interior_data()
+
 func _ready() -> void:
+	_ready_rand()
 	minimap_img_explore.fill(Color.BLACK)
 	interior_pos = tile_map.map_to_local(interior_tile)
 	thread_1 = Thread.new()
@@ -170,13 +208,15 @@ func _set_tile():
 			cur_chunk = tile_to_chunk(pos)
 			
 			if !chunks.has(cur_chunk): chunks[cur_chunk] = []
+			if !chunks_wall.has(cur_chunk): chunks_wall[cur_chunk] = []
 			if !chunks_obj.has(cur_chunk): chunks_obj[cur_chunk] = []
 			
 			if _urban > 0:
 				if alt < -0.25: place_tile_biome(pos, "ocean")
 				elif alt >= -0.25 and alt < -0.18 : place_tile_biome(pos, "eucalyptus")
 				elif _urban <= 0.07: place_tile_biome(pos, "eucalyptus")
-				else: place_tile_biome(pos, "city_1")
+				else: 
+					place_tile_biome(pos, "city_1")
 			else: 
 				if alt < -0.25: place_tile_biome(pos, "ocean")
 				elif alt >= -0.25 and alt < -0.2 : place_tile_biome(pos, "beach")
@@ -233,7 +273,18 @@ func place_tile_biome(pos : Vector2i, _biome: String):
 	minimap_image.set_pixel(minimap_pos.x, minimap_pos.y, tiles_color[tile])
 	blocks[pos] = tile
 	chunks[cur_chunk].append([pos, tiles_data[tile]])
+	place_wall_biome(pos, _biome, minimap_pos)
 	create_object(pos, _biome)
+	
+func place_wall_biome(pos : Vector2i, _biome: String, minimap_pos : Vector2i) -> void:
+	rand_tiles_data()
+	var tile = random_tiles(biomes_wall_data, _biome)
+	
+	if tile == null or objects_pos.get(pos): return
+	
+	minimap_image.set_pixelv(minimap_pos, walls_color[tile])
+	objects_pos[pos] = tile
+	chunks_wall[cur_chunk].append([pos, walls_data[tile]])
 	
 func create_object(pos, _biome):
 	var random_obj = random_tiles(objects_data, _biome)
@@ -248,14 +299,16 @@ func check_accessibility(pos, random_obj):
 	var middle = int(obj_size[0]/2)
 	for x in range(obj_size[0]):
 		for y in range(obj_size[1]+y_free):
-			if objects_pos.get(pos+Vector2i(x-middle,-y+y_free)):
+			var new_pos = pos+Vector2i(x-middle,-y+y_free)
+			if objects_pos.get(new_pos):
 				return false
-			temp_acc_coords.append(pos+Vector2i(x-middle,-y+y_free))
+			temp_acc_coords.append(new_pos)
 	for coords in temp_acc_coords: 
 		objects_pos[coords] = random_obj
 	return true
 	
 func tile_to_map(pos, random_obj):
+	rand_interior_data()
 	var obj_data = objects[str(random_obj)]
 	var obj = obj_data[2].instantiate()
 	obj.position = tile_map.map_to_local(pos)
@@ -264,9 +317,10 @@ func tile_to_map(pos, random_obj):
 	ysort.add_child(obj)
 	if obj_behav != null:
 		gen_obj_interior[obj] = []
-		generated_interior[obj] = create_interior(interior_data[obj_behav][1], interior_data[obj_behav][2], obj)
+		gen_wall_interior[obj] = []
+		generated_interior[obj] = create_interior(interior_data[obj_behav][1], interior_data[obj_behav][2], interior_data[obj_behav][3], obj)
 		
-func create_interior(room_size, palette, obj):
+func create_interior(room_size, palette, wall_palette, obj):
 	Global.cur_scene = "interior"
 	Global.cur_interior = obj
 	var cur_interior = {}
@@ -277,7 +331,10 @@ func create_interior(room_size, palette, obj):
 	var middle : Vector2i = Vector2i(Vector2(x_range, y_range)/2)
 	var tile
 	var room_amount = 0
-	var max_room = int((x_range+1)*(y_range+1)/55)
+	var cur_wall : Dictionary
+	var total_wall := {}
+	var max_room = int((x_range+1)*(y_range+1)/55*(randf_range(0.9, 1.25)))
+	var room_abundance = randf_range(0.05, 0.2)
 	#tile = "water"
 	#cur_interior[middle+interior_tile] = [middle+interior_tile, tile, tiles_data[tile]]
 	for x in range(0, x_range+1):
@@ -288,8 +345,9 @@ func create_interior(room_size, palette, obj):
 			
 			if cur_interior.has(_pos): continue
 			
-			if room_amount < max_room and (x == 0 or x == x_range or y == 0 or y == y_range) and randf_range(0,1) <= 0.1: 
-				create_room(room_availability, middle, cur_interior, palette, tile_pos, _pos, x_range, y_range)
+			if room_amount < max_room and (x == 0 or x == x_range or y == 0 or y == y_range) and randf_range(0,1) <= room_abundance: 
+				cur_wall = create_room(total_wall, room_availability, middle, cur_interior, palette, wall_palette, tile_pos, _pos, x_range, y_range)
+				for i in cur_wall: total_wall[i] = cur_wall[i]
 				room_amount += 1
 			else:
 				rand_tiles_data()
@@ -311,22 +369,30 @@ func create_interior(room_size, palette, obj):
 			if !cur_interior.has(n_p_t): continue
 			
 			rand_tiles_data()
-			tile = random_tiles(palette)
+			if y == 1 and (x == -1 or x == 0): tile = "water"
+			else: tile = random_tiles(palette)
 			var find_new_sort = new_sorted.find(cur_interior[n_p_t])
+			
 			new_sorted.remove_at(find_new_sort)
+			total_wall.erase(n_p_t)
 			new_sorted.insert(find_new_sort, [n_p_t, tile, tiles_data[tile]])
 		
 	Global.cur_scene = "outside"
+		
+	for i in total_wall:
+		gen_wall_interior[obj].append(total_wall[i])
+		
 	return new_sorted
 
-func create_room(room_availability, middle, cur_interior, palette, tile_pos, _pos, x_range, y_range):
+func create_room(total_wall, room_availability, middle, cur_interior, palette, wall_palette, tile_pos, _pos, x_range, y_range) -> Dictionary:
 	var tile
 	var random_size = int(min(x_range+1, y_range+1)/2.5)
-	var room_size : Vector2i = Vector2i(Vector2(randi_range(int(random_size) , int(random_size*1.3)), randi_range(int(random_size*0.8) , int(random_size*1.3)))/2)
+	var room_size : Vector2i = Vector2i(Vector2(randi_range(int(random_size) , int(random_size*1.25)), randi_range(int(random_size) , int(random_size*1.25)))/2)
 	var vector_angle = (round(Vector2(tile_pos).angle_to_point(middle)*2/PI))/2*PI
 	var door_normal = Vector2i(int(cos(vector_angle)), int(sin(vector_angle)))
 	var door = Vector2i(door_normal.x*room_size.x, door_normal.y*room_size.y)+_pos
-	#var door_normal_transpose = Vector2i(door_normal.y, door_normal.x)
+	var cur_wall = {}
+	var door_normal_transpose = Vector2i(door_normal.y, door_normal.x)
 	
 	#var _door = [door]#, door+door_normal*2+(door_normal_transpose)]
 	
@@ -340,15 +406,18 @@ func create_room(room_availability, middle, cur_interior, palette, tile_pos, _po
 			var cur_pos = Vector2i(x,y)
 			var n_t_p = tile_pos+cur_pos #new_tile_pos
 			var local_pos = _pos+cur_pos
-			if n_t_p.x > x_range or n_t_p.x < 0 or n_t_p.y > y_range or n_t_p.y < 0 or room_availability.has(local_pos): continue
+			if room_availability.has(local_pos) or n_t_p.x > x_range or n_t_p.x < 0 or n_t_p.y > y_range or n_t_p.y < 0: continue
 			
 			rand_tiles_data()
 			
 			#if x == -room_size.x or y == -room_size.y or x == room_size.x or y == room_size.y:
 			if (abs(x) == room_size.x or abs(y) == room_size.y) and abs(x) < room_size.x+1 and abs(y) < room_size.y+1:
 				tile = "grass"
+				var wall_tile = random_tiles(wall_palette)
+				cur_wall[local_pos] = [local_pos, wall_tile, walls_data[wall_tile]]
 			else: 
-				if randf_range(0,1) <= 0.1: Global.spawn_new_item(tile_map.map_to_local(local_pos)+Vector2(randf_range(-6, 6), randf_range(-6, 6)), Vector2i(0,0), "can", 1.25)
+				if randf_range(0,1) <= 0.1: 
+					Global.spawn_new_item(tile_map.map_to_local(local_pos)+Vector2(randf_range(-6, 6), randf_range(-6, 6)), Vector2i(0,0), "can", 1.25)
 				tile = random_tiles(palette)
 			
 			room_availability.append(local_pos)
@@ -356,24 +425,25 @@ func create_room(room_availability, middle, cur_interior, palette, tile_pos, _po
 		
 	var not_found_air = true
 	var index_door_normal = 0
+	var index_transpose_normal = 0
 	while not_found_air:
-		var cur_pos_door = door+(door_normal*index_door_normal)
-		if index_door_normal <= 1:
+		var cur_pos_door = door+(door_normal*index_door_normal)+(door_normal_transpose*index_transpose_normal)
+		if (index_door_normal <= 1 or total_wall.has(cur_pos_door)) and index_door_normal <= 3:
 			rand_tiles_data()
+			#tile = "water"
 			tile = random_tiles(palette)
 			if !room_availability.has(cur_pos_door): room_availability.append(cur_pos_door)
+			if total_wall.has(cur_pos_door): total_wall.erase(cur_pos_door)
+			if cur_wall.has(cur_pos_door): cur_wall.erase(cur_pos_door)
 			cur_interior[cur_pos_door] = [cur_pos_door, tile, tiles_data[tile]]
 			index_door_normal += 1
-		elif cur_interior.has(cur_pos_door):
-			if cur_interior[cur_pos_door][1] == "grass":
-				rand_tiles_data()
-				tile = random_tiles(palette)
-				if !room_availability.has(cur_pos_door): room_availability.append(cur_pos_door)
-				cur_interior[cur_pos_door] = [cur_pos_door, tile, tiles_data[tile]]
-				index_door_normal += 1
-			else: not_found_air = false  
-		else: not_found_air = false  
+		elif index_transpose_normal >= 1:  not_found_air = false 
+		else:
+			index_transpose_normal += 1
+			index_door_normal = 0
 			
+	return cur_wall
+		
 	#for i in _door:
 	#	rand_tiles_data()
 	#	tile = random_tiles(palette)
@@ -403,7 +473,9 @@ func _create_cell_chunk():
 			camera.position = Vector2(clamp(camera.position.x, -boundary.x, boundary.x), clamp(camera.position.y, -boundary.y, boundary.y))
 			var tiles_interior = generated_interior[Global.cur_interior]
 			var obj_interior = gen_obj_interior[Global.cur_interior]
+			var walls_interior = gen_wall_interior[Global.cur_interior]
 			for _tile in tiles_interior: tile_map.set_cell(_tile[0], -1)
+			for _wall in walls_interior: tilemap_wall.set_cell(_wall[0], -1)
 			for _obj in obj_interior: 
 				if _obj != null:
 					_obj.col_shape.call_deferred("set_disabled", true)
@@ -418,13 +490,15 @@ func _create_cell_chunk():
 				for y in range(0, Global.viewport_y_chunk):
 					var place_tile = tile_chunk + Vector2i(x,y)
 					if !generated_chunks.has(place_tile) and chunks.has(place_tile):
-						for _tile in chunks[place_tile]: tile_map.set_cell(_tile[0], 1, _tile[1])
+						for _tile in chunks[place_tile]: tile_map.set_cell(_tile[0], 0, _tile[1])
+						for _wall in chunks_wall[place_tile]: tilemap_wall.set_cell(_wall[0], 1, _wall[1])
 						for _obj in chunks_obj[place_tile]: _obj.call_deferred("show")
 						generated_chunks.append(place_tile)
 					elif generated_chunks.has(place_tile): temp_chunk.erase(place_tile)
 					
 			for _chunk in temp_chunk:
 				for _tile in chunks[_chunk]: tile_map.set_cell(_tile[0], -1)
+				for _wall in chunks_wall[_chunk]: tilemap_wall.set_cell(_wall[0], -1)
 				for _obj in chunks_obj[_chunk]: _obj.call_deferred("hide")
 				generated_chunks.erase(_chunk)
 				
@@ -433,6 +507,7 @@ func _create_cell_chunk():
 			Global.changing_scene = false
 			
 			var tiles_interior = generated_interior[Global.cur_interior]
+			var walls_interior = gen_wall_interior[Global.cur_interior]
 			var obj_interior = gen_obj_interior[Global.cur_interior]
 			Global.cur_interior_size = tiles_interior.size()
 			
@@ -444,12 +519,11 @@ func _create_cell_chunk():
 			cam_middle = (last_pos - first_pos)/2 + interior_pos
 			camera.zoom = Vector2(1,1)/camera_equation
 			player_last_loc = player.position
-			player.position = Vector2((last_pos.x - first_pos.x)/2 + interior_pos.x, last_pos.y-16) 
-			Global.player_interior_out = player.position+Vector2(0,18)
+			player.position = Vector2((last_pos.x - first_pos.x)/2 + interior_pos.x, last_pos.y-8) 
+			Global.player_interior_out = player.position+Vector2(0,10)
 			
-			for _tile in tiles_interior:
-				tile_map.set_cell(_tile[0], 1, _tile[2])
-				
+			for _tile in tiles_interior: tile_map.set_cell(_tile[0], 0, _tile[2])
+			for _wall in walls_interior: tilemap_wall.set_cell(_wall[0], 1, _wall[2])
 			for _obj in obj_interior: 
 				if _obj != null:
 					_obj.col_shape.call_deferred("set_disabled", false)
@@ -460,6 +534,7 @@ func _create_cell_chunk():
 func erase_all_chunks():
 	for _chunk in generated_chunks:
 		for _tile in chunks[_chunk]: tile_map.set_cell(_tile[0], -1)
+		for _wall in chunks_wall[_chunk]: tilemap_wall.set_cell(_wall[0], -1)
 		for _obj in chunks_obj[_chunk]: _obj.call_deferred("hide")
 	generated_chunks.clear()
 		

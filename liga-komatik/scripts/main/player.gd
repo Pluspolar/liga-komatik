@@ -15,11 +15,11 @@ func _physics_process(_delta: float) -> void:
 		elif _area.is_in_group("interior_interaction") and area_interact == null:
 			area_interact = get_to_staticbody(_area)
 			Global.is_interacting = true
-	if Global.cur_scene == "interior" and global_position.distance_to(Global.player_interior_out) <= 20:
+	if Global.cur_scene == "interior" and global_position.distance_to(Global.player_interior_out) <= 23:
 		Global.is_interacting = true
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact") and Global.cur_scene == "interior" and global_position.distance_to(Global.player_interior_out) <= 20:
+	if event.is_action_pressed("interact") and Global.cur_scene == "interior" and global_position.distance_to(Global.player_interior_out) <= 23:
 		Global.change_scene_to("outside", null)
 	elif event.is_action_pressed("interact") and Global.cur_scene == "outside" and Global.is_interacting:
 		Global.change_scene_to("interior", area_interact)
