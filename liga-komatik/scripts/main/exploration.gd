@@ -260,58 +260,126 @@ func tile_to_map(pos, random_obj):
 	var obj = obj_data[2].instantiate()
 	obj.position = tile_map.map_to_local(pos)
 	var obj_behav = obj_data[1]
-	if obj_behav != null:
-		generated_interior[obj] = create_interior(interior_data[obj_behav][1], interior_data[obj_behav][2])
-		gen_obj_interior[obj] = []
 	chunks_obj[cur_chunk].append(obj)
 	ysort.add_child(obj)
-	
-func create_interior(room_size, palette):
-	var cur_interior = []
+	if obj_behav != null:
+		gen_obj_interior[obj] = []
+		generated_interior[obj] = create_interior(interior_data[obj_behav][1], interior_data[obj_behav][2], obj)
+		
+func create_interior(room_size, palette, obj):
+	Global.cur_scene = "interior"
+	Global.cur_interior = obj
+	var cur_interior = {}
+	var interior_sorted = []
+	var room_availability = []
 	var x_range = room_size[0] - 1
 	var y_range = room_size[1] - 1
-	var interior_availability = []
-	#var middle : Vector2i = Vector2i(Vector2(x_range, y_range)/2)
+	var middle : Vector2i = Vector2i(Vector2(x_range, y_range)/2)
 	var tile
+	var room_amount = 0
+	var max_room = int((x_range+1)*(y_range+1)/55)
+	#tile = "water"
+	#cur_interior[middle+interior_tile] = [middle+interior_tile, tile, tiles_data[tile]]
 	for x in range(0, x_range+1):
 		for y in range(0, y_range+1):
-			var _pos = Vector2i(x,y)+interior_tile
-			if interior_availability.has(_pos): 
-				continue
+			var tile_pos = Vector2i(x,y)
+			var _pos = tile_pos+interior_tile
+			interior_sorted.append(_pos)
 			
-			if (x == 0 or x == x_range or y == 0 or y == y_range) and randf_range(0,1) <= 0.1: 
-				create_room(interior_availability, cur_interior, _pos, x_range, y_range)
+			if cur_interior.has(_pos): continue
+			
+			if room_amount < max_room and (x == 0 or x == x_range or y == 0 or y == y_range) and randf_range(0,1) <= 0.1: 
+				create_room(room_availability, middle, cur_interior, palette, tile_pos, _pos, x_range, y_range)
+				room_amount += 1
 			else:
 				rand_tiles_data()
 				tile = random_tiles(palette)
-				interior_availability.append(_pos)
-				cur_interior.append([_pos, tile, tiles_data[tile]])
-			#print(round(sin(Vector2(x,y).angle_to_point(Vector2(middle)))))
+				cur_interior[_pos] = [_pos, tile, tiles_data[tile]]
+	
+	var new_sorted = []
+	
+	for i in interior_sorted:
+		new_sorted.append(cur_interior[i])
+	
+	var first_pos = tile_map.map_to_local(new_sorted[0][0])
+	var last_pos = tile_map.map_to_local(new_sorted[-1][0])
+	var player_cur_tile = tile_map.local_to_map(Vector2((last_pos.x - first_pos.x)/2 + interior_pos.x, last_pos.y-16))
+		
+	for x in range(-2,2):
+		for y in range(-1,2):
+			var n_p_t = player_cur_tile+Vector2i(x,y) #new_player_tile
+			if !cur_interior.has(n_p_t): continue
 			
-	return cur_interior
+			rand_tiles_data()
+			tile = random_tiles(palette)
+			var find_new_sort = new_sorted.find(cur_interior[n_p_t])
+			new_sorted.remove_at(find_new_sort)
+			new_sorted.insert(find_new_sort, [n_p_t, tile, tiles_data[tile]])
+		
+	Global.cur_scene = "outside"
+	return new_sorted
 
-func create_room(interior_availability, cur_interior, _pos, x_range, y_range):
+func create_room(room_availability, middle, cur_interior, palette, tile_pos, _pos, x_range, y_range):
 	var tile
-	var room_size : Vector2i = Vector2i(4, 4)
+	var random_size = int(min(x_range+1, y_range+1)/2.5)
+	var room_size : Vector2i = Vector2i(Vector2(randi_range(int(random_size) , int(random_size*1.3)), randi_range(int(random_size*0.8) , int(random_size*1.3)))/2)
+	var vector_angle = (round(Vector2(tile_pos).angle_to_point(middle)*2/PI))/2*PI
+	var door_normal = Vector2i(int(cos(vector_angle)), int(sin(vector_angle)))
+	var door = Vector2i(door_normal.x*room_size.x, door_normal.y*room_size.y)+_pos
+	#var door_normal_transpose = Vector2i(door_normal.y, door_normal.x)
 	
-	for x in range(room_size.x):
-		var y = room_size.y-1
-		var local_pos = _pos+Vector2i(x,y)
-		if x > x_range or y > y_range: continue
-		rand_tiles_data()
-		tile = "grass"
-		interior_availability.append(local_pos)
-		cur_interior.append([local_pos, tile, tiles_data[tile]])
+	#var _door = [door]#, door+door_normal*2+(door_normal_transpose)]
 	
-	for y in range(room_size.y):
-		var x = room_size.x-1
-		var local_pos = _pos+Vector2i(x,y)
-		if x > x_range or y > y_range: continue
-		rand_tiles_data()
-		tile = "grass"
-		interior_availability.append(local_pos)
-		cur_interior.append([local_pos, tile, tiles_data[tile]])
-
+	#for i in range(-1, 2):
+	#	_door.append(door+door_normal+(door_normal_transpose*i))
+	
+	#for x in range(-room_size.x-1, room_size.x+2): #create invisible border around with -1 and +2 (1+1)
+		#for y in range(-room_size.y-1, room_size.y+2):
+	for x in range(-room_size.x, room_size.x+1): #create invisible border around with -1 and +2 (1+1)
+		for y in range(-room_size.y, room_size.y+1):
+			var cur_pos = Vector2i(x,y)
+			var n_t_p = tile_pos+cur_pos #new_tile_pos
+			var local_pos = _pos+cur_pos
+			if n_t_p.x > x_range or n_t_p.x < 0 or n_t_p.y > y_range or n_t_p.y < 0 or room_availability.has(local_pos): continue
+			
+			rand_tiles_data()
+			
+			#if x == -room_size.x or y == -room_size.y or x == room_size.x or y == room_size.y:
+			if (abs(x) == room_size.x or abs(y) == room_size.y) and abs(x) < room_size.x+1 and abs(y) < room_size.y+1:
+				tile = "grass"
+			else: 
+				if randf_range(0,1) <= 0.1: Global.spawn_new_item(tile_map.map_to_local(local_pos)+Vector2(randf_range(-6, 6), randf_range(-6, 6)), Vector2i(0,0), "can", 1.25)
+				tile = random_tiles(palette)
+			
+			room_availability.append(local_pos)
+			cur_interior[local_pos] = [local_pos, tile, tiles_data[tile]]
+		
+	var not_found_air = true
+	var index_door_normal = 0
+	while not_found_air:
+		var cur_pos_door = door+(door_normal*index_door_normal)
+		if index_door_normal <= 1:
+			rand_tiles_data()
+			tile = random_tiles(palette)
+			if !room_availability.has(cur_pos_door): room_availability.append(cur_pos_door)
+			cur_interior[cur_pos_door] = [cur_pos_door, tile, tiles_data[tile]]
+			index_door_normal += 1
+		elif cur_interior.has(cur_pos_door):
+			if cur_interior[cur_pos_door][1] == "grass":
+				rand_tiles_data()
+				tile = random_tiles(palette)
+				if !room_availability.has(cur_pos_door): room_availability.append(cur_pos_door)
+				cur_interior[cur_pos_door] = [cur_pos_door, tile, tiles_data[tile]]
+				index_door_normal += 1
+			else: not_found_air = false  
+		else: not_found_air = false  
+			
+	#for i in _door:
+	#	rand_tiles_data()
+	#	tile = random_tiles(palette)
+	#	if !room_availability.has(i): room_availability.append(i)
+	#	cur_interior[i] = [i, tile, tiles_data[tile]]
+	
 func random_tiles(data, _place : String = ""):
 	var cur_place
 	if _place == "":
@@ -338,7 +406,7 @@ func _create_cell_chunk():
 			for _tile in tiles_interior: tile_map.set_cell(_tile[0], -1)
 			for _obj in obj_interior: 
 				if _obj != null:
-					_obj.col_sprite.call_deferred("set_disabled", true)
+					_obj.col_shape.call_deferred("set_disabled", true)
 					_obj.hide()
 		
 		if Global.cur_scene == "outside":
@@ -360,7 +428,7 @@ func _create_cell_chunk():
 				for _obj in chunks_obj[_chunk]: _obj.call_deferred("hide")
 				generated_chunks.erase(_chunk)
 				
-		elif Global.changing_scene and Global.cur_scene == "interior":
+		elif Global.cur_scene == "interior" and Global.changing_scene and Global.cur_interior != null:
 			erase_all_chunks()
 			Global.changing_scene = false
 			
@@ -377,13 +445,14 @@ func _create_cell_chunk():
 			camera.zoom = Vector2(1,1)/camera_equation
 			player_last_loc = player.position
 			player.position = Vector2((last_pos.x - first_pos.x)/2 + interior_pos.x, last_pos.y-16) 
+			Global.player_interior_out = player.position+Vector2(0,18)
 			
 			for _tile in tiles_interior:
 				tile_map.set_cell(_tile[0], 1, _tile[2])
 				
 			for _obj in obj_interior: 
 				if _obj != null:
-					_obj.col_sprite.call_deferred("set_disabled", false)
+					_obj.col_shape.call_deferred("set_disabled", false)
 					_obj.show()
 			
 		await get_tree().process_frame

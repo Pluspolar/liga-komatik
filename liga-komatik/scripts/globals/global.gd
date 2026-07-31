@@ -13,6 +13,7 @@ var chunks = {}
 var chunks_obj = {}
 #var cur_chunk : Vector2i
 var inventory = {}
+var player_interior_out : Vector2 = Vector2(0,0)
 var item_id : int = 0
 var cam_coords : Vector2 = Vector2(0,0)
 var item_drop = preload("res://scenes/__item_drop/can.tscn")
@@ -42,6 +43,7 @@ func spawn_new_item(pos: Vector2, chunk_pos: Vector2i, item_name: String, item_w
 	drop_item.item_id = "#" + str(item_id)
 	drop_item.item_dur = 0
 	if cur_scene == "outside": 
+		drop_item.col_shape_enabled = true
 		drop_item.chunk_pos = chunk_pos
 		chunks_obj[chunk_pos].append(drop_item)
 	elif cur_scene == "interior":
@@ -57,6 +59,7 @@ func spawn_item(_item_id: String, pos: Vector2, chunk_pos: Vector2i, item_name: 
 	drop_item.item_weight = item_weight
 	drop_item.item_id = _item_id
 	drop_item.item_dur = 2
+	drop_item.col_shape_enabled = true
 	drop_item.show()
 	if cur_scene == "outside": 
 		drop_item.chunk_pos = chunk_pos
@@ -87,6 +90,6 @@ func _drop_item(_item_id: String):
 
 func change_scene_to(to_scene, interior):
 	cur_scene = to_scene
-	if interior != Node: cur_interior = interior
+	if interior != null: cur_interior = interior
 	changing_scene = true
 	

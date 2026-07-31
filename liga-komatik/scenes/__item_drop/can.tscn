@@ -22,3 +22,4 @@ offset = Vector2(0.48842, 10.443867)
 [node name="col_shape" type="CollisionShape2D" parent="." unique_id=1627007358]
 position = Vector2(0, -0.22)
 shape = SubResource("RectangleShape2D_gvv6n")
+disabled = true
