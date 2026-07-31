@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://cnqh7ocygiu32"]
+
+[ext_resource type="Texture2D" uid="uid://bv6wuxb26a54v" path="res://textures/Cooking/MejaMasak.png" id="1_4orch"]
+[ext_resource type="Script" uid="uid://bxdmqbp5ifobv" path="res://scenes/Cooking/cooking.gd" id="1_eexf5"]
+[ext_resource type="Texture2D" uid="uid://di0pssqy3hpv7" path="res://textures/Cooking/wajan.png" id="2_ls771"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7tk3i"]
+radius = 96.02083
+
+[node name="Cooking" type="Node2D" unique_id=1038864092]
+script = ExtResource("1_eexf5")
+
+[node name="MejaMasak" type="Sprite2D" parent="." unique_id=191318821]
+position = Vector2(204, 157)
+scale = Vector2(0.75625, 0.71883136)
+texture = ExtResource("1_4orch")
+
+[node name="Wajan" type="Sprite2D" parent="." unique_id=871459983]
+position = Vector2(195, 124.00001)
+scale = Vector2(0.96484375, 0.96484375)
+texture = ExtResource("2_ls771")
+
+[node name="Marker2D" type="Marker2D" parent="Wajan" unique_id=1154105991]
+position = Vector2(1.0364373, -13.473693)
+
+[node name="wajan" type="Area2D" parent="." unique_id=2004414069]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wajan" unique_id=1165349055]
+position = Vector2(198, 111)
+shape = SubResource("CircleShape2D_7tk3i")
