@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dhnglshdg05fo"]
+
+[ext_resource type="Script" uid="uid://uyyb0svkbpij" path="res://scripts/cooking/rigid_body_2d.gd" id="1_u04j5"]
+[ext_resource type="Texture2D" uid="uid://c8j2sgwyinq0q" path="res://textures/sprites/icon.svg" id="2_mar4j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7tk3i"]
+size = Vector2(60, 60)
+
+[node name="RigidBody2D" type="RigidBody2D" unique_id=2002989848]
+script = ExtResource("1_u04j5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=939039345]
+shape = SubResource("RectangleShape2D_7tk3i")
+debug_color = Color(0.66369945, 0.31664118, 1, 0.41960785)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1893443627]
+position = Vector2(0.5, -0.5)
+scale = Vector2(0.4609375, 0.4609375)
+texture = ExtResource("2_mar4j")
