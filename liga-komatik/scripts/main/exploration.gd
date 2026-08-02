@@ -23,6 +23,8 @@ extends Node2D
 @onready var mini_map_explore := $UI/minimap/mini_map_explore
 @onready var backpack := $UI/backpack
 @onready var hand_interact := $UI/interaction/hand
+@onready var fog := $Ysort/player/fog
+@onready var fog_texture := $darker_area/canvas_fog/fog_texture
 
 var player_last_loc := Vector2(0,0)
 var noise = FastNoiseLite.new()
@@ -558,8 +560,16 @@ func _physics_process(delta: float) -> void:
 	
 	camera.position += (player.global_position - camera.position) * 30 * delta
 	
-	if Global.cur_scene == "outside": camera.position = Vector2(clamp(camera.position.x, -boundary.x, boundary.x), clamp(camera.position.y, -boundary.y, boundary.y))
-	else: camera.position = cam_middle
+	if Global.cur_scene == "outside": 
+		fog_texture.hide()
+		fog.texture_scale = 30
+		fog.shadow_item_cull_mask = 0
+		camera.position = Vector2(clamp(camera.position.x, -boundary.x, boundary.x), clamp(camera.position.y, -boundary.y, boundary.y))
+	else: 
+		fog_texture.show()
+		fog.texture_scale = 4
+		fog.shadow_item_cull_mask = 3
+		camera.position = cam_middle
 	Global.cam_coords = camera.position
 	cam_global = camera.global_position
 	
@@ -585,6 +595,12 @@ func _physics_process(delta: float) -> void:
 		var last_pos = tile_map.map_to_local(tiles_interior[tiles_interior.size()-1][0]) + player_offset
 		
 		player.position = Vector2(clamp(player.position.x, first_pos.x, last_pos.x), clamp(player.position.y, first_pos.y, last_pos.y))
+	
+	var player_local = -player.make_canvas_position_local(Vector2.ZERO)*camera.zoom
+	fog_texture.material.set_shader_parameter("player_pos", (player_local/get_viewport_rect().size))
+	#fog_texture.scale = Vector2(1,1) * fog.texture_scale/6
+	#print(camera.to_local(player.global_position))global_position
+	#print(fog_texture.material.get_shader_parameter("player_pos"))
 	
 	_update_player_minimap()
 	check_interaction()

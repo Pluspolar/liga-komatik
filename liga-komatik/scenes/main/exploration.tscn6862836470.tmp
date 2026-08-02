@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cy53pn6ljbgf4" path="res://scripts/main/exploration.gd" id="1_gh8vw"]
 [ext_resource type="Texture2D" uid="uid://lg1h786whlnn" path="res://textures/tiles/terrain_palette_1.png" id="2_iss55"]
 [ext_resource type="Shader" uid="uid://c0acgjq117e6d" path="res://scripts/gdshaders/fog.gdshader" id="2_ue0mf"]
-[ext_resource type="Texture2D" uid="uid://bde7amsm6s1rv" path="res://textures/tiles/wall_!.png" id="3_d35ny"]
+[ext_resource type="Texture2D" uid="uid://b3qiimxygx5xr" path="res://textures/tiles/wall_2.png" id="3_iss55"]
 [ext_resource type="PackedScene" uid="uid://dxmns207wwbdx" path="res://scenes/main/player.tscn" id="3_ue0mf"]
 [ext_resource type="PackedScene" uid="uid://cw23mt2nx3v4p" path="res://scenes/UI/dialogue.tscn" id="5_6exic"]
 [ext_resource type="Shader" uid="uid://cl3mjp7tmxktk" path="res://scripts/gdshaders/new_fog.gdshader" id="6_6exic"]
@@ -34,15 +34,14 @@ texture = ExtResource("2_iss55")
 0:3/0 = 0
 1:3/0 = 0
 
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_6exic"]
-polygon = PackedVector2Array(-8, -8, -8, -4.9571877, 8, -5.014496, 8, -8, 8, 8, 8, -5.014496, -8, -4.9571877, -8, 8)
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ue0mf"]
+polygon = PackedVector2Array(-8, -8, -8, -5.014495, 8, -5.071803, 8, -8, 8, 8, 8, -5.071803, -8, -4.9571867, -8, 8)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ywco0"]
-texture = ExtResource("3_d35ny")
-texture_region_size = Vector2i(16, 32)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ue0mf"]
+texture = ExtResource("3_iss55")
+texture_region_size = Vector2i(16, 48)
 0:0/0 = 0
-0:0/0/texture_origin = Vector2i(0, 8)
-0:0/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_6exic")
+0:0/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_ue0mf")
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSet" id="TileSet_htemk"]
@@ -50,7 +49,7 @@ occlusion_layer_0/light_mask = 1
 occlusion_layer_0/sdf_collision = true
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_2a5b4")
-sources/1 = SubResource("TileSetAtlasSource_ywco0")
+sources/1 = SubResource("TileSetAtlasSource_ue0mf")
 pattern_0 = SubResource("TileMapPattern_iss55")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d35ny"]
@@ -78,23 +77,6 @@ noise = SubResource("FastNoiseLite_stgpn")
 shader = ExtResource("6_6exic")
 shader_parameter/pixelation = Vector2(84, 84)
 shader_parameter/noise = SubResource("NoiseTexture2D_ywco0")
-shader_parameter/player_pos = Vector2(0, 0)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_0kyq7"]
-seed = 23295
-frequency = 0.0339
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ugcl7"]
-width = 384
-height = 216
-generate_mipmaps = false
-noise = SubResource("FastNoiseLite_0kyq7")
-seamless = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pj0hq"]
-shader = ExtResource("6_6exic")
-shader_parameter/pixelation = Vector2(84, 84)
-shader_parameter/noise = SubResource("NoiseTexture2D_ugcl7")
 shader_parameter/player_pos = Vector2(0, 0)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_14cdr"]
@@ -130,14 +112,34 @@ shader_parameter/center_pos = Vector2(0.5, 0.5)
 shader_parameter/position_impact = 0.52999998815344
 shader_parameter/color_gardient = SubResource("GradientTexture1D_kqym7")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0kyq7"]
+seed = 23295
+frequency = 0.0339
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ugcl7"]
+width = 384
+height = 216
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_0kyq7")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pj0hq"]
+shader = ExtResource("6_6exic")
+shader_parameter/pixelation = Vector2(84, 84)
+shader_parameter/noise = SubResource("NoiseTexture2D_ugcl7")
+shader_parameter/player_pos = Vector2(0, 0)
+
 [node name="exploration" type="Node2D" unique_id=1527149665]
 script = ExtResource("1_gh8vw")
+boundary_x = null
+map_detail = null
 speed = 3000.0
 
 [node name="background" type="CanvasLayer" parent="." unique_id=2111901761]
 layer = -1
 
 [node name="ColorRect" type="ColorRect" parent="background" unique_id=1701401091]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -175,20 +177,9 @@ shadow_item_cull_mask = 3
 texture = SubResource("GradientTexture2D_d35ny")
 texture_scale = 3.0
 
-[node name="darker_area" type="CanvasModulate" parent="." unique_id=1132029224]
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1132029224]
 material = SubResource("ShaderMaterial_ywco0")
-color = Color(0.2520276, 0.25202766, 0.25202763, 1)
-
-[node name="canvas_fog" type="CanvasLayer" parent="darker_area" unique_id=954603733]
-
-[node name="fog_texture" type="ColorRect" parent="darker_area/canvas_fog" unique_id=306045168]
-material = SubResource("ShaderMaterial_pj0hq")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
+color = Color(0.22670749, 0.22670749, 0.22670746, 1)
 
 [node name="cam" type="Camera2D" parent="." unique_id=1321165422]
 limit_enabled = false
@@ -210,7 +201,7 @@ visible = false
 
 [node name="interaction" parent="UI" unique_id=817276631 instance=ExtResource("7_gh8vw")]
 
-[node name="cloud" type="ColorRect" parent="." unique_id=1334844623]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1334844623]
 visible = false
 material = SubResource("ShaderMaterial_htemk")
 anchors_preset = 15
@@ -220,3 +211,14 @@ offset_right = 384.0
 offset_bottom = 216.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=954603733]
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer" unique_id=306045168]
+material = SubResource("ShaderMaterial_pj0hq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
