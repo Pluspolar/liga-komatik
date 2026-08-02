@@ -1,19 +1,38 @@
 [gd_scene format=3 uid="uid://dhnglshdg05fo"]
 
 [ext_resource type="Script" uid="uid://uyyb0svkbpij" path="res://scripts/cooking/rigid_body_2d.gd" id="1_u04j5"]
-[ext_resource type="Texture2D" uid="uid://c8j2sgwyinq0q" path="res://textures/sprites/icon.svg" id="2_mar4j"]
+[ext_resource type="Texture2D" uid="uid://qmhkckw7gorx" path="res://textures/Cooking/Ingredient/udang.png" id="2_u04j5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7tk3i"]
-size = Vector2(60, 60)
+size = Vector2(29, 23)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wae4q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_u04j5")
+}],
+"loop": 1,
+"name": &"Udang",
+"speed": 5.0
+}]
 
 [node name="RigidBody2D" type="RigidBody2D" unique_id=2002989848]
+contact_monitor = true
+max_contacts_reported = 4
+linear_damp = 1.604
 script = ExtResource("1_u04j5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=939039345]
+position = Vector2(-2.5, -1.5)
 shape = SubResource("RectangleShape2D_7tk3i")
 debug_color = Color(0.66369945, 0.31664118, 1, 0.41960785)
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1893443627]
-position = Vector2(0.5, -0.5)
-scale = Vector2(0.4609375, 0.4609375)
-texture = ExtResource("2_mar4j")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=984923059]
+sprite_frames = SubResource("SpriteFrames_wae4q")
+animation = &"Udang"
+
+[node name="Timer" type="Timer" parent="." unique_id=549622729]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
