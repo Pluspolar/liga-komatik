@@ -1,11 +1,55 @@
 [gd_scene format=3 uid="uid://cnqh7ocygiu32"]
 
 [ext_resource type="Texture2D" uid="uid://bv6wuxb26a54v" path="res://textures/Cooking/MejaMasak.png" id="1_4orch"]
-[ext_resource type="Script" uid="uid://bxdmqbp5ifobv" path="res://scenes/Cooking/cooking.gd" id="1_eexf5"]
+[ext_resource type="Script" uid="uid://bxdmqbp5ifobv" path="res://scripts/__item_drop/cooking.gd" id="1_eexf5"]
 [ext_resource type="Texture2D" uid="uid://di0pssqy3hpv7" path="res://textures/Cooking/wajan.png" id="2_ls771"]
+[ext_resource type="Texture2D" uid="uid://bipjqlj3l86jq" path="res://textures/Cooking/spatula.png" id="4_j8mjs"]
+[ext_resource type="Script" uid="uid://cp81p00yt4gmr" path="res://scripts/cooking/spatula.gd" id="4_xabes"]
+[ext_resource type="Texture2D" uid="uid://bbr5bk5201ki" path="res://textures/Cooking/slop.png" id="6_jjvtj"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_7tk3i"]
-radius = 96.02083
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ncnqo"]
+radius = 86.0
+height = 176.0
+
+[sub_resource type="Animation" id="Animation_jjvtj"]
+length = 2.9666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.9666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.283185307179586]
+}
+
+[sub_resource type="Animation" id="Animation_7c8ge"]
+resource_name = "new_animation"
+length = 2.5333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.033333335, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.283185307179586]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lbay0"]
+_data = {
+&"RESET": SubResource("Animation_jjvtj"),
+&"new_animation": SubResource("Animation_7c8ge")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wae4q"]
+size = Vector2(49.040207, 52.944817)
 
 [node name="Cooking" type="Node2D" unique_id=1038864092]
 script = ExtResource("1_eexf5")
@@ -15,16 +59,43 @@ position = Vector2(204, 157)
 scale = Vector2(0.75625, 0.71883136)
 texture = ExtResource("1_4orch")
 
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1154105991]
+position = Vector2(196, 111)
+scale = Vector2(0.96484375, 0.96484375)
+
 [node name="Wajan" type="Sprite2D" parent="." unique_id=871459983]
 position = Vector2(195, 124.00001)
 scale = Vector2(0.96484375, 0.96484375)
 texture = ExtResource("2_ls771")
 
-[node name="Marker2D" type="Marker2D" parent="Wajan" unique_id=1154105991]
-position = Vector2(1.0364373, -13.473693)
-
 [node name="wajan" type="Area2D" parent="." unique_id=2004414069]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="wajan" unique_id=1165349055]
-position = Vector2(198, 111)
-shape = SubResource("CircleShape2D_7tk3i")
+position = Vector2(196, 110)
+shape = SubResource("CapsuleShape2D_ncnqo")
+
+[node name="Slop" type="Sprite2D" parent="." unique_id=235939960]
+position = Vector2(195, 122)
+scale = Vector2(0.828, 0.828)
+texture = ExtResource("6_jjvtj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Slop" unique_id=485876359]
+libraries/ = SubResource("AnimationLibrary_lbay0")
+
+[node name="Spatula" type="RigidBody2D" parent="." unique_id=966951137]
+sleeping = true
+lock_rotation = true
+freeze = true
+script = ExtResource("4_xabes")
+
+[node name="Spatula" type="Sprite2D" parent="Spatula" unique_id=953328745]
+position = Vector2(16.00003, 44.00003)
+rotation = -0.34906584
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("4_j8mjs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spatula" unique_id=448418367]
+position = Vector2(-3.730874, -9.265629)
+rotation = -0.34906584
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_wae4q")
