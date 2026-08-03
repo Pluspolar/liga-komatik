@@ -132,7 +132,7 @@ shader_parameter/color_gardient = SubResource("GradientTexture1D_kqym7")
 
 [node name="exploration" type="Node2D" unique_id=1527149665]
 script = ExtResource("1_gh8vw")
-speed = 3000.0
+speed = 3500.0
 
 [node name="background" type="CanvasLayer" parent="." unique_id=2111901761]
 layer = -1

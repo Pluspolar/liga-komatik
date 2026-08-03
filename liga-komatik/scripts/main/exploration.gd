@@ -151,6 +151,7 @@ var minimap_img_explore : Image = Image.create(512, 288, false, Image.FORMAT_RGB
 @onready var chunks = Global.chunks
 @onready var chunks_wall = Global.chunks_wall
 @onready var chunks_obj = Global.chunks_obj
+@onready var astargrid : AStarGrid2D = AStarGrid2D.new()
 
 func _ready_rand():
 	rand_tiles_data()
@@ -198,12 +199,25 @@ func generate_noise(freq : float, oct : int, noise_type: String, multiplier: flo
 			for y in range(-height_half, height_half):
 				grid_noise[Vector2i(x,y)] = multiplier*(abs(noise.get_noise_2d(x, y))+additive)
 		return grid_noise
-	
+		
+func setup_astargrid():
+	astargrid.region = Rect2i(-width_half-1, -height_half-1, width_half*2+2, height_half*2+2)
+	astargrid.cell_size = Vector2i(16,16)
+	#astargrid.default_compute_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
+	astargrid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
+	astargrid.update()
+
 func _set_tile():
 	minimap_image.fill(Color.BLACK)
-	for x in range(-width_half, width_half):
-		for y in range(-height_half, height_half):
+	setup_astargrid()
+	
+	for x in range(-width_half-1, width_half+1):
+		for y in range(-height_half-1, height_half+1):
 			var pos = Vector2i(x, y)
+			if pos.x == (-width_half-1) or pos.y == (-height_half-1) or pos.x == width_half or pos.y == height_half:
+				astargrid.set_point_solid(pos, true)
+				continue
+			
 			var alt = altitude[pos]
 			var temp = temperature[pos]
 			var _urban = urban[pos]
@@ -274,6 +288,7 @@ func place_tile_biome(pos : Vector2i, _biome: String):
 	minimap_pos.y = int(float(minimap_pos.y)*288/height)
 	minimap_image.set_pixel(minimap_pos.x, minimap_pos.y, tiles_color[tile])
 	blocks[pos] = tile
+	if tile == "water": astargrid.set_point_weight_scale(pos, 8.0)
 	chunks[cur_chunk].append([pos, tiles_data[tile]])
 	place_wall_biome(pos, _biome, minimap_pos)
 	create_object(pos, _biome)
@@ -286,6 +301,7 @@ func place_wall_biome(pos : Vector2i, _biome: String, minimap_pos : Vector2i) ->
 	
 	minimap_image.set_pixelv(minimap_pos, walls_color[tile])
 	objects_pos[pos] = tile
+	astargrid.set_point_solid(pos, true)
 	chunks_wall[cur_chunk].append([pos, walls_data[tile]])
 	
 func create_object(pos, _biome):
@@ -306,6 +322,7 @@ func check_accessibility(pos, random_obj):
 				return false
 			temp_acc_coords.append(new_pos)
 	for coords in temp_acc_coords: 
+		astargrid.set_point_solid(coords, true)
 		objects_pos[coords] = random_obj
 	return true
 	
@@ -577,8 +594,18 @@ func _physics_process(delta: float) -> void:
 		Global.spawn_new_item(player.position + Vector2(15,0), pos_to_chunk(player.position + Vector2(15,0)), "Test", 1.5)
 		
 	if Input.is_action_just_pressed("right_click"):
-		new_minimap_image.fill(Color.WHITE)
-		pass
+		var point_solid = false
+		if astargrid.is_point_solid(Global.player_tile):
+			point_solid = true
+			astargrid.set_point_solid(Global.player_tile, false)  
+		var path_taken = astargrid.get_id_path(tile_map.local_to_map(get_global_mouse_position()), Global.player_tile)
+		if point_solid: astargrid.set_point_solid(Global.player_tile, true)
+		
+		for i in path_taken:
+			tile_map.set_cell(i, 0, tiles_data["grass"])
+		
+		#new_minimap_image.fill(Color.WHITE)
+		#pass
 		#dialogue.add_text("Kami mendapatkan info dari beberapa orang bahwa stok di kota [wave]GURT[/wave] telah diisi kembali.", 20, "Radio") #[wave amp=15 freq=5]
 		#dialogue.add_text("[tornado radius=1.5 freq=3]Semoga Beruntung!", 15, "Radio") #[wave amp=15 freq=8]
 	
