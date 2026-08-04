@@ -14,6 +14,7 @@ void fragment() {
 	vec2 new_player_pos = player_pos;
 	new_player_pos.x *= aspect;
 	uv_mixed.x *= aspect;
+	
 	vec2 noise_scroll = fract(uv_mixed + TIME * 0.03);
 	vec4 noise_a = texture(noise, noise_scroll);
 	float dist = distance(new_player_pos, uv_mixed)*7.5;

@@ -30,4 +30,5 @@ void fragment() {
 	float final = mix(1.0-noise_col.r, dist, position_impact);
 	//applies the color from the gradient
 	COLOR = texture(color_gardient, vec2(final, final));
+	
 }
