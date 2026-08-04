@@ -10,7 +10,7 @@ signal done(nutrition)
 @export var timePass = 0
 func _ready() -> void:
 	# Disable the default global Y-down gravity on this body
-	gravity_scale = 0.0
+	#gravity_scale = 0.0
 	
 	wajan.body_exited.connect(dirty)
 	wajan.body_entered.connect(mulai)

@@ -3,7 +3,7 @@ var item_id: String
 
 func _ready():
 	add_to_group("item_inventory")
-	gravity_scale = 0.15
+	#gravity_scale = 0.15
 	rotation_degrees = randi_range(-60, 60)
 	
 func _process(_delta: float) -> void:

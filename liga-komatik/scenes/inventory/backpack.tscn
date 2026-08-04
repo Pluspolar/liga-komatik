@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cj4ay80w17efv" path="res://scripts/inventory/backpack_container.gd" id="1_oyk2f"]
 [ext_resource type="Texture2D" uid="uid://b88eg7obnrveb" path="res://textures/inventory/backpack_1.png" id="2_k4nu2"]
-[ext_resource type="Shader" uid="uid://5qxx3cjbh8ja" path="res://scenes/inventory/wobble.gdshader" id="2_oyk2f"]
+[ext_resource type="Shader" uid="uid://5qxx3cjbh8ja" path="res://scripts/gdshaders/wobble.gdshader" id="2_oyk2f"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0mn7q"]
 noise_type = 3

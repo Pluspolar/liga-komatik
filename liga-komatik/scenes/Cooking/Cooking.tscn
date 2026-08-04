@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bv6wuxb26a54v" path="res://textures/Cooking/MejaMasak.png" id="1_4orch"]
 [ext_resource type="Script" uid="uid://bxdmqbp5ifobv" path="res://scripts/__item_drop/cooking.gd" id="1_eexf5"]
 [ext_resource type="Texture2D" uid="uid://di0pssqy3hpv7" path="res://textures/Cooking/wajan.png" id="2_ls771"]
+[ext_resource type="Shader" uid="uid://5qxx3cjbh8ja" path="res://scripts/gdshaders/wobble.gdshader" id="4_7c8ge"]
 [ext_resource type="Texture2D" uid="uid://bipjqlj3l86jq" path="res://textures/Cooking/spatula.png" id="4_j8mjs"]
 [ext_resource type="Script" uid="uid://cp81p00yt4gmr" path="res://scripts/cooking/spatula.gd" id="4_xabes"]
 [ext_resource type="Texture2D" uid="uid://bbr5bk5201ki" path="res://textures/Cooking/slop.png" id="6_jjvtj"]
@@ -10,6 +11,24 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ncnqo"]
 radius = 86.0
 height = 176.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4cpeb"]
+noise_type = 3
+seed = 7
+frequency = 0.0105
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lbay0"]
+noise = SubResource("FastNoiseLite_4cpeb")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jjvtj"]
+shader = ExtResource("4_7c8ge")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_lbay0")
+shader_parameter/center_pos = Vector2(0.5, 0.5)
+shader_parameter/distance_val = 0.0
+shader_parameter/noise_scale = 1.0
+shader_parameter/distortion_strength = 0.004
+shader_parameter/pixelation = Vector2(32, 64)
+shader_parameter/speed = 0.1770000084075
 
 [sub_resource type="Animation" id="Animation_jjvtj"]
 length = 2.9666667
@@ -55,6 +74,7 @@ size = Vector2(49.040207, 52.944817)
 script = ExtResource("1_eexf5")
 
 [node name="MejaMasak" type="Sprite2D" parent="." unique_id=191318821]
+texture_filter = 1
 position = Vector2(204, 157)
 scale = Vector2(0.75625, 0.71883136)
 texture = ExtResource("1_4orch")
@@ -64,6 +84,7 @@ position = Vector2(196, 111)
 scale = Vector2(0.96484375, 0.96484375)
 
 [node name="Wajan" type="Sprite2D" parent="." unique_id=871459983]
+texture_filter = 1
 position = Vector2(195, 124.00001)
 scale = Vector2(0.96484375, 0.96484375)
 texture = ExtResource("2_ls771")
@@ -75,20 +96,25 @@ position = Vector2(196, 110)
 shape = SubResource("CapsuleShape2D_ncnqo")
 
 [node name="Slop" type="Sprite2D" parent="." unique_id=235939960]
-position = Vector2(195, 122)
+texture_filter = 1
+material = SubResource("ShaderMaterial_jjvtj")
+position = Vector2(192.805, 106.865)
 scale = Vector2(0.828, 0.828)
 texture = ExtResource("6_jjvtj")
+offset = Vector2(3.6231842, 20.531395)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Slop" unique_id=485876359]
 libraries/ = SubResource("AnimationLibrary_lbay0")
 
 [node name="Spatula" type="RigidBody2D" parent="." unique_id=966951137]
-sleeping = true
-lock_rotation = true
-freeze = true
+position = Vector2(340, 108)
+mass = 1000.0
+gravity_scale = 0.0
+angular_damp = 20.0
 script = ExtResource("4_xabes")
 
 [node name="Spatula" type="Sprite2D" parent="Spatula" unique_id=953328745]
+texture_filter = 1
 position = Vector2(16.00003, 44.00003)
 rotation = -0.34906584
 scale = Vector2(0.99999994, 0.99999994)

@@ -96,12 +96,6 @@ func rand_tiles_data():
 	"stone" : Vector2i(randi_range(0,1), randi_range(2,3))
 	}
 
-func rand_interior_data():
-	interior_data = {
-	"1_aband_house" : [0, [randi_range(10,20), randi_range(10,20)], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}], 
-	"1_aband_apart" : [0, [randi_range(20,35), randi_range(20,35)], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}]
-	} #id, tiles, [x_size, y_size]
-
 #	interior_data = {
 #	"1_aband_house" : [0, [10,50], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}], 
 #	"1_aband_apart" : [0, [20,20], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}]
@@ -141,6 +135,13 @@ var objects := { #[x_size, y_vertical_size, how much free space under "y"], scen
 	"abandoned_house" : [[3,1,0], "1_aband_house", preload("res://scenes/structures/abandoned_house.tscn")],
 	"abandoned_apartment" : [[3,1,0], "1_aband_apart", preload("res://scenes/structures/abandoned_apartment.tscn")]
 }
+
+func rand_interior_data():
+	interior_data = {
+	"1_aband_house" : [0.2, [randi_range(10,20), randi_range(10,20)], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}, 0.125, {"can" : 0.5, "mie": 0.5}], 
+	"1_aband_apart" : [0.1, [randi_range(20,35), randi_range(20,35)], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}, 0.06, {"can" : 1}]
+} #room_abundance, [x_size, y_size], tiles, chance_item_per_tile, item_list #old: id, [x_size, y_size], tiles, chance_item_per_tile, item_list
+
 
 var objects_pos := {}
 var new_minimap_image : Image = Image.create(512, 288, false, Image.FORMAT_RGB8)
@@ -282,7 +283,7 @@ func map_unlock_section():
 func place_tile_biome(pos : Vector2i, _biome: String):
 	rand_tiles_data()
 	biome[pos] = _biome
-	var tile = random_tiles(biomes_data, _biome)
+	var tile = rng_calculator(biomes_data, _biome)
 	var minimap_pos : Vector2i = pos + Vector2i(width_half, height_half)
 	minimap_pos.x = int(float(minimap_pos.x)*512/width)
 	minimap_pos.y = int(float(minimap_pos.y)*288/height)
@@ -295,7 +296,7 @@ func place_tile_biome(pos : Vector2i, _biome: String):
 	
 func place_wall_biome(pos : Vector2i, _biome: String, minimap_pos : Vector2i) -> void:
 	rand_tiles_data()
-	var tile = random_tiles(biomes_wall_data, _biome)
+	var tile = rng_calculator(biomes_wall_data, _biome)
 	
 	if tile == null or objects_pos.get(pos): return
 	
@@ -305,7 +306,7 @@ func place_wall_biome(pos : Vector2i, _biome: String, minimap_pos : Vector2i) ->
 	chunks_wall[cur_chunk].append([pos, walls_data[tile]])
 	
 func create_object(pos, _biome):
-	var random_obj = random_tiles(objects_data, _biome)
+	var random_obj = rng_calculator(objects_data, _biome)
 	if random_obj != null:
 		if check_accessibility(pos, random_obj):
 			tile_to_map(pos, random_obj)
@@ -337,9 +338,19 @@ func tile_to_map(pos, random_obj):
 	if obj_behav != null:
 		gen_obj_interior[obj] = []
 		gen_wall_interior[obj] = []
-		generated_interior[obj] = create_interior(interior_data[obj_behav][1], interior_data[obj_behav][2], interior_data[obj_behav][3], obj)
+		#generated_interior[obj] = create_interior(interior_data[obj_behav][1], interior_data[obj_behav][2], interior_data[obj_behav][3], interior_data[obj_behav][4], obj)
+		generated_interior[obj] = create_interior(interior_data[obj_behav], obj)
 		
-func create_interior(room_size, palette, wall_palette, obj):
+#func create_interior(room_size, palette, wall_palette, item_loot_table, obj):
+func create_interior(cur_interior_data, obj):
+	var room_abundance = cur_interior_data[0]
+	room_abundance = randf_range(room_abundance*0.85, room_abundance*1.15)
+	var room_size = cur_interior_data[1]
+	var floor_palette = cur_interior_data[2]
+	var wall_palette = cur_interior_data[3]
+	var chance_item_spawn = cur_interior_data[4]
+	var item_loot_table = cur_interior_data[5]
+	
 	Global.cur_scene = "interior"
 	Global.cur_interior = obj
 	var cur_interior = {}
@@ -353,7 +364,7 @@ func create_interior(room_size, palette, wall_palette, obj):
 	var cur_wall : Dictionary
 	var total_wall := {}
 	var max_room = int((x_range+1)*(y_range+1)/55*(randf_range(0.9, 1.25)))
-	var room_abundance = randf_range(0.05, 0.2)
+	#var room_abundance = randf_range(0.05, 0.2)
 	#tile = "water"
 	#cur_interior[middle+interior_tile] = [middle+interior_tile, tile, tiles_data[tile]]
 	for x in range(0, x_range+1):
@@ -365,12 +376,12 @@ func create_interior(room_size, palette, wall_palette, obj):
 			if cur_interior.has(_pos): continue
 			
 			if room_amount < max_room and (x == 0 or x == x_range or y == 0 or y == y_range) and randf_range(0,1) <= room_abundance: 
-				cur_wall = create_room(total_wall, room_availability, middle, cur_interior, palette, wall_palette, tile_pos, _pos, x_range, y_range)
+				cur_wall = create_room(total_wall, room_availability, middle, cur_interior, floor_palette, wall_palette, chance_item_spawn, item_loot_table, tile_pos, _pos, x_range, y_range)
 				for i in cur_wall: total_wall[i] = cur_wall[i]
 				room_amount += 1
 			else:
 				rand_tiles_data()
-				tile = random_tiles(palette)
+				tile = rng_calculator(floor_palette)
 				cur_interior[_pos] = [_pos, tile, tiles_data[tile]]
 	
 	var new_sorted = []
@@ -389,7 +400,7 @@ func create_interior(room_size, palette, wall_palette, obj):
 			
 			rand_tiles_data()
 			if y == 1 and (x == -1 or x == 0): tile = "water"
-			else: tile = random_tiles(palette)
+			else: tile = rng_calculator(floor_palette)
 			var find_new_sort = new_sorted.find(cur_interior[n_p_t])
 			
 			new_sorted.remove_at(find_new_sort)
@@ -403,7 +414,7 @@ func create_interior(room_size, palette, wall_palette, obj):
 		
 	return new_sorted
 
-func create_room(total_wall, room_availability, middle, cur_interior, palette, wall_palette, tile_pos, _pos, x_range, y_range) -> Dictionary:
+func create_room(total_wall, room_availability, middle, cur_interior, floor_palette, wall_palette, chance_item_spawn, item_loot_table, tile_pos, _pos, x_range, y_range) -> Dictionary:
 	var tile
 	var random_size = int(min(x_range+1, y_range+1)/2.5)
 	var room_size : Vector2i = Vector2i(Vector2(randi_range(int(random_size) , int(random_size*1.25)), randi_range(int(random_size) , int(random_size*1.25)))/2)
@@ -432,12 +443,13 @@ func create_room(total_wall, room_availability, middle, cur_interior, palette, w
 			#if x == -room_size.x or y == -room_size.y or x == room_size.x or y == room_size.y:
 			if (abs(x) == room_size.x or abs(y) == room_size.y) and abs(x) < room_size.x+1 and abs(y) < room_size.y+1:
 				tile = "grass"
-				var wall_tile = random_tiles(wall_palette)
+				var wall_tile = rng_calculator(wall_palette)
 				cur_wall[local_pos] = [local_pos, wall_tile, walls_data[wall_tile]]
 			else: 
-				if randf_range(0,1) <= 0.1: 
-					Global.spawn_new_item(tile_map.map_to_local(local_pos)+Vector2(randf_range(-6, 6), randf_range(-6, 6)), Vector2i(0,0), "can", 1.25)
-				tile = random_tiles(palette)
+				if randf_range(0,1) <= chance_item_spawn: 
+					var rand_position = tile_map.map_to_local(local_pos)+Vector2(randf_range(-6, 6), randf_range(-6, 6))
+					Global.spawn_new_item(rand_position, Vector2i(0,0), rng_calculator(item_loot_table))#, 0.5)
+				tile = rng_calculator(floor_palette)
 			
 			room_availability.append(local_pos)
 			cur_interior[local_pos] = [local_pos, tile, tiles_data[tile]]
@@ -450,7 +462,7 @@ func create_room(total_wall, room_availability, middle, cur_interior, palette, w
 		if (index_door_normal <= 1 or total_wall.has(cur_pos_door)) and index_door_normal <= 3:
 			rand_tiles_data()
 			#tile = "water"
-			tile = random_tiles(palette)
+			tile = rng_calculator(floor_palette)
 			if !room_availability.has(cur_pos_door): room_availability.append(cur_pos_door)
 			if total_wall.has(cur_pos_door): total_wall.erase(cur_pos_door)
 			if cur_wall.has(cur_pos_door): cur_wall.erase(cur_pos_door)
@@ -469,17 +481,16 @@ func create_room(total_wall, room_availability, middle, cur_interior, palette, w
 	#	if !room_availability.has(i): room_availability.append(i)
 	#	cur_interior[i] = [i, tile, tiles_data[tile]]
 	
-func random_tiles(data, _place : String = ""):
+func rng_calculator(data, _place : String = ""):
 	var cur_place
-	if _place == "":
-		cur_place = data
+	if _place == "": cur_place = data
 	else: cur_place = data[_place]
 	var chance = 0
 	var rand_num = randf_range(0, 1)
-	for tile in cur_place:
-		chance += cur_place[tile]
+	for cur_data in cur_place:
+		chance += cur_place[cur_data]
 		if rand_num <= chance:
-			return tile
+			return cur_data
 
 func _create_cell_chunk():
 	while true:

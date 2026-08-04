@@ -18,8 +18,6 @@ var inventory = {}
 var player_interior_out : Vector2 = Vector2(0,0)
 var item_id : int = 0
 var cam_coords : Vector2 = Vector2(0,0)
-var item_drop = preload("res://scenes/__item_drop/can.tscn")
-var item_inventory := {"can" : preload("res://scenes/_item_inventory/can.tscn")}
 var is_mouse_dragging = false
 var changing_scene = false
 var is_interacting = false
@@ -34,14 +32,29 @@ var backpack_weight : float = 0
 var show_tiles : Array = []
 var _timer : float
 	
+var item_drop : Dictionary = {
+	"can" : [preload("res://scenes/__item_drop/can.tscn"), 0.5], 
+	"mie" : [preload("res://scenes/__item_drop/mie.tscn"), 1.5]
+} #scene, nutrition
+
+var item_inventory : Dictionary = {
+	"can" : preload("res://scenes/_item_inventory/can.tscn"),
+	"mie" : preload("res://scenes/_item_inventory/mie.tscn")
+}
+
 func _process(delta: float) -> void:
 	_timer += 1 * delta
+	#if Input.is_action_just_pressed("interact"):
+	#	print(inventory)
 
-func spawn_new_item(pos: Vector2, chunk_pos: Vector2i, item_name: String, item_weight: float):
-	var drop_item = item_drop.instantiate()
+func spawn_new_item(pos: Vector2, chunk_pos: Vector2i, item_name: String, item_nutrition : float = -1.0):
+	var drop_item = item_drop[item_name][0].instantiate()
+	var rand_nutrition = item_drop[item_name][1]
 	drop_item.position = pos
 	drop_item.item_name = item_name
-	drop_item.item_weight = item_weight
+	#drop_item.item_weight = item_weight
+	if item_nutrition == -1: drop_item.item_nutrition = round(randf_range(rand_nutrition*0.8, rand_nutrition*1.25)*1000)/1000
+	else: drop_item.item_nutrition = item_nutrition
 	drop_item.item_id = "#" + str(item_id)
 	drop_item.item_dur = 0
 	if cur_scene == "outside": 
@@ -53,12 +66,16 @@ func spawn_new_item(pos: Vector2, chunk_pos: Vector2i, item_name: String, item_w
 		drop_item.interior = cur_interior
 	item_id += 1
 	get_tree().current_scene.get_node("Ysort").add_child(drop_item)
-
-func spawn_item(_item_id: String, pos: Vector2, chunk_pos: Vector2i, item_name: String, item_weight: float):
-	var drop_item = item_drop.instantiate()
+	
+func spawn_item(_item_id: String, pos: Vector2, chunk_pos: Vector2i, item_name: String, item_nutrition : float = -1.0): #item_weight: float):
+	var drop_item = item_drop[item_name][0].instantiate()
 	drop_item.position = pos
 	drop_item.item_name = item_name
-	drop_item.item_weight = item_weight
+	#drop_item.item_weight = item_weight
+	#drop_item.item_nutrition = item_nutrition
+	#if item_nutrition == -1: drop_item.item_nutrition = round(randf_range(rand_nutrition*0.8, rand_nutrition*1.25)*10000)/10000
+	#else: drop_item.item_nutrition = item_nutrition
+	drop_item.item_nutrition = item_nutrition
 	drop_item.item_id = _item_id
 	drop_item.item_dur = 2
 	drop_item.col_shape_enabled = true
@@ -71,12 +88,13 @@ func spawn_item(_item_id: String, pos: Vector2, chunk_pos: Vector2i, item_name: 
 		drop_item.interior = cur_interior
 	get_tree().current_scene.get_node("Ysort").add_child(drop_item)
 
-func add_item(object, chunk_pos : Vector2i, _item_id: String, item_name: String, item_weight: float):
-	var item_backpack = item_inventory["can"].instantiate()
+func add_item(object, chunk_pos : Vector2i, _item_id: String, item_name: String, item_nutrition: float): #item_weight: float):
+	var item_backpack = item_inventory[item_name].instantiate()
 	item_backpack.position = Vector2(randf_range(viewport_tree.size.x/2-20, viewport_tree.size.x/2+20), 0)
 	item_backpack.item_id = _item_id
-	inventory[_item_id] = [item_name, item_weight]
-	backpack_weight += item_weight
+	inventory[_item_id] = [item_name, item_nutrition]
+	#inventory[_item_id] = [item_name, item_weight]
+	#backpack_weight += item_weight
 	chunks_obj[chunk_pos].erase(object)
 	get_tree().current_scene.get_node("UI/backpack").call_deferred("add_child", item_backpack)
 
@@ -87,7 +105,7 @@ func remove_item(_item_id: String):
 func _drop_item(_item_id: String):
 	var item_desc = inventory[_item_id]
 	inventory.erase(_item_id)
-	backpack_weight -= item_desc[1]
+	#backpack_weight -= item_desc[1]
 	spawn_item(_item_id, player_pos, player_chunk, item_desc[0], item_desc[1])
 
 func change_scene_to(to_scene, interior):

@@ -1,15 +1,16 @@
-[gd_scene format=3 uid="uid://dhnglshdg05fo"]
+[gd_scene format=3 uid="uid://3b1rbj842snu"]
 
-[ext_resource type="Script" uid="uid://uyyb0svkbpij" path="res://scripts/cooking/rigid_body_2d.gd" id="1_u04j5"]
-[ext_resource type="Texture2D" uid="uid://qmhkckw7gorx" path="res://textures/Cooking/Ingredient/udang.png" id="2_u04j5"]
+[ext_resource type="Script" uid="uid://uyyb0svkbpij" path="res://scripts/cooking/rigid_body_2d.gd" id="1_ekw8o"]
+[ext_resource type="Texture2D" uid="uid://qmhkckw7gorx" path="res://textures/Cooking/Ingredient/udang.png" id="2_a2hlp"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ndmi3"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7tk3i"]
+size = Vector2(29, 23)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wae4q"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_u04j5")
+"texture": ExtResource("2_a2hlp")
 }],
 "loop": 1,
 "name": &"Udang",
@@ -17,14 +18,14 @@ animations = [{
 }]
 
 [node name="RigidBody2D" type="RigidBody2D" unique_id=2002989848]
-gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 4
 linear_damp = 1.604
-script = ExtResource("1_u04j5")
+script = ExtResource("1_ekw8o")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=939039345]
-shape = SubResource("CircleShape2D_ndmi3")
+position = Vector2(-2.5, -1.5)
+shape = SubResource("RectangleShape2D_7tk3i")
 debug_color = Color(0.66369945, 0.31664118, 1, 0.41960785)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=984923059]

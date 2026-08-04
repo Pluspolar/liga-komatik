@@ -10,7 +10,7 @@ func _physics_process(_delta: float) -> void:
 	area_interact = null
 	for _area in _areas:
 		if _area.is_in_group("item_drop") and _area.item_dur == 0:
-			Global.add_item(_area, _area.chunk_pos, _area.item_id, _area.item_name, _area.item_weight)
+			Global.add_item(_area, _area.chunk_pos, _area.item_id, _area.item_name, _area.item_nutrition)
 			_area.call_deferred("queue_free")
 		elif _area.is_in_group("interior_interaction") and area_interact == null:
 			area_interact = get_to_staticbody(_area)
