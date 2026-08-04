@@ -14,7 +14,8 @@ var chunks = {}
 var chunks_wall = {}
 var chunks_obj = {}
 #var cur_chunk : Vector2i
-var inventory = {}
+var backpack_inventory = {}
+var central_inventory = {}
 var player_interior_out : Vector2 = Vector2(0,0)
 var item_id : int = 0
 var cam_coords : Vector2 = Vector2(0,0)
@@ -23,7 +24,7 @@ var changing_scene = false
 var is_interacting = false
 var cur_interior
 var cur_interior_size
-var cur_scene = "outside"
+var cur_scene : String = "outside"
 var all_scenes = ["outside", "interior"]
 var player_pos : Vector2
 var player_tile : Vector2i
@@ -92,19 +93,19 @@ func add_item(object, chunk_pos : Vector2i, _item_id: String, item_name: String,
 	var item_backpack = item_inventory[item_name].instantiate()
 	item_backpack.position = Vector2(randf_range(viewport_tree.size.x/2-20, viewport_tree.size.x/2+20), 0)
 	item_backpack.item_id = _item_id
-	inventory[_item_id] = [item_name, item_nutrition]
+	backpack_inventory[_item_id] = [item_name, item_nutrition]
 	#inventory[_item_id] = [item_name, item_weight]
 	#backpack_weight += item_weight
 	chunks_obj[chunk_pos].erase(object)
 	get_tree().current_scene.get_node("UI/backpack").call_deferred("add_child", item_backpack)
 
 func remove_item(_item_id: String):
-	var remove_index = inventory.find(_item_id)
-	for i in range(2): inventory.remove_at(remove_index)
+	var remove_index = backpack_inventory.find(_item_id)
+	for i in range(2): backpack_inventory.remove_at(remove_index)
 	
 func _drop_item(_item_id: String):
-	var item_desc = inventory[_item_id]
-	inventory.erase(_item_id)
+	var item_desc = backpack_inventory[_item_id]
+	backpack_inventory.erase(_item_id)
 	#backpack_weight -= item_desc[1]
 	spawn_item(_item_id, player_pos, player_chunk, item_desc[0], item_desc[1])
 
