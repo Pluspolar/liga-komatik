@@ -6,10 +6,16 @@
 [ext_resource type="Shader" uid="uid://5qxx3cjbh8ja" path="res://scripts/gdshaders/wobble.gdshader" id="4_7c8ge"]
 [ext_resource type="Texture2D" uid="uid://bipjqlj3l86jq" path="res://textures/Cooking/spatula.png" id="4_j8mjs"]
 [ext_resource type="Texture2D" uid="uid://bbr5bk5201ki" path="res://textures/Cooking/slop.png" id="6_jjvtj"]
+[ext_resource type="Texture2D" uid="uid://qmhkckw7gorx" path="res://textures/Cooking/Ingredient/udang.png" id="8_4cpeb"]
+[ext_resource type="Texture2D" uid="uid://d0hg6rj3ehwxy" path="res://textures/Cooking/Sprite-0001.png" id="8_lbay0"]
+[ext_resource type="Texture2D" uid="uid://elutf0nk1c1u" path="res://textures/Cooking/Ingredient/Kornet.png" id="8_o2wga"]
+[ext_resource type="Texture2D" uid="uid://dysf2hx71oa2f" path="res://textures/Cooking/Ingredient/Rumput.png" id="9_6dxfr"]
+[ext_resource type="Texture2D" uid="uid://sj77wnyeew2s" path="res://textures/Cooking/Ingredient/Sarden.png" id="10_7dwi3"]
+[ext_resource type="Texture2D" uid="uid://bx5qsx2iqlgtd" path="res://textures/Cooking/Ingredient/Ubi.png" id="11_xeaur"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ncnqo"]
-radius = 86.0
-height = 176.0
+radius = 107.0
+height = 216.0
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_4cpeb"]
 noise_type = 3
@@ -69,17 +75,67 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wae4q"]
 size = Vector2(49.040207, 52.944817)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7tk3i"]
+size = Vector2(49, 248)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wae4q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_o2wga")
+}],
+"loop": 1,
+"name": &"kornet",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_6dxfr")
+}],
+"loop": 1,
+"name": &"rumput",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_7dwi3")
+}],
+"loop": 1,
+"name": &"sarden",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_xeaur")
+}],
+"loop": 1,
+"name": &"ubi",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_4cpeb")
+}],
+"loop": 1,
+"name": &"udang",
+"speed": 5.0
+}]
+
 [node name="Cooking" type="Node2D" unique_id=1038864092]
 script = ExtResource("1_eexf5")
 
 [node name="MejaMasak" type="Sprite2D" parent="." unique_id=191318821]
 texture_filter = 1
-position = Vector2(204, 157)
-scale = Vector2(0.75625, 0.71883136)
+position = Vector2(219.50002, 157)
+scale = Vector2(0.70781255, 0.71883136)
 texture = ExtResource("1_4orch")
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=1154105991]
-position = Vector2(196, 111)
+position = Vector2(196, 108)
+scale = Vector2(0.96484375, 0.96484375)
+
+[node name="Marker2D2" type="Marker2D" parent="." unique_id=1043501707]
+position = Vector2(-195.485, 108)
 scale = Vector2(0.96484375, 0.96484375)
 
 [node name="Wajan" type="Sprite2D" parent="." unique_id=871459983]
@@ -123,3 +179,49 @@ position = Vector2(-3.730874, -9.265629)
 rotation = -0.34906584
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("RectangleShape2D_wae4q")
+
+[node name="Sprite0001" type="Sprite2D" parent="." unique_id=1469001067]
+position = Vector2(-195, 110)
+scale = Vector2(1.5078125, 1)
+texture = ExtResource("8_lbay0")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1239452147]
+position = Vector2(196, 108)
+
+[node name="Swicth" type="Area2D" parent="." unique_id=1645597865]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Swicth" unique_id=683643372]
+position = Vector2(2.5, 114)
+shape = SubResource("RectangleShape2D_7tk3i")
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="." unique_id=2123458986]
+position = Vector2(-197, 180)
+sprite_frames = SubResource("SpriteFrames_wae4q")
+animation = &"kornet"
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="AnimatedSprite2D3" unique_id=1033572677]
+position = Vector2(114.954994, 0)
+sprite_frames = SubResource("SpriteFrames_wae4q")
+animation = &"ubi"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D3" unique_id=2045024730]
+position = Vector2(-116.05, 0)
+sprite_frames = SubResource("SpriteFrames_wae4q")
+animation = &"rumput"
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=584744935]
+position = Vector2(-197, 72)
+sprite_frames = SubResource("SpriteFrames_wae4q")
+animation = &"sarden"
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="AnimatedSprite2D2" unique_id=1955545647]
+position = Vector2(114.954994, 0)
+sprite_frames = SubResource("SpriteFrames_wae4q")
+animation = &"kornet"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D2" unique_id=1760026995]
+position = Vector2(-116.05, 0)
+sprite_frames = SubResource("SpriteFrames_wae4q")
+animation = &"udang"
+
+[connection signal="mouse_entered" from="Swicth" to="." method="_on_swicth_mouse_entered"]
