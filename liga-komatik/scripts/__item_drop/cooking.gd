@@ -3,9 +3,10 @@ extends Node2D
 @onready var spatula = $Spatula
 const FOOD = preload("uid://dhnglshdg05fo")
 @onready var total_nutrition : float = slop.scale.x
-
-#var tween: Tweener
-
+@onready var cooking = true
+@onready var Cam = $Camera2D
+@onready var cook = $Marker2D
+@onready var ingre = $Marker2D2
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	slop.scale= Vector2(0,0)
@@ -25,7 +26,7 @@ func _process(delta: float) -> void:
 	spatula_physics(delta)
 	
 func spatula_physics(delta: float) -> void:
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and cooking:
 		spatula.linear_velocity = (get_global_mouse_position() - spatula.global_position)*10
 		if Input.is_action_pressed("right-hand") and spatula.angular_velocity >= -6.0:
 			if spatula.angular_velocity > 0: spatula.angular_velocity *= pow(0.7, delta*60)
@@ -51,3 +52,12 @@ func bigger(nutri):
 		#slop.scale += Vector2(nutrition, nutrition)
 	else: tween.tween_property(slop, "scale", Vector2(1,1)*0.8, 1)
 	tween.play()
+
+
+func _on_swicth_mouse_entered() -> void:
+	if cooking == true:
+		Cam.position = Vector2(-195.485, 108.0 )
+		cooking = false
+	else : 
+		Cam.position = Vector2(196.0, 108.0)
+		cooking = true

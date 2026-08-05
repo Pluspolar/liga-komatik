@@ -28,7 +28,6 @@ shape = SubResource("CircleShape2D_ndmi3")
 debug_color = Color(0.66369945, 0.31664118, 1, 0.41960785)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=984923059]
-texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_wae4q")
 animation = &"Udang"
 
