@@ -3,6 +3,7 @@ extends Area2D
 var item_name : String
 var item_id : String
 var item_nutrition: float
+var item_star: int
 var col_shape_enabled : bool = false
 var chunk_pos : Vector2i
 var interior = null

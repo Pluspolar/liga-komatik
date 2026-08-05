@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://di0pssqy3hpv7" path="res://textures/Cooking/wajan.png" id="2_ls771"]
 [ext_resource type="Shader" uid="uid://5qxx3cjbh8ja" path="res://scripts/gdshaders/wobble.gdshader" id="4_7c8ge"]
 [ext_resource type="Texture2D" uid="uid://bipjqlj3l86jq" path="res://textures/Cooking/spatula.png" id="4_j8mjs"]
-[ext_resource type="Script" uid="uid://cp81p00yt4gmr" path="res://scripts/cooking/spatula.gd" id="4_xabes"]
 [ext_resource type="Texture2D" uid="uid://bbr5bk5201ki" path="res://textures/Cooking/slop.png" id="6_jjvtj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ncnqo"]
@@ -111,7 +110,6 @@ position = Vector2(340, 108)
 mass = 1000.0
 gravity_scale = 0.0
 angular_damp = 20.0
-script = ExtResource("4_xabes")
 
 [node name="Spatula" type="Sprite2D" parent="Spatula" unique_id=953328745]
 texture_filter = 1

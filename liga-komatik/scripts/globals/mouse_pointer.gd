@@ -23,7 +23,7 @@ func _process(_delta: float) -> void:
 	var new_hovered
 	
 	for _body in bodies:
-		if _body.is_in_group("item_inventory"):
+		if _body.is_in_group("item_inventory") and Global.is_opening_inventory:
 			if Input.is_action_pressed("right_click") and not is_dragging:
 				Global._drop_item(_body.item_id)
 				_body.call_deferred("queue_free")
@@ -32,10 +32,16 @@ func _process(_delta: float) -> void:
 			else:
 				new_hovered = _body
 				break
-			
-	if new_hovered != null and (not is_dragging) and Input.is_action_pressed("left_click"):
+		
+	if not Global.is_opening_inventory:
+		new_hovered = null
+		hovered = null
+		is_dragging = false
+	elif new_hovered != null and (not is_dragging) and Input.is_action_pressed("left_click"):
 		is_dragging = true
 		hovered = new_hovered
 	elif !Input.is_action_pressed("left_click") and is_dragging:
 		is_dragging = false
 		hovered = null
+		
+	

@@ -140,8 +140,7 @@ func rand_interior_data():
 	interior_data = {
 	"1_aband_house" : [0.2, [randi_range(10,20), randi_range(10,20)], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}, 0.125, {"can" : 0.5, "mie": 0.5}], 
 	"1_aband_apart" : [0.1, [randi_range(20,35), randi_range(20,35)], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}, 0.06, {"can" : 1}]
-} #room_abundance, [x_size, y_size], tiles, chance_item_per_tile, item_list #old: id, [x_size, y_size], tiles, chance_item_per_tile, item_list
-
+} #room_abundance, [x_size, y_size], tiles, chance_item_per_tile, item_list #old: id, [x_size, y_size], tiles, chance_item_per_tile, item_loot_table
 
 var objects_pos := {}
 var new_minimap_image : Image = Image.create(512, 288, false, Image.FORMAT_RGB8)
@@ -578,7 +577,7 @@ func is_in_water():
 			return true
 	return false
 		
-func _physics_process(delta: float) -> void:
+func _exploring(delta: float) -> void:
 	var _is_in_water = is_in_water()
 	
 	player.velocity += speed * delta * Vector2(float(Input.is_action_pressed("right")) - float(Input.is_action_pressed("left")), float(Input.is_action_pressed("down")) - float(Input.is_action_pressed("up"))).normalized()
@@ -642,6 +641,9 @@ func _physics_process(delta: float) -> void:
 	
 	_update_player_minimap()
 	check_interaction()
+		
+func _physics_process(delta: float) -> void:
+	if Global.is_exploring: _exploring(delta)
 
 func check_interaction():
 	if Global.is_interacting: 
@@ -653,8 +655,12 @@ func check_interaction():
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("inventory"):
-		if backpack.visible: backpack.hide()
-		else: backpack.show()
+		if Global.is_opening_inventory: 
+			backpack.hide()
+			Global.is_opening_inventory = false
+		else: 
+			backpack.show()
+			Global.is_opening_inventory = true
 	if event.is_action_pressed("map"):
 		if mini_map_root.visible: mini_map_root.hide()
 		else: mini_map_root.show()
