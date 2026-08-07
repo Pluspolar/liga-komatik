@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://db713odxq0240"
-path="res://.godot/imported/belalang-new_3.png-d6e11275124dbc38048805c272f4a9da.ctex"
+path="res://.godot/imported/belalang.png-c2ccf891aac799b44cc9b3d2c346ee66.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/sprites/item/belalang-new_3.png"
-dest_files=["res://.godot/imported/belalang-new_3.png-d6e11275124dbc38048805c272f4a9da.ctex"]
+source_file="res://textures/sprites/item/belalang.png"
+dest_files=["res://.godot/imported/belalang.png-c2ccf891aac799b44cc9b3d2c346ee66.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwvtixtwm4at"
-path="res://.godot/imported/kornet-new.png-279ac67588cf4d7eed38c7ffb594a3d5.ctex"
+uid="uid://lg1h786whlnn"
+path="res://.godot/imported/terrain_palette.png-5220328cd0c98650a5878f725759352c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/sprites/item/kornet-new.png"
-dest_files=["res://.godot/imported/kornet-new.png-279ac67588cf4d7eed38c7ffb594a3d5.ctex"]
+source_file="res://textures/tiles/terrain_palette.png"
+dest_files=["res://.godot/imported/terrain_palette.png-5220328cd0c98650a5878f725759352c.ctex"]
 
 [params]
 

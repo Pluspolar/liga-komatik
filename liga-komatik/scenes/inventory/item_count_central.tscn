@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://dnbe6vjwdojl5"]
+
+[ext_resource type="Shader" uid="uid://dmtbmlxg1dm3u" path="res://scripts/gdshaders/central_inventory_fog.gdshader" id="1_ca60d"]
+[ext_resource type="Script" uid="uid://dmhguxpgw8ify" path="res://scripts/inventory/item_count_central.gd" id="1_ksho0"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_b0jfs"]
+noise_type = 2
+seed = 9
+frequency = 0.0078
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wn4hl"]
+noise = SubResource("FastNoiseLite_b0jfs")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pp1to"]
+seed = 6
+frequency = 0.0157
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0kyq7"]
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_pp1to")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_j0u46"]
+noise_type = 3
+seed = 6
+frequency = 0.0123
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rkxbx"]
+noise = SubResource("FastNoiseLite_j0u46")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_htemk"]
+shader = ExtResource("1_ca60d")
+shader_parameter/noise_1 = SubResource("NoiseTexture2D_wn4hl")
+shader_parameter/noise_2 = SubResource("NoiseTexture2D_0kyq7")
+shader_parameter/noise_combine = SubResource("NoiseTexture2D_rkxbx")
+shader_parameter/center_pos = Vector2(0.5, -0.25)
+
+[node name="item_count_central" type="CanvasLayer" unique_id=2042369158]
+script = ExtResource("1_ksho0")
+
+[node name="background" type="ColorRect" parent="." unique_id=629217621]
+material = SubResource("ShaderMaterial_htemk")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.1882353)
+
+[node name="hbox" type="HBoxContainer" parent="." unique_id=1851763429]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+alignment = 1

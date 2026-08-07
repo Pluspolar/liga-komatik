@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://bc8r3jlrayelb"]
 
-[ext_resource type="Texture2D" uid="uid://c27dvely7gsfe" path="res://textures/inventory/crate_outline.png" id="1_b3phk"]
+[ext_resource type="Texture2D" uid="uid://dp17yd33m3pkr" path="res://textures/inventory/crate_layer.png" id="1_c3syx"]
+[ext_resource type="Script" uid="uid://dn7ie3gcw8gj4" path="res://scripts/inventory/crate_layer.gd" id="2_c3syx"]
 
-[node name="crate_layer" type="Parallax2D" unique_id=467786708]
-
-[node name="crate_outline" type="Sprite2D" parent="." unique_id=750321619]
-scale = Vector2(8, 8)
-texture = ExtResource("1_b3phk")
+[node name="crate_layer" type="Sprite2D" unique_id=259601825]
+position = Vector2(192, 108)
+texture = ExtResource("1_c3syx")
+script = ExtResource("2_c3syx")

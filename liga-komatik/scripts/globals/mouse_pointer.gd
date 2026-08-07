@@ -13,12 +13,13 @@ func _ready():
 	mouse_area.add_child(shape)
 	
 	mouse_area.collision_layer = 0
-	mouse_area.collision_mask = 4
+	mouse_area.collision_mask = 68 #4+64
 	get_tree().current_scene.add_child(mouse_area)
 	
 func _process(_delta: float) -> void:
 	
-	mouse_area.position = get_viewport().get_mouse_position()
+	if Global.cur_scene == "central_inventory": mouse_area.position = get_global_mouse_position()
+	else: mouse_area.position = get_viewport().get_mouse_position()
 	var bodies = mouse_area.get_overlapping_bodies()
 	var new_hovered
 	
@@ -32,8 +33,11 @@ func _process(_delta: float) -> void:
 			else:
 				new_hovered = _body
 				break
+		elif _body.is_in_group("item_central"):
+			new_hovered = _body
+			break
 		
-	if not Global.is_opening_inventory:
+	if not Global.is_opening_inventory and Global.cur_scene != "central_inventory":
 		new_hovered = null
 		hovered = null
 		is_dragging = false

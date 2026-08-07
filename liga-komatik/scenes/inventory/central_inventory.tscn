@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dgwdd7ce5jhvc"]
 
-[ext_resource type="Script" uid="uid://dx6mxvf0nfutu" path="res://scenes/inventory/central_inventory.gd" id="1_c2krf"]
-[ext_resource type="Texture2D" uid="uid://c6key240hwvf" path="res://textures/inventory/crate_full.png" id="2_c2krf"]
+[ext_resource type="Script" uid="uid://dx6mxvf0nfutu" path="res://scripts/inventory/central_inventory.gd" id="1_c2krf"]
+[ext_resource type="Texture2D" uid="uid://chcg2dyetb5ts" path="res://textures/inventory/crate_full.png" id="2_a6mc7"]
 
 [node name="central_inventory" type="Node2D" unique_id=1493145807]
 script = ExtResource("1_c2krf")
@@ -9,10 +9,14 @@ script = ExtResource("1_c2krf")
 [node name="crate_floor" type="Sprite2D" parent="." unique_id=1385014458]
 texture_filter = 1
 position = Vector2(192, 108)
-scale = Vector2(8, 8)
-texture = ExtResource("2_c2krf")
+texture = ExtResource("2_a6mc7")
 
 [node name="crate_outline" type="Node2D" parent="." unique_id=995027806]
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=239492969]
-position_smoothing_enabled = true
+[node name="static_body" type="StaticBody2D" parent="." unique_id=358369669]
+collision_layer = 64
+collision_mask = 0
+
+[node name="col_shape" type="CollisionPolygon2D" parent="static_body" unique_id=430993665]
+position = Vector2(192, 108)
+polygon = PackedVector2Array(288, -224, 256, -192, -257, -191, -256, 191, 255, 189, 256, -192, 288, -224, 287, 224, -288, 225, -289, -223)
