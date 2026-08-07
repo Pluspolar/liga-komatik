@@ -19,6 +19,7 @@ var central_inventory = {}
 var player_interior_out : Vector2 = Vector2(0,0)
 var item_id : int = 0
 var cam_coords : Vector2 = Vector2(0,0)
+var player_last_loc := Vector2(0,0)
 var is_mouse_dragging = false
 var changing_scene = false
 var is_interacting = false
@@ -34,11 +35,14 @@ var player_chunk : Vector2i
 var backpack_weight : float = 0
 var show_tiles : Array = []
 var _timer : float
-	
-var item_drop : Dictionary = {
-	"can" : preload("res://scenes/__item_drop/can.tscn"), 
-	"mie" : preload("res://scenes/__item_drop/mie.tscn")
-} #scene, nutrition
+var central_item_list := []
+
+var item_drop = preload("res://scenes/__item_drop/item_drop.tscn")
+
+#var item_drop : Dictionary = {
+#	"can" : preload("res://scenes/__item_drop/can.tscn"), 
+#	"mie" : preload("res://scenes/__item_drop/mie.tscn")
+#} #scene, nutrition
 
 var _item_nutrition : Dictionary = {
 	"can" : [
@@ -55,21 +59,24 @@ var item_inventory : Dictionary = {
 	"mie" : preload("res://scenes/_item_inventory/mie.tscn")
 }
 
+var item_texture : Dictionary = {
+	"can" : preload("res://textures/sprites/item/can.png"),
+	"mie" : preload("res://textures/sprites/item/mie.png")
+}
+
 func _process(delta: float) -> void:
 	_timer += 1 * delta
 	if Input.is_action_just_pressed("left-hand"):
 		change_scene_to("central_inventory")
 		print(central_inventory)
 	if Input.is_action_just_pressed("right-hand"):
+		change_scene_to("outside")
 		print(backpack_inventory)
 
 func spawn_new_item(pos: Vector2, chunk_pos: Vector2i, item_name: String, item_nutrition : float = -1.0):
-	var drop_item = item_drop[item_name].instantiate()
-	#var rand_nutrition = item_drop[item_name][1]
+	var drop_item = item_drop.instantiate()
 	drop_item.position = pos
 	drop_item.item_name = item_name
-	#drop_item.item_weight = item_weight
-	#if item_nutrition == -1: drop_item.item_nutrition = round(randf_range(rand_nutrition*0.8, rand_nutrition*1.25)*1000)/1000
 	if item_nutrition == -1: 
 		var _item_star = rng_calculator(_item_nutrition[item_name][1])
 		var cur_nutrition = _item_nutrition[item_name][0][_item_star]
@@ -92,13 +99,9 @@ func spawn_new_item(pos: Vector2, chunk_pos: Vector2i, item_name: String, item_n
 	get_tree().current_scene.get_node("Ysort").add_child(drop_item)
 	
 func spawn_item(_item_id: String, pos: Vector2, chunk_pos: Vector2i, item_name: String, item_star: int, item_nutrition : float): #= -1.0): #item_weight: float):
-	var drop_item = item_drop[item_name].instantiate()
+	var drop_item = item_drop.instantiate()
 	drop_item.position = pos
 	drop_item.item_name = item_name
-	#drop_item.item_weight = item_weight
-	#drop_item.item_nutrition = item_nutrition
-	#if item_nutrition == -1: drop_item.item_nutrition = round(randf_range(rand_nutrition*0.8, rand_nutrition*1.25)*10000)/10000
-	#else: drop_item.item_nutrition = item_nutrition
 	drop_item.item_star = item_star
 	drop_item.item_nutrition = item_nutrition
 	drop_item.item_id = _item_id
@@ -119,9 +122,6 @@ func add_item(object, chunk_pos : Vector2i, _item_id: String, item_name: String,
 	item_backpack.item_id = _item_id
 	item_backpack.modulate += Color(1,0,1) * (pow(1.3, item_star)-1)
 	backpack_inventory[_item_id] = [item_name, item_star, item_nutrition, item_backpack]
-	#backpack_inventory[_item_id] = [item_name, item_nutrition, item_backpack]
-	#inventory[_item_id] = [item_name, item_weight]
-	#backpack_weight += item_weight
 	chunks_obj[chunk_pos].erase(object)
 	get_tree().current_scene.get_node("UI/backpack").call_deferred("add_child", item_backpack)
 
@@ -132,27 +132,53 @@ func remove_item(_item_id: String):
 func _drop_item(_item_id: String):
 	var item_desc = backpack_inventory[_item_id]
 	backpack_inventory.erase(_item_id)
-	#backpack_weight -= item_desc[1]
 	spawn_item(_item_id, player_pos, player_chunk, item_desc[0], item_desc[1], item_desc[2])
 
 func change_scene_to(to_scene, interior = null):
+	if !central_item_list.is_empty():
+		for _obj in central_item_list:
+			_obj.call_deferred("queue_free")
+		central_item_list.clear()
+	
 	if to_scene == "interior" or to_scene == "outside": is_exploring = true
 	else: 
 		if is_exploring: 
-			for _item_id in backpack_inventory:
-				var item_name = backpack_inventory[_item_id][0]
-				var item_star = backpack_inventory[_item_id][1]
-				#var item_nutrition = backpack_inventory[_item_id][2]
-				var item_obj = backpack_inventory[_item_id][3]
-				if !central_inventory.has(item_name): central_inventory[item_name] = _item_nutrition[item_name][0].duplicate()
-				central_inventory[item_name][item_star][0] += 1
-				#central_inventory[item_name][0] += 1
-				item_obj.call_deferred("queue_free")
-			backpack_inventory.clear()
+			if to_scene == "central_inventory": convert_to_central_inv()
+			
+			if cur_scene == "interior": get_tree().current_scene.change_to_outside()
+			elif cur_scene == "outside": player_last_loc = get_tree().current_scene.update_player_location()
+		
 		is_exploring = false
-	cur_scene = to_scene
+		
 	if interior != null: cur_interior = interior
+	cur_scene = to_scene
 	changing_scene = true
+
+func convert_to_central_inv():
+	for _item_id in backpack_inventory:
+		var item_name = backpack_inventory[_item_id][0]
+		var item_star = backpack_inventory[_item_id][1]
+		#var item_nutrition = backpack_inventory[_item_id][2]
+		var item_obj = backpack_inventory[_item_id][3]
+		if !central_inventory.has(item_name): central_inventory[item_name] = _item_nutrition[item_name][0].duplicate()
+		central_inventory[item_name][item_star][0] += 1
+		item_obj.call_deferred("queue_free")
+	backpack_inventory.clear()
+	
+	for _item_name in central_inventory:
+		for _item_star in central_inventory[_item_name]:
+			central_item(_item_name, _item_star, central_inventory[_item_name][_item_star][0])
+
+func central_item(item_name: String, item_star: int, amount: int) -> void:
+	if amount <= 0: return
+	var central_inv_scene = get_tree().current_scene.get_node("UI/central_inventory")
+
+	for i in range(amount):
+		var item_central = item_inventory[item_name].instantiate()
+		item_central.position = viewport_tree.size/2 + Vector2(randi_range(-80,80), randi_range(-80,80))
+		item_central.modulate += Color(1,0,1) * (pow(1.3, item_star)-1)
+		central_inv_scene.call_deferred("add_child", item_central)
+		central_item_list.append(item_central)
 
 func rng_calculator(data):
 	var cur_place = data

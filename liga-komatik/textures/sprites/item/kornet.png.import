@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b88eg7obnrveb"
-path="res://.godot/imported/backpack_1.png-4cc2ad91a589fc0633047c7dd886cd9c.ctex"
+uid="uid://cwvtixtwm4at"
+path="res://.godot/imported/kornet.png-a41e44220b993c851399ca3e648dceed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/inventory/backpack_1.png"
-dest_files=["res://.godot/imported/backpack_1.png-4cc2ad91a589fc0633047c7dd886cd9c.ctex"]
+source_file="res://textures/sprites/item/kornet.png"
+dest_files=["res://.godot/imported/kornet.png-a41e44220b993c851399ca3e648dceed.ctex"]
 
 [params]
 

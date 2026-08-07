@@ -25,8 +25,9 @@ extends Node2D
 @onready var hand_interact := $UI/interaction/hand
 @onready var fog := $Ysort/player/fog
 @onready var fog_texture := $darker_area/canvas_fog/fog_texture
+@onready var darker_area := $darker_area
+@onready var _central_inventory := $UI/central_inventory
 
-var player_last_loc := Vector2(0,0)
 var noise = FastNoiseLite.new()
 var corner_spot
 var thread_1 : Thread
@@ -74,7 +75,6 @@ var tiles_data := {}
 var walls_data := {}
 var interior_data = {} #id, tiles, [x_size, y_size]
 
-
 var tiles_color = {
 	"dirt" : Color8(104, 61, 43),
 	"sand" : Color8(209, 196, 158),
@@ -95,11 +95,6 @@ func rand_tiles_data():
 	"grass" : Vector2i(randi_range(6,7), randi_range(0,1)),
 	"stone" : Vector2i(randi_range(0,1), randi_range(2,3))
 	}
-
-#	interior_data = {
-#	"1_aband_house" : [0, [10,50], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}], 
-#	"1_aband_apart" : [0, [20,20], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}]
-#	} #id, tiles, [x_size, y_size]
 
 func rand_walls_data():
 	walls_data = {
@@ -171,7 +166,7 @@ func _ready() -> void:
 	_set_tile()
 	_player_minimap()
 	
-	thread_1.start(_create_cell_chunk)
+	thread_1.start(_load_scene)
 	
 func _exit_tree() -> void:
 	thread_1.wait_to_finish()
@@ -203,7 +198,6 @@ func generate_noise(freq : float, oct : int, noise_type: String, multiplier: flo
 func setup_astargrid():
 	astargrid.region = Rect2i(-width_half-1, -height_half-1, width_half*2+2, height_half*2+2)
 	astargrid.cell_size = Vector2i(16,16)
-	#astargrid.default_compute_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	astargrid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
 	astargrid.update()
 
@@ -337,10 +331,8 @@ func tile_to_map(pos, random_obj):
 	if obj_behav != null:
 		gen_obj_interior[obj] = []
 		gen_wall_interior[obj] = []
-		#generated_interior[obj] = create_interior(interior_data[obj_behav][1], interior_data[obj_behav][2], interior_data[obj_behav][3], interior_data[obj_behav][4], obj)
 		generated_interior[obj] = create_interior(interior_data[obj_behav], obj)
 		
-#func create_interior(room_size, palette, wall_palette, item_loot_table, obj):
 func create_interior(cur_interior_data, obj):
 	var room_abundance = cur_interior_data[0]
 	room_abundance = randf_range(room_abundance*0.85, room_abundance*1.15)
@@ -363,9 +355,7 @@ func create_interior(cur_interior_data, obj):
 	var cur_wall : Dictionary
 	var total_wall := {}
 	var max_room = int((x_range+1)*(y_range+1)/55*(randf_range(0.9, 1.25)))
-	#var room_abundance = randf_range(0.05, 0.2)
-	#tile = "water"
-	#cur_interior[middle+interior_tile] = [middle+interior_tile, tile, tiles_data[tile]]
+
 	for x in range(0, x_range+1):
 		for y in range(0, y_range+1):
 			var tile_pos = Vector2i(x,y)
@@ -423,13 +413,6 @@ func create_room(total_wall, room_availability, middle, cur_interior, floor_pale
 	var cur_wall = {}
 	var door_normal_transpose = Vector2i(door_normal.y, door_normal.x)
 	
-	#var _door = [door]#, door+door_normal*2+(door_normal_transpose)]
-	
-	#for i in range(-1, 2):
-	#	_door.append(door+door_normal+(door_normal_transpose*i))
-	
-	#for x in range(-room_size.x-1, room_size.x+2): #create invisible border around with -1 and +2 (1+1)
-		#for y in range(-room_size.y-1, room_size.y+2):
 	for x in range(-room_size.x, room_size.x+1): #create invisible border around with -1 and +2 (1+1)
 		for y in range(-room_size.y, room_size.y+1):
 			var cur_pos = Vector2i(x,y)
@@ -460,7 +443,6 @@ func create_room(total_wall, room_availability, middle, cur_interior, floor_pale
 		var cur_pos_door = door+(door_normal*index_door_normal)+(door_normal_transpose*index_transpose_normal)
 		if (index_door_normal <= 1 or total_wall.has(cur_pos_door)) and index_door_normal <= 3:
 			rand_tiles_data()
-			#tile = "water"
 			tile = rng_calculator(floor_palette)
 			if !room_availability.has(cur_pos_door): room_availability.append(cur_pos_door)
 			if total_wall.has(cur_pos_door): total_wall.erase(cur_pos_door)
@@ -473,12 +455,6 @@ func create_room(total_wall, room_availability, middle, cur_interior, floor_pale
 			index_door_normal = 0
 			
 	return cur_wall
-		
-	#for i in _door:
-	#	rand_tiles_data()
-	#	tile = random_tiles(palette)
-	#	if !room_availability.has(i): room_availability.append(i)
-	#	cur_interior[i] = [i, tile, tiles_data[tile]]
 	
 func rng_calculator(data, _place : String = ""):
 	var cur_place
@@ -491,24 +467,44 @@ func rng_calculator(data, _place : String = ""):
 		if rand_num <= chance:
 			return cur_data
 
-func _create_cell_chunk():
+func change_to_outside():
+	#erase_all_chunks()
+	Global.changing_scene = false
+	camera.zoom = Vector2(1,1)
+	player.position = Global.player_last_loc
+	camera.position = player.position
+	camera.position = Vector2(clamp(camera.position.x, -boundary.x, boundary.x), clamp(camera.position.y, -boundary.y, boundary.y))
+	var tiles_interior = generated_interior[Global.cur_interior]
+	var obj_interior = gen_obj_interior[Global.cur_interior]
+	var walls_interior = gen_wall_interior[Global.cur_interior]
+	for _tile in tiles_interior: tile_map.set_cell(_tile[0], -1)
+	for _wall in walls_interior: tilemap_wall.set_cell(_wall[0], -1)
+	for _obj in obj_interior: 
+		if _obj != null:
+			_obj.col_shape.call_deferred("set_disabled", true)
+			_obj.hide()
+			
+	fog_texture.call_deferred("hide")
+	fog.texture_scale = 30
+	fog.shadow_item_cull_mask = 0
+
+func update_player_location():
+	return player.position
+
+func _load_scene():
 	while true:
+		if Global.changing_scene:
+			if Global.is_exploring: 
+				_central_inventory.hide()
+				darker_area.show()
+			else:
+				camera.position = Vector2(192,108)
+				if Global.cur_scene == "central_inventory": _central_inventory.show()
+				hand_interact.hide()
+				darker_area.hide()
+		
 		if Global.changing_scene and Global.cur_scene == "outside":
-			erase_all_chunks()
-			Global.changing_scene = false
-			camera.zoom = Vector2(1,1)
-			player.position = player_last_loc
-			camera.position = player.position
-			camera.position = Vector2(clamp(camera.position.x, -boundary.x, boundary.x), clamp(camera.position.y, -boundary.y, boundary.y))
-			var tiles_interior = generated_interior[Global.cur_interior]
-			var obj_interior = gen_obj_interior[Global.cur_interior]
-			var walls_interior = gen_wall_interior[Global.cur_interior]
-			for _tile in tiles_interior: tile_map.set_cell(_tile[0], -1)
-			for _wall in walls_interior: tilemap_wall.set_cell(_wall[0], -1)
-			for _obj in obj_interior: 
-				if _obj != null:
-					_obj.col_shape.call_deferred("set_disabled", true)
-					_obj.hide()
+			change_to_outside()
 		
 		if Global.cur_scene == "outside":
 			corner_spot = (cam_global) - (Global.viewport_tree.size/2) + Vector2(-16, -16)
@@ -533,6 +529,10 @@ func _create_cell_chunk():
 				
 		elif Global.cur_scene == "interior" and Global.changing_scene and Global.cur_interior != null:
 			erase_all_chunks()
+			fog_texture.call_deferred("show")
+			fog.texture_scale = 4
+			fog.shadow_item_cull_mask = 3
+			
 			Global.changing_scene = false
 			
 			var tiles_interior = generated_interior[Global.cur_interior]
@@ -547,7 +547,7 @@ func _create_cell_chunk():
 			
 			cam_middle = (last_pos - first_pos)/2 + interior_pos
 			camera.zoom = Vector2(1,1)/camera_equation
-			player_last_loc = player.position
+			Global.player_last_loc = player.position
 			player.position = Vector2((last_pos.x - first_pos.x)/2 + interior_pos.x, last_pos.y-8) 
 			Global.player_interior_out = player.position+Vector2(0,10)
 			
@@ -558,6 +558,9 @@ func _create_cell_chunk():
 					_obj.col_shape.call_deferred("set_disabled", false)
 					_obj.show()
 			
+		if not Global.is_exploring:
+			erase_all_chunks()
+			Global.changing_scene = false
 		await get_tree().process_frame
 		
 func erase_all_chunks():
@@ -585,18 +588,13 @@ func _exploring(delta: float) -> void:
 	if _is_in_water: player.velocity *= pow(0.4, delta*60)
 	else: player.velocity *= pow(0.85, delta*60)
 	
-	camera.position += (player.global_position - camera.position) * 30 * delta
+	camera.position += (player.global_position - camera.position) * 10 * delta
 	
 	if Global.cur_scene == "outside": 
-		fog_texture.hide()
-		fog.texture_scale = 30
-		fog.shadow_item_cull_mask = 0
 		camera.position = Vector2(clamp(camera.position.x, -boundary.x, boundary.x), clamp(camera.position.y, -boundary.y, boundary.y))
 	else: 
-		fog_texture.show()
-		fog.texture_scale = 4
-		fog.shadow_item_cull_mask = 3
 		camera.position = cam_middle
+	
 	Global.cam_coords = camera.position
 	cam_global = camera.global_position
 	
@@ -635,15 +633,14 @@ func _exploring(delta: float) -> void:
 	
 	var player_local = -player.make_canvas_position_local(Vector2.ZERO)*camera.zoom
 	fog_texture.material.set_shader_parameter("player_pos", (player_local/get_viewport_rect().size))
-	#fog_texture.scale = Vector2(1,1) * fog.texture_scale/6
-	#print(camera.to_local(player.global_position))global_position
-	#print(fog_texture.material.get_shader_parameter("player_pos"))
 	
 	_update_player_minimap()
 	check_interaction()
 		
 func _physics_process(delta: float) -> void:
 	if Global.is_exploring: _exploring(delta)
+	elif Global.cur_scene == "central_inventory": 
+		camera_follow_mouse(delta)
 
 func check_interaction():
 	if Global.is_interacting: 
@@ -652,6 +649,11 @@ func check_interaction():
 		hand_interact.scale.x = 2+cos(Global._timer*13)*0.05
 		hand_interact.scale.y = 2+sin(Global._timer*13)*0.05
 	else: hand_interact.hide()
+
+func camera_follow_mouse(delta: float) -> void:
+	var mouse_viewport_pos = get_viewport().get_mouse_position()
+	camera.position += (mouse_viewport_pos-camera.position) * 10 * delta
+	Global.cam_coords = camera.position
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("inventory"):
@@ -664,3 +666,4 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("map"):
 		if mini_map_root.visible: mini_map_root.hide()
 		else: mini_map_root.show()
+		

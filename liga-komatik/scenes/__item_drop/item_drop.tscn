@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://b1ap4modux5y3"]
+
+[ext_resource type="Script" uid="uid://tn7y16mmubn7" path="res://scripts/__item_drop/item_drop.gd" id="1_hcf5l"]
+[ext_resource type="PackedScene" uid="uid://dmgrvdx8tcg5i" path="res://scenes/global/costume_sprite.tscn" id="2_hcf5l"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hcf5l"]
+light_mode = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gvv6n"]
+size = Vector2(7, 7)
+
+[node name="item_drop" type="Area2D" unique_id=758389323 groups=["item_drop"]]
+visible = false
+y_sort_enabled = true
+collision_layer = 8
+script = ExtResource("1_hcf5l")
+
+[node name="costume_sprite" parent="." unique_id=1991779528 instance=ExtResource("2_hcf5l")]
+material = SubResource("CanvasItemMaterial_hcf5l")
+position = Vector2(0, -3)
+scale = Vector2(0.225, 0.225)
+offset = Vector2(-3.8146973e-06, 13.333334)
+
+[node name="col_shape" type="CollisionShape2D" parent="." unique_id=1627007358]
+shape = SubResource("RectangleShape2D_gvv6n")
+disabled = true

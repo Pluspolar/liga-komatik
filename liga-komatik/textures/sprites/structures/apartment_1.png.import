@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccvffy1xwt4bh"
-path="res://.godot/imported/kentang-new.png-dc3df4dc450df675c1377519a4b947dc.ctex"
+uid="uid://objwvi1lrf5"
+path="res://.godot/imported/apartment_1.png-3bd6aa1c06d7354dccceb7867f6e3184.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/sprites/item/kentang-new.png"
-dest_files=["res://.godot/imported/kentang-new.png-dc3df4dc450df675c1377519a4b947dc.ctex"]
+source_file="res://textures/sprites/structures/apartment_1.png"
+dest_files=["res://.godot/imported/apartment_1.png-3bd6aa1c06d7354dccceb7867f6e3184.ctex"]
 
 [params]
 

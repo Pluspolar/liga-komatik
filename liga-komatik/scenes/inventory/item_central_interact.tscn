@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dsw6g5vngvf3p"]
+
+[ext_resource type="PackedScene" uid="uid://dmgrvdx8tcg5i" path="res://scenes/global/costume_sprite.tscn" id="1_1ch16"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_14cdr"]
+size = Vector2(32, 32)
+
+[node name="item_central_interact" type="Area2D" unique_id=47516740]
+
+[node name="costume_sprite" parent="." unique_id=1991779528 instance=ExtResource("1_1ch16")]
+animation = &"can"
+
+[node name="col_shape" type="CollisionShape2D" parent="." unique_id=495759558]
+shape = SubResource("RectangleShape2D_14cdr")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=738543717]
+offset_right = 40.0
+offset_bottom = 40.0

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djx44ybt5uf5d"
-path="res://.godot/imported/mie-new.png-b85fdc733ce7d3f31df5a26b27d8e23e.ctex"
+uid="uid://dp17yd33m3pkr"
+path="res://.godot/imported/crate_layer.png-795759745ca81f99f52d19cff0fb5391.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/sprites/item/mie-new.png"
-dest_files=["res://.godot/imported/mie-new.png-b85fdc733ce7d3f31df5a26b27d8e23e.ctex"]
+source_file="res://textures/inventory/crate_layer.png"
+dest_files=["res://.godot/imported/crate_layer.png-795759745ca81f99f52d19cff0fb5391.ctex"]
 
 [params]
 

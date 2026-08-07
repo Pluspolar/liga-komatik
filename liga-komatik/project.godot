@@ -102,6 +102,7 @@ left-hand={
 2d_physics/layer_4="item"
 2d_physics/layer_5="backpack_region"
 2d_physics/layer_6="tiles"
+2d_physics/layer_7="central_inventory"
 2d_physics/size/viewport_height=144
 2d_physics/size/viewport_width=256
 

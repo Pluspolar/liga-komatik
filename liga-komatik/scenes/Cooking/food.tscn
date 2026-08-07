@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dhnglshdg05fo"]
 
-[ext_resource type="Script" uid="uid://uyyb0svkbpij" path="res://scripts/cooking/rigid_body_2d.gd" id="1_u04j5"]
+[ext_resource type="Script" uid="uid://uyyb0svkbpij" path="res://scripts/cooking/food.gd" id="1_u04j5"]
 [ext_resource type="Texture2D" uid="uid://qmhkckw7gorx" path="res://textures/Cooking/Ingredient/udang.png" id="2_u04j5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ndmi3"]

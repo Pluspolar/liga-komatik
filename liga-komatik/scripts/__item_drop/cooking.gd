@@ -35,7 +35,6 @@ func spatula_physics(delta: float) -> void:
 			if spatula.angular_velocity < 0: spatula.angular_velocity *= pow(0.7, delta*60)
 			spatula.angular_velocity += 16.0 * delta
 	else:
-		#spatula.linear_velocity *= pow(0.92, delta*60) 
 		spatula.linear_velocity *= pow(0.8, delta*60)
 		spatula.angular_velocity = (0-spatula.rotation_degrees)*0.05
 		
