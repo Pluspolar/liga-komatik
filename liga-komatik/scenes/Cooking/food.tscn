@@ -1,9 +1,23 @@
 [gd_scene format=3 uid="uid://dhnglshdg05fo"]
 
 [ext_resource type="Script" uid="uid://uyyb0svkbpij" path="res://scripts/cooking/food.gd" id="1_u04j5"]
-[ext_resource type="Texture2D" uid="uid://qmhkckw7gorx" path="res://textures/Cooking/Ingredient/udang.png" id="2_u04j5"]
+[ext_resource type="SpriteFrames" uid="uid://i2k82erxbvjx" path="res://textures/Cooking/Ingredient/new_sprite_frames.tres" id="2_nkj5g"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ndmi3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wae4q"]
+radius = 14.114229
+height = 48.165977
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_quang"]
+height = 50.446663
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wae4q"]
+size = Vector2(76, 45)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7tk3i"]
+radius = 15.019955
+height = 82.07326
 
 [node name="RigidBody2D" type="RigidBody2D" unique_id=2002989848]
 gravity_scale = 0.0
@@ -12,15 +26,41 @@ max_contacts_reported = 4
 linear_damp = 1.6
 script = ExtResource("1_u04j5")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=939039345]
+[node name="udang" type="CollisionShape2D" parent="." unique_id=939039345]
+visible = false
 shape = SubResource("CircleShape2D_ndmi3")
+disabled = true
 debug_color = Color(0.66369945, 0.31664118, 1, 0.41960785)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=984923059]
-sprite_frames = ExtResource("2_u04j5")
-animation = &"kornet"
+sprite_frames = ExtResource("2_nkj5g")
+animation = &"rumput"
 
 [node name="Timer" type="Timer" parent="." unique_id=549622729]
+
+[node name="rumput" type="CollisionShape2D" parent="." unique_id=1043592918]
+position = Vector2(-3.9999995, -14)
+rotation = -0.84823
+shape = SubResource("CapsuleShape2D_wae4q")
+disabled = true
+
+[node name="ubi" type="CollisionShape2D" parent="." unique_id=250023645]
+position = Vector2(-3, 1)
+rotation = -0.9983283
+shape = SubResource("CapsuleShape2D_quang")
+disabled = true
+
+[node name="kornet" type="CollisionShape2D" parent="." unique_id=549459461]
+visible = false
+position = Vector2(0, -17.5)
+shape = SubResource("RectangleShape2D_wae4q")
+disabled = true
+
+[node name="sarden" type="CollisionShape2D" parent="." unique_id=1639673856]
+visible = false
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_7tk3i")
+disabled = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

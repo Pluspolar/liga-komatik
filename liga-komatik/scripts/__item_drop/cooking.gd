@@ -8,6 +8,7 @@ const FOOD = preload("uid://dhnglshdg05fo")
 @onready var Cam = $Camera2D
 @onready var cook = $Marker2D
 @onready var ingre = $Marker2D2
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	slop.scale= Vector2(0,0)
@@ -37,15 +38,15 @@ func spatula_physics(delta: float) -> void:
 	slop.rotation_degrees += 8 * delta
 		
 func bigger(nutri):
-	var nutrition = nutri/3
+	var nutrition = nutri/10
 	var tween = create_tween()
 	tween.set_trans(Tween.TRANS_SINE)
-	total_nutrition += nutrition
+	total_nutrition += nutri
 	if total_nutrition < 0.8: #if slop.scale < Vector2(0.8,0.8):
-		tween.tween_property(slop, "scale", Vector2(1,1)*total_nutrition, 1)
+		tween.tween_property(slop, "scale", Vector2(nutrition,nutrition), 1)
 		#slop.scale += pow((Vector2(nutrition, nutrition) - slop.scale), 0.95)
 		#slop.scale += Vector2(nutrition, nutrition)
-	else: tween.tween_property(slop, "scale", Vector2(1,1)*0.8, 1)
+	else: tween.tween_property(slop, "scale", Vector2(nutrition,nutrition)*0.8, 1)
 	tween.play()
 
 
@@ -60,9 +61,11 @@ func _on_swicth_mouse_entered() -> void:
 
 func newIngre(play) -> void :
 		holding = false
-		var newFood : food = FOOD.instantiate()
+		var newFood : foods = FOOD.instantiate()
 		newFood.done.connect(bigger)
-		print(play)
-		newFood.global_position = Vector2(0,0)
-		
 		add_child(newFood)
+		newFood.sprite.play(play)
+		
+		newFood.global_position = get_global_mouse_position()
+		
+		
