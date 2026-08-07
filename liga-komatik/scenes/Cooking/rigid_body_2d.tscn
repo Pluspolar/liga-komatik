@@ -1,20 +1,9 @@
 [gd_scene format=3 uid="uid://dhnglshdg05fo"]
 
 [ext_resource type="Script" uid="uid://uyyb0svkbpij" path="res://scripts/cooking/rigid_body_2d.gd" id="1_u04j5"]
-[ext_resource type="Texture2D" uid="uid://qmhkckw7gorx" path="res://textures/Cooking/Ingredient/udang.png" id="2_u04j5"]
+[ext_resource type="SpriteFrames" uid="uid://i2k82erxbvjx" path="res://textures/Cooking/Ingredient/new_sprite_frames.tres" id="2_u04j5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ndmi3"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_wae4q"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_u04j5")
-}],
-"loop": 1,
-"name": &"Udang",
-"speed": 5.0
-}]
 
 [node name="RigidBody2D" type="RigidBody2D" unique_id=2002989848]
 gravity_scale = 0.0
@@ -28,8 +17,8 @@ shape = SubResource("CircleShape2D_ndmi3")
 debug_color = Color(0.66369945, 0.31664118, 1, 0.41960785)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=984923059]
-sprite_frames = SubResource("SpriteFrames_wae4q")
-animation = &"Udang"
+sprite_frames = ExtResource("2_u04j5")
+animation = &"kornet"
 
 [node name="Timer" type="Timer" parent="." unique_id=549622729]
 

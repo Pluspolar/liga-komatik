@@ -1,0 +1,50 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://i2k82erxbvjx"]
+
+[ext_resource type="Texture2D" uid="uid://elutf0nk1c1u" path="res://textures/Cooking/Ingredient/Kornet.png" id="1_88j4h"]
+[ext_resource type="Texture2D" uid="uid://dysf2hx71oa2f" path="res://textures/Cooking/Ingredient/Rumput.png" id="2_it2ny"]
+[ext_resource type="Texture2D" uid="uid://sj77wnyeew2s" path="res://textures/Cooking/Ingredient/Sarden.png" id="3_u0vhr"]
+[ext_resource type="Texture2D" uid="uid://bx5qsx2iqlgtd" path="res://textures/Cooking/Ingredient/Ubi.png" id="4_65c7t"]
+[ext_resource type="Texture2D" uid="uid://qmhkckw7gorx" path="res://textures/Cooking/Ingredient/udang.png" id="5_juu4v"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_88j4h")
+}],
+"loop": 1,
+"name": &"kornet",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_it2ny")
+}],
+"loop": 1,
+"name": &"rumput",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_u0vhr")
+}],
+"loop": 1,
+"name": &"sarden",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_65c7t")
+}],
+"loop": 1,
+"name": &"ubi",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_juu4v")
+}],
+"loop": 1,
+"name": &"udang",
+"speed": 5.0
+}]

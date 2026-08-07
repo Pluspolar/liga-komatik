@@ -4,13 +4,14 @@ class_name food
 @export var gravity_strength: float = 400.0
 @onready var spatula  = $"../Spatula"
 @onready var wajan = $"../wajan"
+@onready var sprite = $AnimatedSprite2D
 const cookTime = 10
 signal done(nutrition)
 @export var nutrition = 0.5
 @export var timePass = 0
 func _ready() -> void:
 	# Disable the default global Y-down gravity on this body
-	#gravity_scale = 0.0
+	gravity_scale = 0.0
 	
 	wajan.body_exited.connect(dirty)
 	wajan.body_entered.connect(mulai)

@@ -4,6 +4,7 @@ extends Node2D
 const FOOD = preload("uid://dhnglshdg05fo")
 @onready var total_nutrition : float = slop.scale.x
 @onready var cooking = true
+@onready var holding = false
 @onready var Cam = $Camera2D
 @onready var cook = $Marker2D
 @onready var ingre = $Marker2D2
@@ -16,17 +17,12 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	#$Slop/AnimationPlayer.play("new_animation")
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
-		var newFood : food = FOOD.instantiate()
-		newFood.done.connect(bigger)
-		newFood.global_position = Vector2(0,0)
-		
-		add_child(newFood)
+	
 		
 	spatula_physics(delta)
 	
 func spatula_physics(delta: float) -> void:
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and cooking:
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and cooking and !holding:
 		spatula.linear_velocity = (get_global_mouse_position() - spatula.global_position)*10
 		if Input.is_action_pressed("right-hand") and spatula.angular_velocity >= -6.0:
 			if spatula.angular_velocity > 0: spatula.angular_velocity *= pow(0.7, delta*60)
@@ -61,3 +57,13 @@ func _on_swicth_mouse_entered() -> void:
 	else : 
 		Cam.position = Vector2(196.0, 108.0)
 		cooking = true
+
+
+func newIngre(play) -> void :
+		holding = false
+		var newFood : food = FOOD.instantiate()
+		newFood.done.connect(bigger)
+		print(play)
+		newFood.global_position = Vector2(0,0)
+		
+		add_child(newFood)

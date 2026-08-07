@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://0q5f1qfe1crj"]
+
+[ext_resource type="SpriteFrames" uid="uid://i2k82erxbvjx" path="res://textures/Cooking/Ingredient/new_sprite_frames.tres" id="1_u15f5"]
+[ext_resource type="Script" uid="uid://dg54283h68cjq" path="res://scenes/Cooking/grabable.gd" id="2_futpd"]
+
+[node name="grabable" type="AnimatedSprite2D" unique_id=1879483802]
+sprite_frames = ExtResource("1_u15f5")
+animation = &"rumput"
+script = ExtResource("2_futpd")

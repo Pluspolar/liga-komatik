@@ -6,12 +6,9 @@
 [ext_resource type="Shader" uid="uid://5qxx3cjbh8ja" path="res://scripts/gdshaders/wobble.gdshader" id="4_7c8ge"]
 [ext_resource type="Texture2D" uid="uid://bipjqlj3l86jq" path="res://textures/Cooking/spatula.png" id="4_j8mjs"]
 [ext_resource type="Texture2D" uid="uid://bbr5bk5201ki" path="res://textures/Cooking/slop.png" id="6_jjvtj"]
-[ext_resource type="Texture2D" uid="uid://qmhkckw7gorx" path="res://textures/Cooking/Ingredient/udang.png" id="8_4cpeb"]
+[ext_resource type="Script" uid="uid://bon6gjyayap13" path="res://scripts/cooking/ingreButton.gd" id="8_6dxfr"]
 [ext_resource type="Texture2D" uid="uid://d0hg6rj3ehwxy" path="res://textures/Cooking/Sprite-0001.png" id="8_lbay0"]
-[ext_resource type="Texture2D" uid="uid://elutf0nk1c1u" path="res://textures/Cooking/Ingredient/Kornet.png" id="8_o2wga"]
-[ext_resource type="Texture2D" uid="uid://dysf2hx71oa2f" path="res://textures/Cooking/Ingredient/Rumput.png" id="9_6dxfr"]
-[ext_resource type="Texture2D" uid="uid://sj77wnyeew2s" path="res://textures/Cooking/Ingredient/Sarden.png" id="10_7dwi3"]
-[ext_resource type="Texture2D" uid="uid://bx5qsx2iqlgtd" path="res://textures/Cooking/Ingredient/Ubi.png" id="11_xeaur"]
+[ext_resource type="SpriteFrames" uid="uid://i2k82erxbvjx" path="res://textures/Cooking/Ingredient/new_sprite_frames.tres" id="9_qvev4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ncnqo"]
 radius = 107.0
@@ -78,48 +75,8 @@ size = Vector2(49.040207, 52.944817)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7tk3i"]
 size = Vector2(49, 248)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_wae4q"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("8_o2wga")
-}],
-"loop": 1,
-"name": &"kornet",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("9_6dxfr")
-}],
-"loop": 1,
-"name": &"rumput",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("10_7dwi3")
-}],
-"loop": 1,
-"name": &"sarden",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("11_xeaur")
-}],
-"loop": 1,
-"name": &"ubi",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("8_4cpeb")
-}],
-"loop": 1,
-"name": &"udang",
-"speed": 5.0
-}]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_quang"]
+size = Vector2(83, 64.5)
 
 [node name="Cooking" type="Node2D" unique_id=1038864092]
 script = ExtResource("1_eexf5")
@@ -194,34 +151,94 @@ position = Vector2(196, 108)
 position = Vector2(2.5, 114)
 shape = SubResource("RectangleShape2D_7tk3i")
 
-[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="." unique_id=2123458986]
-position = Vector2(-197, 180)
-sprite_frames = SubResource("SpriteFrames_wae4q")
-animation = &"kornet"
+[node name="1" type="Area2D" parent="." unique_id=1551558150]
+position = Vector2(-313, 71)
+script = ExtResource("8_6dxfr")
 
-[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="AnimatedSprite2D3" unique_id=1033572677]
-position = Vector2(114.954994, 0)
-sprite_frames = SubResource("SpriteFrames_wae4q")
-animation = &"ubi"
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D3" unique_id=2045024730]
-position = Vector2(-116.05, 0)
-sprite_frames = SubResource("SpriteFrames_wae4q")
+[node name="AnimatedSprite2D1" type="AnimatedSprite2D" parent="1" unique_id=1760026995]
+position = Vector2(-0.049987793, 1)
+sprite_frames = ExtResource("9_qvev4")
 animation = &"rumput"
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=584744935]
-position = Vector2(-197, 72)
-sprite_frames = SubResource("SpriteFrames_wae4q")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="1" unique_id=72466950]
+position = Vector2(0.5, -16.75)
+shape = SubResource("RectangleShape2D_quang")
+
+[node name="2" type="Area2D" parent="." unique_id=1818578458]
+position = Vector2(-198.26, 71)
+script = ExtResource("8_6dxfr")
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="2" unique_id=584744935]
+position = Vector2(1.2599945, 1)
+sprite_frames = ExtResource("9_qvev4")
 animation = &"sarden"
 
-[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="AnimatedSprite2D2" unique_id=1955545647]
-position = Vector2(114.954994, 0)
-sprite_frames = SubResource("SpriteFrames_wae4q")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="2" unique_id=253567965]
+position = Vector2(0.5, -16.75)
+shape = SubResource("RectangleShape2D_quang")
+
+[node name="3" type="Area2D" parent="." unique_id=1876275875]
+position = Vector2(-81.965, 71)
+script = ExtResource("8_6dxfr")
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="3" unique_id=1955545647]
+position = Vector2(-0.08000946, 1)
+sprite_frames = ExtResource("9_qvev4")
 animation = &"kornet"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="AnimatedSprite2D2" unique_id=1760026995]
-position = Vector2(-116.05, 0)
-sprite_frames = SubResource("SpriteFrames_wae4q")
-animation = &"udang"
+[node name="CollisionShape2D" type="CollisionShape2D" parent="3" unique_id=70058343]
+position = Vector2(0.5, -16.75)
+shape = SubResource("RectangleShape2D_quang")
+
+[node name="5" type="Area2D" parent="." unique_id=1388612232]
+position = Vector2(-196.785, 178.58)
+script = ExtResource("8_6dxfr")
+
+[node name="AnimatedSprite2D5" type="AnimatedSprite2D" parent="5" unique_id=2123458986]
+position = Vector2(-0.21499634, 1.4199982)
+sprite_frames = ExtResource("9_qvev4")
+animation = &"sarden"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="5" unique_id=242001873]
+position = Vector2(0.5, -16.75)
+shape = SubResource("RectangleShape2D_quang")
+
+[node name="6" type="Area2D" parent="." unique_id=333520356]
+position = Vector2(-81.945, 178.58)
+script = ExtResource("8_6dxfr")
+
+[node name="AnimatedSprite2D6" type="AnimatedSprite2D" parent="6" unique_id=1033572677]
+position = Vector2(-0.1000061, 1.4199982)
+sprite_frames = ExtResource("9_qvev4")
+animation = &"ubi"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="6" unique_id=1787399855]
+position = Vector2(0.5, -16.75)
+shape = SubResource("RectangleShape2D_quang")
+
+[node name="4" type="Area2D" parent="." unique_id=1646543432]
+position = Vector2(-312.61, 181.38)
+script = ExtResource("8_6dxfr")
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="4" unique_id=2045024730]
+position = Vector2(-0.44000244, -1.3800049)
+sprite_frames = ExtResource("9_qvev4")
+animation = &"rumput"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="4" unique_id=1369385189]
+position = Vector2(0.5, -16.75)
+shape = SubResource("RectangleShape2D_quang")
 
 [connection signal="mouse_entered" from="Swicth" to="." method="_on_swicth_mouse_entered"]
+[connection signal="mouse_entered" from="1" to="1" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="1" to="1" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="2" to="2" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="2" to="2" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="3" to="3" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="3" to="3" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="5" to="5" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="5" to="5" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="6" to="6" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="6" to="6" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="4" to="4" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="4" to="4" method="_on_mouse_exited"]
