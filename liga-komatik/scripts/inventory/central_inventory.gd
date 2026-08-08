@@ -28,3 +28,6 @@ func _process(delta: float) -> void:
 		for obj in obj_list:
 			obj.position = local_cam_coords*obj.scroll_scale+_scroll_offset
 		
+		
+		
+		

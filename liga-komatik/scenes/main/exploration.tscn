@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://ckj6wchsv4182" path="res://scenes/UI/interaction.tscn" id="7_gh8vw"]
 [ext_resource type="PackedScene" uid="uid://brrw8jkdg77xa" path="res://scenes/UI/minimap.tscn" id="7_stgpn"]
 [ext_resource type="PackedScene" uid="uid://dgwdd7ce5jhvc" path="res://scenes/inventory/central_inventory.tscn" id="10_6exic"]
+[ext_resource type="PackedScene" uid="uid://dnbe6vjwdojl5" path="res://scenes/inventory/item_count_central.tscn" id="11_ywco0"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_iss55"]
 tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 1)
@@ -199,6 +200,9 @@ visible = false
 [node name="interaction" parent="UI" unique_id=817276631 instance=ExtResource("7_gh8vw")]
 
 [node name="central_inventory" parent="UI" unique_id=1493145807 instance=ExtResource("10_6exic")]
+visible = false
+
+[node name="item_count_central" parent="UI" unique_id=2042369158 instance=ExtResource("11_ywco0")]
 visible = false
 
 [node name="cloud" type="ColorRect" parent="." unique_id=1334844623]

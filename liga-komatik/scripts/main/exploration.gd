@@ -468,7 +468,6 @@ func rng_calculator(data, _place : String = ""):
 			return cur_data
 
 func change_to_outside():
-	#erase_all_chunks()
 	Global.changing_scene = false
 	camera.zoom = Vector2(1,1)
 	player.position = Global.player_last_loc

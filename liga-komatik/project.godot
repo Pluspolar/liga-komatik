@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Order Up, Heads Down! - Liga Komatik"
-run/main_scene="uid://i3hypxykcult"
+run/main_scene="uid://dnbe6vjwdojl5"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="uid://k61uwhx25f8b"
 
@@ -31,6 +31,7 @@ window/stretch/aspect="expand"
 
 interior_interaction=""
 item_drop=""
+item_central_interact=""
 
 [input]
 
@@ -103,6 +104,7 @@ left-hand={
 2d_physics/layer_5="backpack_region"
 2d_physics/layer_6="tiles"
 2d_physics/layer_7="central_inventory"
+2d_physics/layer_8="item_central_interact"
 2d_physics/size/viewport_height=144
 2d_physics/size/viewport_width=256
 

@@ -16,9 +16,8 @@ script = ExtResource("1_vyivj")
 
 [node name="sprite" type="Sprite2D" parent="." unique_id=1019661729]
 texture_filter = 1
-position = Vector2(-0.555, -2)
 texture = ExtResource("2_vyivj")
-offset = Vector2(0.57175636, 0.19497108)
+offset = Vector2(0.016756356, -1.8050289)
 
 [node name="col_shape" type="CollisionShape2D" parent="." unique_id=1043071412]
 position = Vector2(0, -0.745)

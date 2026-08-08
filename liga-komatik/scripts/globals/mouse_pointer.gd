@@ -13,7 +13,7 @@ func _ready():
 	mouse_area.add_child(shape)
 	
 	mouse_area.collision_layer = 0
-	mouse_area.collision_mask = 68 #4+64
+	mouse_area.collision_mask = 196 #4+64+128
 	get_tree().current_scene.add_child(mouse_area)
 	
 func _process(_delta: float) -> void:
@@ -33,6 +33,9 @@ func _process(_delta: float) -> void:
 			else:
 				new_hovered = _body
 				break
+		elif _body.is_in_group("item_central_inventory"):
+			new_hovered = _body
+			break
 		elif _body.is_in_group("item_central"):
 			new_hovered = _body
 			break
