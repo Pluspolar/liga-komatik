@@ -12,15 +12,12 @@ const GRABABLE = preload("uid://0q5f1qfe1crj")
 func _ready() -> void:
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
-
 func _on_mouse_entered() -> void:
 	self.scale = Vector2(1.2,1.2)
-
 
 func _on_mouse_exited() -> void:
 	self.scale = Vector2(1,1)

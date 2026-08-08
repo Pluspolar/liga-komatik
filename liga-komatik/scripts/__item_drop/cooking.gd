@@ -2,7 +2,7 @@ extends Node2D
 @onready var slop = $Slop
 @onready var spatula = $Spatula
 const FOOD = preload("uid://dhnglshdg05fo")
-@onready var total_nutrition : float = slop.scale.x
+@onready var total_nutrition : float = 0
 @onready var cooking = true
 @onready var holding = false
 @onready var Cam = $Camera2D
@@ -12,8 +12,6 @@ const FOOD = preload("uid://dhnglshdg05fo")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	slop.scale= Vector2(0,0)
-
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -38,18 +36,19 @@ func spatula_physics(delta: float) -> void:
 	slop.rotation_degrees += 8 * delta
 		
 func bigger(nutri):
-	var nutrition : float = nutri/300
+	var nutrition = nutri/300
 	print(nutrition)
 	var tween = create_tween()
 	tween.set_trans(Tween.TRANS_SINE)
 	total_nutrition += nutrition
-	if slop.scale < Vector2(0.8,0.8): #if slop.scale < Vector2(0.8,0.8):
-		tween.tween_property(slop, "scale", Vector2(nutrition,nutrition), 1)
+	var target_nutrition : float = total_nutrition
+	if target_nutrition > 0.8: target_nutrition = 0.8
+	#if slop.scale.x < total_nutrition: #if slop.scale < Vector2(0.8,0.8):
+	tween.tween_property(slop, "scale", target_nutrition*Vector2(1,1), 1)
 		#slop.scale += pow((Vector2(nutrition, nutrition) - slop.scale), 0.95)
 		#slop.scale += Vector2(nutrition, nutrition)
-	else: tween.tween_property(slop, "scale", Vector2(nutrition,nutrition), 1)
+	#else: tween.tween_property(slop, "scale", Vector2(1, 1)*0.8, 1)
 	tween.play()
-
 
 func _on_swicth_mouse_entered() -> void:
 	if cooking == true:

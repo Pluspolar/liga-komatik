@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Order Up, Heads Down! - Liga Komatik"
-run/main_scene="uid://dnbe6vjwdojl5"
+run/main_scene="uid://cnqh7ocygiu32"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="uid://k61uwhx25f8b"
 
