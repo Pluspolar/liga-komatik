@@ -38,15 +38,16 @@ func spatula_physics(delta: float) -> void:
 	slop.rotation_degrees += 8 * delta
 		
 func bigger(nutri):
-	var nutrition = nutri/10
+	var nutrition : float = nutri/300
+	print(nutrition)
 	var tween = create_tween()
 	tween.set_trans(Tween.TRANS_SINE)
-	total_nutrition += nutri
-	if total_nutrition < 0.8: #if slop.scale < Vector2(0.8,0.8):
+	total_nutrition += nutrition
+	if slop.scale < Vector2(0.8,0.8): #if slop.scale < Vector2(0.8,0.8):
 		tween.tween_property(slop, "scale", Vector2(nutrition,nutrition), 1)
 		#slop.scale += pow((Vector2(nutrition, nutrition) - slop.scale), 0.95)
 		#slop.scale += Vector2(nutrition, nutrition)
-	else: tween.tween_property(slop, "scale", Vector2(nutrition,nutrition)*0.8, 1)
+	else: tween.tween_property(slop, "scale", Vector2(nutrition,nutrition), 1)
 	tween.play()
 
 

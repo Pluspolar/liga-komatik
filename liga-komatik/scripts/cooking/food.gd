@@ -5,13 +5,13 @@ class_name foods
 @onready var spatula  = $"../Spatula"
 @onready var wajan = $"../wajan"
 @onready var sprite = $AnimatedSprite2D
-
+#first one is the collision, seccond nutrition value
 @onready var shapes: Dictionary = {
-	"sarden": $sarden,
-	"rumput": $rumput,
-	"kornet": $kornet,
-	"udang": $udang,
-	"ubi": $ubi
+	"sarden": [$sarden,70],
+	"rumput": [$rumput,10],
+	"kornet": [$kornet,100],
+	"udang": [$udang,40],
+	"ubi": [$ubi, 50]
 }
 const cookTime = 10
 signal done(nutrition)
@@ -60,5 +60,7 @@ func _on_body_entered(body: Node) -> void:
 		
 func activate(pick) -> void :
 	for shape_names in shapes:
-		print(pick)
-		shapes[shape_names].disabled = (shape_names != pick)
+		if shape_names == pick:
+			shapes[shape_names][0].disabled = false
+			nutrition = shapes[shape_names][1]
+			print(nutrition)
