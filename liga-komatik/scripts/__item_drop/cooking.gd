@@ -36,7 +36,7 @@ func spatula_physics(delta: float) -> void:
 	slop.rotation_degrees += 8 * delta
 		
 func bigger(nutri):
-	var nutrition = nutri/300
+	var nutrition : float = nutri/300
 	print(nutrition)
 	var tween = create_tween()
 	tween.set_trans(Tween.TRANS_SINE)
