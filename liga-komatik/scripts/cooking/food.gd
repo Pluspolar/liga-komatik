@@ -53,7 +53,7 @@ func mulai(junk):
 
 func _on_body_entered(body: Node) -> void:
 	if body == spatula:
-		timePass += 10
+		timePass += 1
 		print("kena")
 		
 func activate(pick) -> void :
