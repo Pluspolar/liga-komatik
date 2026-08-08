@@ -63,7 +63,9 @@ func newIngre(play) -> void :
 		holding = false
 		var newFood : foods = FOOD.instantiate()
 		newFood.done.connect(bigger)
+		
 		add_child(newFood)
+		newFood.activate(play)
 		newFood.sprite.play(play)
 		
 		newFood.global_position = get_global_mouse_position()

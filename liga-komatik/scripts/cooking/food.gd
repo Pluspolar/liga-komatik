@@ -5,12 +5,14 @@ class_name foods
 @onready var spatula  = $"../Spatula"
 @onready var wajan = $"../wajan"
 @onready var sprite = $AnimatedSprite2D
-@onready var udang = $udang
-@onready var rumput = $rumput
-@onready var kornet = $kornet
-@onready var sarden = $sarden
-@onready var ubi = $ubi
 
+@onready var shapes: Dictionary = {
+	"sarden": $sarden,
+	"rumput": $rumput,
+	"kornet": $kornet,
+	"udang": $udang,
+	"ubi": $ubi
+}
 const cookTime = 10
 signal done(nutrition)
 @export var nutrition = 0.5
@@ -20,7 +22,7 @@ signal done(nutrition)
 func _ready() -> void:
 	# Disable the default global Y-down gravity on this body
 	gravity_scale = 0.0
-	activate(self.sprite.animation)
+	
 	wajan.body_exited.connect(dirty)
 	wajan.body_entered.connect(mulai)
 	
@@ -36,12 +38,15 @@ func _physics_process(delta: float) -> void:
 
 func _on_timer_timeout() -> void:
 	if timePass > cookTime:
-		queue_free()
 		done.emit(nutrition)
+		queue_free()
+		
 	else: 
 		timePass += 1
 		print("continue")
-	
+
+
+
 func mulai(junk):
 	if junk == self: 
 		time.start()
@@ -54,14 +59,6 @@ func _on_body_entered(body: Node) -> void:
 		print("kena")
 		
 func activate(pick) -> void :
-	if pick == "sarden":
-		sarden.disabled = false
-	elif pick == "rumput":
-		rumput.disabled = false
-	elif pick == "kornet":
-		kornet.disabled = false
-	elif pick == "udang":
-		udang.disabled = false
-	elif pick == "ubi":
-		ubi.disabled = false 
-	
+	for shape_names in shapes:
+		print(pick)
+		shapes[shape_names].disabled = (shape_names != pick)
