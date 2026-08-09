@@ -57,8 +57,6 @@ func _on_body_entered(body: Node) -> void:
 		print("kena")
 		
 func activate(pick) -> void :
-	for shape_names in shapes:
-		if shape_names == pick:
-			shapes[shape_names][0].disabled = false
-			nutrition = shapes[shape_names][1]
-			print(nutrition)
+	shapes[pick][0].disabled = false
+	nutrition = shapes[pick][1]
+	print(nutrition)
