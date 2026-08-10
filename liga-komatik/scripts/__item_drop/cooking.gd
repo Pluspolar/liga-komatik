@@ -56,9 +56,9 @@ func bigger(nutri):
 	
 	if target_nutrition > 0.05 and target_nutrition < 0.6:
 		nutri_level.text = lvl1
-	elif target_nutrition > 0.4 and target_nutrition < 0.8:
+	elif target_nutrition > 0.3 and target_nutrition < 0.7:
 		nutri_level.text = lvl2
-	elif target_nutrition > 0.8:
+	elif target_nutrition > 0.7:
 		nutri_level.text = lvl3
 	elif target_nutrition == 0.0:
 		nutri_level.text = lvl0	

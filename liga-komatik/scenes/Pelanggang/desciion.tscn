@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://svxdinll71xh"]
+
+[ext_resource type="Script" uid="uid://bqjw8bil1s68" path="res://scenes/Pelanggang/desciion.gd" id="1_s6b8t"]
+[ext_resource type="PackedScene" uid="uid://cw23mt2nx3v4p" path="res://scenes/UI/dialogue.tscn" id="2_0p0mj"]
+[ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="3_rcnrg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7tk3i"]
+font = ExtResource("3_rcnrg")
+font_size = 8
+
+[node name="Desciion" type="CanvasLayer" unique_id=2096890935]
+script = ExtResource("1_s6b8t")
+
+[node name="dialogue" parent="." unique_id=31305971 instance=ExtResource("2_0p0mj")]
+
+[node name="Gossip" type="Button" parent="." unique_id=883061946]
+offset_left = 294.0
+offset_top = 66.0
+offset_right = 363.0
+offset_bottom = 88.0
+
+[node name="Label" type="Label" parent="Gossip" unique_id=1141303412]
+layout_mode = 0
+offset_right = 69.0
+offset_bottom = 23.0
+text = "Gossip"
+label_settings = SubResource("LabelSettings_7tk3i")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Repeat" type="Button" parent="." unique_id=1681468609]
+offset_left = 294.0
+offset_top = 42.0
+offset_right = 363.0
+offset_bottom = 64.0
+
+[node name="Label" type="Label" parent="Repeat" unique_id=1153383101]
+layout_mode = 0
+offset_right = 69.0
+offset_bottom = 23.0
+text = "Repeat?"
+label_settings = SubResource("LabelSettings_7tk3i")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="COOOOK" type="Button" parent="." unique_id=1556406260]
+offset_left = 294.0
+offset_top = 90.0
+offset_right = 363.0
+offset_bottom = 112.0
+
+[node name="Label" type="Label" parent="COOOOK" unique_id=1120541973]
+layout_mode = 0
+offset_right = 69.0
+offset_bottom = 23.0
+text = "COOOK!!"
+label_settings = SubResource("LabelSettings_7tk3i")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="button_down" from="Gossip" to="." method="_on_gossip_button_down"]
+[connection signal="button_down" from="Repeat" to="." method="_on_repeat_button_down"]
+[connection signal="button_down" from="COOOOK" to="." method="_on_cooook_button_down"]
