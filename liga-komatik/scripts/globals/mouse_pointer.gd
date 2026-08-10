@@ -17,8 +17,7 @@ func _ready():
 	
 	mouse_area.collision_layer = 0
 	mouse_area.collision_mask = 196 #4+64+128
-	get_tree().current_scene.add_child(mouse_area)
-	#get_tree().current_scene.add_child(mouse_area_follow)
+	add_child(mouse_area)
 	
 func _process(_delta: float) -> void:
 	
@@ -72,3 +71,4 @@ func _process(_delta: float) -> void:
 		hovered = null
 		
 	
+ 

@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bon6gjyayap13" path="res://scripts/cooking/ingreButton.gd" id="8_6dxfr"]
 [ext_resource type="Texture2D" uid="uid://d0hg6rj3ehwxy" path="res://textures/Cooking/Sprite-0001.png" id="8_lbay0"]
 [ext_resource type="SpriteFrames" uid="uid://i2k82erxbvjx" path="res://textures/Cooking/Ingredient/new_sprite_frames.tres" id="9_qvev4"]
+[ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="10_qvev4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ncnqo"]
 radius = 107.0
@@ -78,6 +79,18 @@ size = Vector2(49, 248)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_quang"]
 size = Vector2(83, 64.5)
 
+[sub_resource type="LabelSettings" id="LabelSettings_wae4q"]
+font = ExtResource("10_qvev4")
+font_size = 7
+
+[sub_resource type="LabelSettings" id="LabelSettings_7tk3i"]
+font = ExtResource("10_qvev4")
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_quang"]
+font = ExtResource("10_qvev4")
+font_size = 14
+
 [node name="Cooking" type="Node2D" unique_id=1038864092]
 script = ExtResource("1_eexf5")
 
@@ -111,7 +124,7 @@ shape = SubResource("CapsuleShape2D_ncnqo")
 texture_filter = 1
 material = SubResource("ShaderMaterial_jjvtj")
 position = Vector2(192.805, 106.865)
-scale = Vector2(0.793, 0.793)
+scale = Vector2(0.863, 0.863)
 texture = ExtResource("6_jjvtj")
 offset = Vector2(3.6231842, 20.531395)
 
@@ -164,6 +177,16 @@ animation = &"rumput"
 position = Vector2(0.5, -16.75)
 shape = SubResource("RectangleShape2D_quang")
 
+[node name="Label" type="Label" parent="1" unique_id=1431188946]
+offset_left = -19.39
+offset_top = 22.595
+offset_right = 21.102158
+offset_bottom = 34.595016
+text = "1"
+label_settings = SubResource("LabelSettings_wae4q")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="2" type="Area2D" parent="." unique_id=1818578458]
 position = Vector2(-198.26, 71)
 script = ExtResource("8_6dxfr")
@@ -176,6 +199,16 @@ animation = &"sarden"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="2" unique_id=253567965]
 position = Vector2(0.5, -16.75)
 shape = SubResource("RectangleShape2D_quang")
+
+[node name="Label" type="Label" parent="2" unique_id=845844356]
+offset_left = -19.39
+offset_top = 22.595
+offset_right = 21.102158
+offset_bottom = 34.594997
+text = "1"
+label_settings = SubResource("LabelSettings_wae4q")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="3" type="Area2D" parent="." unique_id=1876275875]
 position = Vector2(-81.965, 71)
@@ -190,6 +223,16 @@ animation = &"kornet"
 position = Vector2(0.5, -16.75)
 shape = SubResource("RectangleShape2D_quang")
 
+[node name="Label" type="Label" parent="3" unique_id=716419198]
+offset_left = -19.39
+offset_top = 21.59
+offset_right = 21.102158
+offset_bottom = 33.59001
+text = "1"
+label_settings = SubResource("LabelSettings_wae4q")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="5" type="Area2D" parent="." unique_id=1388612232]
 position = Vector2(-196.785, 178.58)
 script = ExtResource("8_6dxfr")
@@ -202,6 +245,16 @@ animation = &"sarden"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="5" unique_id=242001873]
 position = Vector2(0.5, -16.75)
 shape = SubResource("RectangleShape2D_quang")
+
+[node name="Label" type="Label" parent="5" unique_id=804934036]
+offset_left = -19.39
+offset_top = 19.295
+offset_right = 21.102158
+offset_bottom = 31.295
+text = "1"
+label_settings = SubResource("LabelSettings_wae4q")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="6" type="Area2D" parent="." unique_id=333520356]
 position = Vector2(-81.945, 178.58)
@@ -216,6 +269,16 @@ animation = &"ubi"
 position = Vector2(0.5, -16.75)
 shape = SubResource("RectangleShape2D_quang")
 
+[node name="Label" type="Label" parent="6" unique_id=603938034]
+offset_left = -19.39
+offset_top = 19.295
+offset_right = 21.102158
+offset_bottom = 31.295
+text = "1"
+label_settings = SubResource("LabelSettings_wae4q")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="4" type="Area2D" parent="." unique_id=1646543432]
 position = Vector2(-312.61, 181.38)
 script = ExtResource("8_6dxfr")
@@ -228,6 +291,43 @@ animation = &"rumput"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="4" unique_id=1369385189]
 position = Vector2(0.5, -16.75)
 shape = SubResource("RectangleShape2D_quang")
+
+[node name="Label" type="Label" parent="4" unique_id=1864986521]
+offset_left = -19.390015
+offset_top = 16.619995
+offset_right = 21.102142
+offset_bottom = 28.619995
+text = "1"
+label_settings = SubResource("LabelSettings_wae4q")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="nutriLevel" type="Label" parent="." unique_id=799367641]
+offset_left = 275.835
+offset_right = 383.83508
+offset_bottom = 22.794996
+text = "Tidak Ada"
+label_settings = SubResource("LabelSettings_7tk3i")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="." unique_id=900251225]
+visible = false
+offset_left = 286.0
+offset_top = 179.0
+offset_right = 381.0
+offset_bottom = 213.0
+focus_mode = 0
+disabled = true
+
+[node name="Label" type="Label" parent="Button" unique_id=239639603]
+layout_mode = 0
+offset_right = 95.0
+offset_bottom = 33.0
+text = "Finish"
+label_settings = SubResource("LabelSettings_quang")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="mouse_entered" from="Swicth" to="." method="_on_swicth_mouse_entered"]
 [connection signal="mouse_entered" from="1" to="1" method="_on_mouse_entered"]
@@ -242,3 +342,4 @@ shape = SubResource("RectangleShape2D_quang")
 [connection signal="mouse_exited" from="6" to="6" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="4" to="4" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="4" to="4" method="_on_mouse_exited"]
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]

@@ -37,6 +37,7 @@ func _process(_delta: float) -> void:
 				text.visible_ratio = 0
 				end_text.visible_ratio = 0
 				cur_state = state.READY
+				
 
 func display_text():
 	cur_state = state.TALKING
