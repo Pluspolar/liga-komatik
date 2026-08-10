@@ -44,6 +44,8 @@ var altitude = {}
 var moisture = {}
 var temperature = {}
 var urban = {}
+var city = {}
+var road = {}
 
 @onready var generated_interior = Global.generated_interior
 @onready var gen_wall_interior = Global.gen_wall_interior
@@ -82,7 +84,9 @@ var tiles_color = {
 	"sand" : Color8(209, 196, 158),
 	"water" : Color8(94, 125, 182),
 	"grass" : Color8(20, 93, 15),
-	"stone" : Color8(77, 77, 77)
+	"stone" : Color(0.35, 0.35, 0.35),
+	"asphalt" : Color(0.25, 0.25, 0.25),
+	"gravel" : Color(0.3, 0.3, 0.3),
 }
 
 var walls_color = {
@@ -91,13 +95,24 @@ var walls_color = {
 
 func rand_tiles_data():
 	tiles_data = {
-	"dirt" : Vector2i(randi_range(0,1), randi_range(0,1)),
-	"sand" : Vector2i(randi_range(2,3), randi_range(0,1)),
-	"water" : Vector2i(4,0),
-	"grass" : Vector2i(randi_range(6,7), randi_range(0,1)),
-	"stone" : Vector2i(randi_range(0,1), randi_range(2,3))
+	"dirt" : Vector2i(randi_range(0,1), randi_range(0,1))*2,
+	"sand" : Vector2i(randi_range(2,3), randi_range(0,1))*2,
+	"water" : Vector2i(8,0),
+	"grass" : Vector2i(11,1),
+	"stone" : Vector2i(0,4),
+	"asphalt" : Vector2i(4,4),
+	"gravel" : Vector2i(17,1),
 	}
 
+	#tiles_data = {
+	#"dirt" : Vector2i(randi_range(0,1), randi_range(0,1))*2,
+	#"sand" : Vector2i(randi_range(2,3), randi_range(0,1))*2,
+	#"water" : Vector2i(4,0),
+	#"grass" : Vector2i(randi_range(6,7), randi_range(0,1)),
+	#"stone" : Vector2i(randi_range(0,1), randi_range(2,3)),
+	#"asphalt" : Vector2i(2,2),
+	#"gravel" : Vector2i(4,2),
+	#}
 func rand_walls_data():
 	walls_data = {
 		"crate" : Vector2i(0, 0)
@@ -108,15 +123,21 @@ var biomes_data := {
 	"beach" : {"sand" : 1},
 	"ocean" : {"water" : 1},
 	"eucalyptus" : {"grass" : 0.05, "dirt" : 0.95},
-	"city_1" : {"stone" : 0.997, "dirt" : 0.003}
+	"urban" : {"stone" : 0.998, "dirt" : 0.002},
+	"city" : {"asphalt" : 1},
+	"city_transition" : {"asphalt" : 1},
+	"city_road" : {"gravel" : 1},
 }
 
 var biomes_wall_data := {
-	"plains" : {"crate" : 0.05},
+	"plains" : {},
 	"beach" : {},
 	"ocean" : {},
 	"eucalyptus" : {},
-	"city_1" : {}
+	"urban" : {},
+	"city" : {},
+	"city_transition" : {"crate" : 0.35},
+	"city_road" : {},
 }
 
 var objects_data := {
@@ -124,7 +145,10 @@ var objects_data := {
 	"beach" : {},
 	"ocean" : {},
 	"eucalyptus" : {"tree" : 0.01},
-	"city_1" : {"abandoned_apartment" : 0.001}
+	"urban" : {},
+	"city" : {"abandoned_apartment" : 0.01},
+	"city_transition" : {},
+	"city_road" : {},
 }
 
 var objects := { #[x_size, y_vertical_size, how much free space under "y"], scene
@@ -163,7 +187,17 @@ func _ready() -> void:
 	altitude = generate_noise(0.03, 3, "perlin", 1, 0.2)
 	moisture = generate_noise(0.03, 3, "value_cubic")
 	temperature = generate_noise(0.025, 3, "simplex_smooth")
-	urban = generate_noise(0.006, 3, "simplex", 1, 0.36)
+	#urban = generate_noise(0.006, 3, "simplex", 1, 0.36)
+	#urban = generate_noise(0.006, 3, "simplex", 1, 0.45)
+	urban = generate_noise(0.0045, 3, "simplex", 1, 0.5)
+	city = generate_noise(0.003, 4, "cellular", 1, 0.3)
+	road = generate_noise(0.02, 2, "perlin", 1, 0)#, false, "sign")
+	#road = generate_noise(0.02, 2, "value_cubic", 1, 0)#, false, "sign")
+	#road = generate_noise(0.015, 2, "perlin", 1, 0.0, false, "sign")
+	#road = generate_noise(0.015, 2, "cellular", 1, 0.55, false, "sign")
+	#road = generate_noise(0.005, 2, "cellular", 1, 0.6, false, "sign")
+	#road = generate_noise(0.0125, 2, "cellular", 1, 0.6, false, "sign")
+	#road = generate_noise(0.015, 2, "cellular", 1, 0.5, false, "sign")
 	destruction = generate_noise(0.003, 3, "cellular", 1, 0.2)
 	_set_tile()
 	_player_minimap()
@@ -180,7 +214,7 @@ func pos_to_chunk(cur_pos : Vector2):
 	var _pos : Vector2i = tile_map.local_to_map(cur_pos)
 	return Vector2i(Vector2(_pos)/chunk_size)
 
-func generate_noise(freq : float, oct : int, noise_type: String, multiplier: float = 1, additive: float = 0, is_abs : bool = false):
+func generate_noise(freq : float, oct : int, noise_type: String, multiplier: float = 1, additive: float = 0, is_abs : bool = false, special_inst : String = ""):
 	noise.seed = randi()
 	noise.frequency = freq
 	noise.fractal_octaves = oct
@@ -189,7 +223,10 @@ func generate_noise(freq : float, oct : int, noise_type: String, multiplier: flo
 	if !is_abs:
 		for x in range(-width_half, width_half):
 			for y in range(-height_half, height_half):
-				grid_noise[Vector2i(x,y)] = multiplier*(noise.get_noise_2d(x, y)+additive)
+				var cur_val = multiplier*(noise.get_noise_2d(x, y)+additive)
+				#if special_inst == "sign": 
+				#	if cur_val > 0: cur_val = 1
+				grid_noise[Vector2i(x,y)] = cur_val
 		return grid_noise
 	else:
 		for x in range(-width_half, width_half):
@@ -217,6 +254,8 @@ func _set_tile():
 			var alt = altitude[pos]
 			var temp = temperature[pos]
 			var _urban = urban[pos]
+			var _city = city[pos]
+			var _road = road[pos]
 			cur_chunk = tile_to_chunk(pos)
 			
 			if !chunks.has(cur_chunk): chunks[cur_chunk] = []
@@ -224,11 +263,19 @@ func _set_tile():
 			if !chunks_obj.has(cur_chunk): chunks_obj[cur_chunk] = []
 			
 			if _urban > 0:
-				if alt < -0.25: place_tile_biome(pos, "ocean")
-				elif alt >= -0.25 and alt < -0.18 : place_tile_biome(pos, "eucalyptus")
-				elif _urban <= 0.07: place_tile_biome(pos, "eucalyptus")
-				else: 
-					place_tile_biome(pos, "city_1")
+				if _road >= -0.08 and _road <= 0: place_tile_biome(pos, "city_road")
+				else:
+					if _city < -0.3: 
+						if _urban <= 0.07: place_tile_biome(pos, "eucalyptus")
+						elif _city > -0.31 and _city <= -0.3: place_tile_biome(pos, "city_transition")
+						
+						#elif _road >= 0 and _road < 0.09: place_tile_biome(pos, "city_road")
+						else: place_tile_biome(pos, "city")
+						
+					elif alt < -0.25: place_tile_biome(pos, "ocean")
+					elif alt >= -0.25 and alt < -0.18 : place_tile_biome(pos, "eucalyptus")
+					elif _urban <= 0.07: place_tile_biome(pos, "eucalyptus")
+					else: place_tile_biome(pos, "urban")
 			else: 
 				if alt < -0.25: place_tile_biome(pos, "ocean")
 				elif alt >= -0.25 and alt < -0.2 : place_tile_biome(pos, "beach")
@@ -604,9 +651,6 @@ func _exploring(delta: float) -> void:
 	
 	Global.cam_coords = camera.position
 	cam_global = camera.global_position
-	
-	if Input.is_action_just_pressed("ui_accept"):
-		Global.spawn_new_item(player.position + Vector2(15,0), pos_to_chunk(player.position + Vector2(15,0)), "Test", 1.5)
 		
 	if Input.is_action_just_pressed("right_click"):
 		var point_solid = false

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://lg1h786whlnn"
-path="res://.godot/imported/terrain_palette.png-5220328cd0c98650a5878f725759352c.ctex"
+uid="uid://bpohl3ma1w0w0"
+path="res://.godot/imported/terrain_palette_7.png-023dca8c4044054029c77e2904f26f89.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/tiles/terrain_palette.png"
-dest_files=["res://.godot/imported/terrain_palette.png-5220328cd0c98650a5878f725759352c.ctex"]
+source_file="res://textures/tiles/terrain_palette_7.png"
+dest_files=["res://.godot/imported/terrain_palette_7.png-023dca8c4044054029c77e2904f26f89.ctex"]
 
 [params]
 

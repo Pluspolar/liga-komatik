@@ -42,5 +42,5 @@ animations = [{
 
 [node name="costume_sprite" type="AnimatedSprite2D" unique_id=1991779528]
 sprite_frames = SubResource("SpriteFrames_45vxw")
-animation = &"belalang"
+animation = &"_"
 offset = Vector2(-3.8146973e-06, 0)
