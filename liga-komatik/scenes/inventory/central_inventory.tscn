@@ -5,6 +5,7 @@
 
 [node name="central_inventory" type="Node2D" unique_id=1493145807]
 script = ExtResource("1_c2krf")
+amount_layer = 10
 
 [node name="crate_floor" type="Sprite2D" parent="." unique_id=1385014458]
 texture_filter = 1

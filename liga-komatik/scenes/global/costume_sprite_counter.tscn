@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bkahkyytp5ii"]
+
+[ext_resource type="PackedScene" uid="uid://dmgrvdx8tcg5i" path="res://scenes/global/costume_sprite.tscn" id="1_db8oi"]
+[ext_resource type="Script" uid="uid://crbd0kos653h1" path="res://scripts/globals/costume_sprite_counter.gd" id="2_u01md"]
+
+[node name="costume_sprite" unique_id=1991779528 instance=ExtResource("1_db8oi")]
+animation = &"_"
+script = ExtResource("2_u01md")

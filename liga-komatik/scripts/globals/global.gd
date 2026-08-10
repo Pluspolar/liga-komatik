@@ -16,6 +16,10 @@ var chunks_obj = {}
 #var cur_chunk : Vector2i
 var backpack_inventory = {}
 var central_inventory = {}
+var cooking_inventory = {}
+
+#var temp_cooking_inventory = {}
+
 var player_interior_out : Vector2 = Vector2(0,0)
 var item_id : int = 0
 var cam_coords : Vector2 = Vector2(0,0)
@@ -36,7 +40,12 @@ var backpack_weight : float = 0
 var show_tiles : Array = []
 var _timer : float
 var central_item_list : Dictionary = {}
+var cur_central_count_list : Array = []
 var item_count_central : Object = null
+var cooking_inventory_scene : Object = null
+var cooking_inventory_list : Array = []
+
+var mouse_cooldown : float = 0
 
 var item_list_amount : int = 0
 var item_drop = preload("res://scenes/__item_drop/item_drop.tscn")
@@ -71,6 +80,8 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("right-hand"):
 		change_scene_to("outside")
 		print(backpack_inventory)
+	if mouse_cooldown > 0:
+		mouse_cooldown -= delta
 
 func spawn_new_item(pos: Vector2, chunk_pos: Vector2i, item_name: String, item_nutrition : float = -1.0):
 	var drop_item = item_drop.instantiate()
@@ -153,16 +164,28 @@ func convert_to_central_inv():
 		var item_name = backpack_inventory[_item_id][0]
 		var item_star = backpack_inventory[_item_id][1]
 		var item_obj = backpack_inventory[_item_id][3]
-		if !central_inventory.has(item_name): central_inventory[item_name] = _item_nutrition[item_name][0].duplicate()
+		if !central_inventory.has(item_name): central_inventory[item_name] = _item_nutrition[item_name][0].duplicate_deep()
 		central_inventory[item_name][item_star][0] += 1
 		item_obj.call_deferred("queue_free")
 	backpack_inventory.clear()
+	
+	for cur_obj in cooking_inventory_list:
+		cur_obj.call_deferred("queue_free")
+	cooking_inventory_list.clear()
 	
 	for _item_name in central_inventory:
 		var total_num : int = 0
 		for _item_star in central_inventory[_item_name]:
 			total_num += central_inventory[_item_name][_item_star][0]
-		if central_item_list.has(_item_name): central_item_list[_item_name].item_count = total_num
+		
+		if central_item_list.has(_item_name): 
+			var cur_obj = central_item_list[_item_name]
+			if total_num <= 0: 
+				cur_obj.hide()
+			else:
+				cur_obj.item_count = total_num
+				cur_obj.show()
+				
 		else: central_item(_item_name, total_num)
 
 func central_item(item_name: String, amount: int) -> void:
@@ -173,6 +196,7 @@ func central_item(item_name: String, amount: int) -> void:
 	var _sprite_counter = sprite_counter.instantiate()
 	item_central.position = viewport_tree.size/2 + Vector2(randi_range(-80,80), randi_range(-80,80))
 	item_central.item_count = amount
+	item_central.item_name = item_name
 	_sprite_counter.target_obj = item_central
 	central_inv_scene.call_deferred("add_child", item_central)
 	central_inv_scene.call_deferred("add_child", _sprite_counter)

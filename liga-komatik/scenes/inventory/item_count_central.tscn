@@ -2,6 +2,8 @@
 
 [ext_resource type="Shader" uid="uid://dmtbmlxg1dm3u" path="res://scripts/gdshaders/central_inventory_fog.gdshader" id="1_ca60d"]
 [ext_resource type="Script" uid="uid://dmhguxpgw8ify" path="res://scripts/inventory/item_count_central.gd" id="1_ksho0"]
+[ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="3_vvpv3"]
+[ext_resource type="Script" uid="uid://d3yg4ref6bm5n" path="res://scripts/globals/button.gd" id="4_elhmc"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_b0jfs"]
 noise_type = 2
@@ -37,6 +39,16 @@ shader_parameter/noise_2 = SubResource("NoiseTexture2D_0kyq7")
 shader_parameter/noise_combine = SubResource("NoiseTexture2D_rkxbx")
 shader_parameter/center_pos = Vector2(0.5, -0.25)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_71tk2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6l2hc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_72utu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k3ics"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wx5vi"]
+
 [node name="item_count_central" type="CanvasLayer" unique_id=2042369158]
 script = ExtResource("1_ksho0")
 
@@ -48,3 +60,38 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.1882353)
+
+[node name="buttons" type="Control" parent="." unique_id=1009939122]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="done_button" type="Button" parent="buttons" unique_id=1139691808]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -35.0
+offset_top = -45.0
+offset_right = 35.0
+offset_bottom = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(35, 11)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.6955032, 0.6955031, 0.6955031, 1)
+theme_override_colors/font_hover_color = Color(0.89492244, 0.89492244, 0.8949224, 1)
+theme_override_fonts/font = ExtResource("3_vvpv3")
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxEmpty_71tk2")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_6l2hc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_72utu")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_k3ics")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wx5vi")
+text = "DONE"
+script = ExtResource("4_elhmc")

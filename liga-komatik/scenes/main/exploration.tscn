@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://brrw8jkdg77xa" path="res://scenes/UI/minimap.tscn" id="7_stgpn"]
 [ext_resource type="PackedScene" uid="uid://dgwdd7ce5jhvc" path="res://scenes/inventory/central_inventory.tscn" id="10_6exic"]
 [ext_resource type="PackedScene" uid="uid://dnbe6vjwdojl5" path="res://scenes/inventory/item_count_central.tscn" id="11_ywco0"]
+[ext_resource type="PackedScene" uid="uid://dnw733uuasa1y" path="res://scenes/inventory/cooking_inventory.tscn" id="12_stgpn"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_iss55"]
 tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 1)
@@ -46,6 +47,7 @@ texture_region_size = Vector2i(16, 32)
 0:0/0/texture_origin = Vector2i(0, 8)
 0:0/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_6exic")
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:0/0/physics_layer_0/polygon_0/one_way_margin = 0.0
 
 [sub_resource type="TileSet" id="TileSet_htemk"]
 occlusion_layer_0/light_mask = 1
@@ -121,6 +123,8 @@ shader_parameter/color_gardient = SubResource("GradientTexture1D_kqym7")
 
 [node name="exploration" type="Node2D" unique_id=1527149665]
 script = ExtResource("1_gh8vw")
+boundary_x = null
+map_detail = null
 speed = 3500.0
 
 [node name="background" type="CanvasLayer" parent="." unique_id=2111901761]
@@ -203,6 +207,9 @@ visible = false
 visible = false
 
 [node name="item_count_central" parent="UI" unique_id=2042369158 instance=ExtResource("11_ywco0")]
+visible = false
+
+[node name="cooking_inventory" parent="UI" unique_id=1975286521 instance=ExtResource("12_stgpn")]
 visible = false
 
 [node name="cloud" type="ColorRect" parent="." unique_id=1334844623]

@@ -39,10 +39,10 @@ shape = SubResource("RectangleShape2D_14cdr")
 
 [node name="count" type="RichTextLabel" parent="." unique_id=738543717]
 clip_contents = false
-offset_left = -17.0
-offset_top = 35.575
-offset_right = 18.0
-offset_bottom = 55.575
+offset_left = 9.0
+offset_top = 36.0
+offset_right = 44.0
+offset_bottom = 56.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
@@ -53,4 +53,39 @@ bbcode_enabled = true
 text = "[wave amp=8.0 freq=3.0]10"
 fit_content = true
 scroll_active = false
+
+[node name="slash" type="RichTextLabel" parent="." unique_id=66460441]
+clip_contents = false
+offset_left = -8.0
+offset_top = 36.0
+offset_right = 9.0
+offset_bottom = 52.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("2_po6ih")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "[wave amp=8.0 freq=3.5]/"
+fit_content = true
+scroll_active = false
 horizontal_alignment = 1
+
+[node name="pick_count" type="RichTextLabel" parent="." unique_id=189537080]
+clip_contents = false
+offset_left = -40.0
+offset_top = 36.0
+offset_right = -10.0
+offset_bottom = 56.0
+theme_override_colors/default_color = Color(4.5242905e-06, 0.6433996, 0.8049686, 1)
+theme_override_colors/font_outline_color = Color(0, 0.46726793, 0.5664311, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("2_po6ih")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "[wave amp=8.0 freq=3.1]0"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 2

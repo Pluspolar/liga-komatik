@@ -24,9 +24,9 @@ func _ready() -> void:
 		
 func _process(delta: float) -> void:
 	if Global.cur_scene == "central_inventory":
-		var local_cam_coords = Global.cam_coords-_scroll_offset
+		var local_cam_coords = Vector2i(Global.cam_coords-_scroll_offset)
 		for obj in obj_list:
-			obj.position = local_cam_coords*obj.scroll_scale+_scroll_offset
+			obj.position = Vector2i(local_cam_coords*obj.scroll_scale+_scroll_offset)
 		
 		
 		

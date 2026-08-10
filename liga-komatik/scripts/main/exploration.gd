@@ -27,6 +27,8 @@ extends Node2D
 @onready var fog_texture := $darker_area/canvas_fog/fog_texture
 @onready var darker_area := $darker_area
 @onready var _central_inventory := $UI/central_inventory
+@onready var _cooking_inv_scene := $UI/cooking_inventory
+#@onready var _cooking_scene := $Cooking
 
 var noise = FastNoiseLite.new()
 var corner_spot
@@ -493,12 +495,18 @@ func update_player_location():
 func _load_scene():
 	while true:
 		if Global.changing_scene:
+			_central_inventory.hide()
+			_cooking_inv_scene.hide()
+			#_cooking_scene.hide()
 			if Global.is_exploring: 
-				_central_inventory.hide()
 				darker_area.show()
 			else:
 				camera.position = Vector2(192,108)
-				if Global.cur_scene == "central_inventory": _central_inventory.show()
+				if Global.cur_scene == "central_inventory": 
+					_central_inventory.show()
+					_cooking_inv_scene.show()
+				#elif Global.cur_scene == "cooking":
+					#_cooking_scene.show()
 				hand_interact.hide()
 				darker_area.hide()
 		
@@ -619,16 +627,7 @@ func _exploring(delta: float) -> void:
 	Global.player_tile = tile_map.local_to_map(player.position)
 	Global.player_chunk = pos_to_chunk(player.position)
 	
-	player.move_and_slide()
-
-	if Global.cur_scene == "outside": player.position = Vector2(clamp(player.position.x, -boundary_player.x, boundary_player.x), clamp(player.position.y, -boundary_player.y, boundary_player.y))
-	elif Global.cur_scene == "interior" and !Global.changing_scene: 
-		var player_offset = Vector2(2,2)
-		var tiles_interior = generated_interior[Global.cur_interior]
-		var first_pos = tile_map.map_to_local(tiles_interior[0][0]) - player_offset
-		var last_pos = tile_map.map_to_local(tiles_interior[tiles_interior.size()-1][0]) + player_offset
-		
-		player.position = Vector2(clamp(player.position.x, first_pos.x, last_pos.x), clamp(player.position.y, first_pos.y, last_pos.y))
+	player_move_and_slide()
 	
 	var player_local = -player.make_canvas_position_local(Vector2.ZERO)*camera.zoom
 	fog_texture.material.set_shader_parameter("player_pos", (player_local/get_viewport_rect().size))
@@ -636,10 +635,34 @@ func _exploring(delta: float) -> void:
 	_update_player_minimap()
 	check_interaction()
 		
+func player_move_and_slide():
+	var player_clamp
+	var player_offset
+	var tiles_interior
+	var first_pos
+	var last_pos
+	
+	var old_pos : Vector2 = player.position
+	if Global.cur_scene == "outside": player.position = Vector2(clamp(player.position.x, -boundary_player.x, boundary_player.x), clamp(player.position.y, -boundary_player.y, boundary_player.y))
+	elif Global.cur_scene == "interior" and !Global.changing_scene: 
+		player_offset = Vector2(2,2)
+		tiles_interior = generated_interior[Global.cur_interior]
+		first_pos = tile_map.map_to_local(tiles_interior[0][0]) - player_offset
+		last_pos = tile_map.map_to_local(tiles_interior[tiles_interior.size()-1][0]) + player_offset
+		
+		player.position = Vector2(clamp(player.position.x, first_pos.x, last_pos.x), clamp(player.position.y, first_pos.y, last_pos.y))
+	
+	if old_pos.x != player.position.x: player.velocity.x = 0
+	if old_pos.y != player.position.y: player.velocity.y = 0
+
+	player.move_and_slide()
+
+	#if Global.cur_scene == "outside": player.position = Vector2(clamp(player.position.x, -boundary_player.x, boundary_player.x), clamp(player.position.y, -boundary_player.y, boundary_player.y))
+	#elif Global.cur_scene == "interior" and !Global.changing_scene: player.position = Vector2(clamp(player.position.x, first_pos.x, last_pos.x), clamp(player.position.y, first_pos.y, last_pos.y))
+		
 func _physics_process(delta: float) -> void:
 	if Global.is_exploring: _exploring(delta)
-	elif Global.cur_scene == "central_inventory": 
-		camera_follow_mouse(delta)
+	elif Global.cur_scene == "central_inventory": camera_follow_mouse(delta)
 
 func check_interaction():
 	if Global.is_interacting: 
@@ -656,6 +679,7 @@ func camera_follow_mouse(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("inventory"):
+		Global.spawn_new_item(Global.player_pos, Global.player_chunk, rng_calculator({"can" : 0.5, "mie" : 0.5}))
 		if Global.is_opening_inventory: 
 			backpack.hide()
 			Global.is_opening_inventory = false

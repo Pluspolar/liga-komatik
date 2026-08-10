@@ -33,14 +33,15 @@ func in_item_central(delta):
 		left_hold += 1 * delta
 	
 	else: 
-		if Input.is_action_just_released("left_click") and left_hold <= 0.2:
-			Global.item_count_central.create_items(Global.central_item_list[item_name].size)
-	
+		if Input.is_action_just_released("left_click") and Global.mouse_cooldown <= 0 and left_hold <= 0.175 and left_hold > 0:
+			Global.item_count_central.create_items(item_name, Global.central_inventory[item_name].size())
+			
 		left_hold = 0
 		
 	if (position.x < -96 or position.y < -110 or position.x > 476 or position.y > 331):
 		position = Global.viewport_tree.size/2
 		sleeping = true
+		
 	else: sleeping = false
 	
 func _process(delta: float) -> void:

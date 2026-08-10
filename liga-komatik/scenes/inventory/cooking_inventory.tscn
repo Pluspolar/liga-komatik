@@ -1,0 +1,124 @@
+[gd_scene format=3 uid="uid://dnw733uuasa1y"]
+
+[ext_resource type="Script" uid="uid://c3ow5s78awq0p" path="res://scripts/inventory/cooking_inventory.gd" id="1_kce3f"]
+[ext_resource type="Shader" uid="uid://cajgk6dog8gy" path="res://scripts/gdshaders/sidebar.gdshader" id="1_kuoei"]
+[ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="3_vwvlp"]
+[ext_resource type="Script" uid="uid://dy24464vqeti" path="res://scripts/inventory/cooking_button.gd" id="4_i656o"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ugcl7"]
+frequency = 0.014
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_14cdr"]
+noise = SubResource("FastNoiseLite_ugcl7")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0kyq7"]
+noise_type = 2
+seed = 5
+frequency = 0.0106
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_q4lci"]
+noise = SubResource("FastNoiseLite_0kyq7")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pp1to"]
+noise_type = 3
+seed = 4
+frequency = 0.008
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pj0hq"]
+noise = SubResource("FastNoiseLite_pp1to")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_htemk"]
+shader = ExtResource("1_kuoei")
+shader_parameter/noise_1 = SubResource("NoiseTexture2D_14cdr")
+shader_parameter/noise_2 = SubResource("NoiseTexture2D_q4lci")
+shader_parameter/noise_combine = SubResource("NoiseTexture2D_pj0hq")
+shader_parameter/center_pos = Vector2(0.005, 0)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ti5eg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ay4sc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0vh4k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pwp1h"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8ar6r"]
+
+[node name="cooking_inventory" type="CanvasLayer" unique_id=1559124875]
+script = ExtResource("1_kce3f")
+
+[node name="background" type="ColorRect" parent="." unique_id=1630003295]
+material = SubResource("ShaderMaterial_htemk")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="buttons" type="Control" parent="." unique_id=547658144]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -92.0
+offset_top = -33.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="cooking_button" type="Button" parent="buttons" unique_id=1301084002]
+modulate = Color(1, 1, 0.44672376, 1)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -91.5
+offset_top = -33.5
+grow_horizontal = 0
+grow_vertical = 0
+pivot_offset = Vector2(35, 11)
+theme_override_fonts/font = ExtResource("3_vwvlp")
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ti5eg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ay4sc")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_0vh4k")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_pwp1h")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8ar6r")
+script = ExtResource("4_i656o")
+
+[node name="label" type="RichTextLabel" parent="buttons/cooking_button" unique_id=1210089680]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -12.0
+offset_right = 43.5
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/normal_font = ExtResource("3_vwvlp")
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[tornado radius=0.4 freq=4.0]MULAI
+MEMASAK"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 2

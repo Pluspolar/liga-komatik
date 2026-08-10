@@ -20,11 +20,15 @@ void fragment() {
 	float noise_a_1 = texture(noise_1, uv_fract_1).r * noise_combine_uv;
 	float noise_a_2 = texture(noise_2, uv_fract_2).r * (0.5-noise_combine_uv);
 	
-	float noise_total = mix(noise_a_1*8.0, noise_a_2*8.0, 0.5);
-	COLOR.a = noise_total;
-	COLOR.a *= 0.6;
+	float cur_distance = pow(distance(UV.x, center_pos.x), 1.25) * 11.0;
+	float noise_total = mix(noise_a_1*8.0, noise_a_2*8.0, 0.5) - cur_distance;
+	
+	
+	float noise_total_distance = mix(0.4/cur_distance, noise_total, 0.7);
+	COLOR.a = noise_total_distance;
+	COLOR.rgb = vec3(0.0);
+	//COLOR.a *= 0.8;
 	//if (COLOR.a < 0.0) COLOR.a = 0.0;
-	COLOR.a += 0.4;
-	COLOR.rgb += vec3(0.05);
+	//COLOR.a += 0.4;
 	
 }
