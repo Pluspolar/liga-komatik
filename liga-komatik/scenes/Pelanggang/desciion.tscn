@@ -18,6 +18,7 @@ offset_left = 294.0
 offset_top = 66.0
 offset_right = 363.0
 offset_bottom = 88.0
+focus_mode = 0
 
 [node name="Label" type="Label" parent="Gossip" unique_id=1141303412]
 layout_mode = 0
@@ -33,6 +34,7 @@ offset_left = 294.0
 offset_top = 42.0
 offset_right = 363.0
 offset_bottom = 64.0
+focus_mode = 0
 
 [node name="Label" type="Label" parent="Repeat" unique_id=1153383101]
 layout_mode = 0
@@ -48,6 +50,7 @@ offset_left = 294.0
 offset_top = 90.0
 offset_right = 363.0
 offset_bottom = 112.0
+focus_mode = 0
 
 [node name="Label" type="Label" parent="COOOOK" unique_id=1120541973]
 layout_mode = 0
