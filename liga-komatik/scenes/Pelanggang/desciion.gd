@@ -1,6 +1,6 @@
 extends CanvasLayer
 @onready var dialog = $dialogue
-const cook = preload("uid://cnqh7ocygiu32")
+const COOK = preload("uid://cnqh7ocygiu32")
 
 var list = ["Aku laparrrr banget, keluargaku dibunuh, cuma ini yang kupunya", "Uhhhh, aku lapar", "Aku mau porsi Jumbo"]
 var times = 1
@@ -16,9 +16,13 @@ func _process(delta: float) -> void:
 
 
 func _on_cooook_button_down() -> void:
-	set_process(false)
-	get_tree().change_scene_to_packed(cook)
-	times =0
+	
+	var change : cooks = COOK.instantiate()
+	get_tree().root.add_child(change)
+	get_tree().current_scene = change
+
+# 4. Free the old scene (self)
+	queue_free()
 
 func _on_repeat_button_down() -> void:
 	if times < list.size():

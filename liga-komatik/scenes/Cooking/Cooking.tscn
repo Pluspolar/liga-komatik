@@ -87,6 +87,10 @@ font_size = 7
 font = ExtResource("10_qvev4")
 font_size = 12
 
+[sub_resource type="LabelSettings" id="LabelSettings_quang"]
+font = ExtResource("10_qvev4")
+font_size = 14
+
 [node name="Cooking" type="Node2D" unique_id=1038864092]
 script = ExtResource("1_eexf5")
 
@@ -307,6 +311,24 @@ label_settings = SubResource("LabelSettings_7tk3i")
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="Button" type="Button" parent="." unique_id=900251225]
+visible = false
+offset_left = 286.0
+offset_top = 179.0
+offset_right = 381.0
+offset_bottom = 213.0
+focus_mode = 0
+disabled = true
+
+[node name="Label" type="Label" parent="Button" unique_id=239639603]
+layout_mode = 0
+offset_right = 95.0
+offset_bottom = 33.0
+text = "Finish"
+label_settings = SubResource("LabelSettings_quang")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="mouse_entered" from="Swicth" to="." method="_on_swicth_mouse_entered"]
 [connection signal="mouse_entered" from="1" to="1" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="1" to="1" method="_on_mouse_exited"]
@@ -320,3 +342,4 @@ vertical_alignment = 1
 [connection signal="mouse_exited" from="6" to="6" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="4" to="4" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="4" to="4" method="_on_mouse_exited"]
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
