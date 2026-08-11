@@ -1,7 +1,7 @@
 extends Node2D
 class_name pelanggang
 @onready var sprite = $WomanShadow
-@onready var des = $Desciion
+@onready var des = $"1"
 var first = true
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

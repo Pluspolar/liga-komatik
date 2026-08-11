@@ -20,7 +20,7 @@ position = Vector2(192, 107.5)
 scale = Vector2(1.5000001, 0.84765625)
 texture = ExtResource("1_4fq5t")
 
-[node name="Desciion" parent="." unique_id=2096890935 instance=ExtResource("5_6jbvm")]
+[node name="1" parent="." unique_id=2096890935 instance=ExtResource("5_6jbvm")]
 
 [connection signal="done" from="WomanShadow" to="." method="_on_woman_shadow_done"]
 [connection signal="entered" from="WomanShadow" to="." method="_on_woman_shadow_entered"]
