@@ -1,0 +1,246 @@
+[gd_scene format=3 uid="uid://i3hypxykcult"]
+
+[ext_resource type="Script" uid="uid://cy53pn6ljbgf4" path="res://scripts/main/exploration.gd" id="1_gh8vw"]
+[ext_resource type="Texture2D" uid="uid://bpohl3ma1w0w0" path="res://textures/tiles/terrain_palette_7.png" id="2_stgpn"]
+[ext_resource type="Shader" uid="uid://c0acgjq117e6d" path="res://scripts/gdshaders/old_fog.gdshader" id="2_ue0mf"]
+[ext_resource type="Texture2D" uid="uid://bde7amsm6s1rv" path="res://textures/tiles/wall_palette.png" id="3_d35ny"]
+[ext_resource type="PackedScene" uid="uid://dxmns207wwbdx" path="res://scenes/main/player.tscn" id="3_ue0mf"]
+[ext_resource type="PackedScene" uid="uid://cw23mt2nx3v4p" path="res://scenes/UI/dialogue.tscn" id="5_6exic"]
+[ext_resource type="Shader" uid="uid://cl3mjp7tmxktk" path="res://scripts/gdshaders/fog.gdshader" id="6_6exic"]
+[ext_resource type="PackedScene" uid="uid://cnqh7ocygiu32" path="res://scenes/Cooking/Cooking.tscn" id="6_yedeh"]
+[ext_resource type="PackedScene" uid="uid://rxqck54a35se" path="res://scenes/inventory/backpack.tscn" id="6_ywco0"]
+[ext_resource type="PackedScene" uid="uid://ckj6wchsv4182" path="res://scenes/UI/interaction.tscn" id="7_gh8vw"]
+[ext_resource type="PackedScene" uid="uid://brrw8jkdg77xa" path="res://scenes/UI/minimap.tscn" id="7_stgpn"]
+[ext_resource type="PackedScene" uid="uid://dgwdd7ce5jhvc" path="res://scenes/inventory/central_inventory.tscn" id="10_6exic"]
+[ext_resource type="PackedScene" uid="uid://dnbe6vjwdojl5" path="res://scenes/inventory/item_count_central.tscn" id="11_ywco0"]
+[ext_resource type="PackedScene" uid="uid://dnw733uuasa1y" path="res://scenes/inventory/cooking_inventory.tscn" id="12_stgpn"]
+[ext_resource type="PackedScene" uid="uid://s52wyhn4tb6m" path="res://scenes/Pelanggang/Pelanggang.tscn" id="13_yedeh"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_iss55"]
+tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 1)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2a5b4"]
+texture = ExtResource("2_stgpn")
+texture_region_size = Vector2i(8, 8)
+0:0/size_in_atlas = Vector2i(2, 2)
+0:0/0 = 0
+2:0/size_in_atlas = Vector2i(2, 2)
+2:0/0 = 0
+0:2/size_in_atlas = Vector2i(2, 2)
+0:2/0 = 0
+2:2/size_in_atlas = Vector2i(2, 2)
+2:2/0 = 0
+4:0/size_in_atlas = Vector2i(2, 2)
+4:0/0 = 0
+6:0/size_in_atlas = Vector2i(2, 2)
+6:0/0 = 0
+4:2/size_in_atlas = Vector2i(2, 2)
+4:2/0 = 0
+6:2/size_in_atlas = Vector2i(2, 2)
+6:2/0 = 0
+8:0/size_in_atlas = Vector2i(2, 2)
+8:0/0 = 0
+0:4/size_in_atlas = Vector2i(2, 2)
+0:4/0 = 0
+4:4/size_in_atlas = Vector2i(2, 2)
+4:4/0 = 0
+11:1/size_in_atlas = Vector2i(4, 4)
+11:1/0 = 0
+17:1/size_in_atlas = Vector2i(4, 4)
+17:1/0 = 0
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_6exic"]
+polygon = PackedVector2Array(-8, -8, -8, -4.9571877, 8, -5.014496, 8, -8, 8, 8, 8, -5.014496, -8, -4.9571877, -8, 8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ywco0"]
+texture = ExtResource("3_d35ny")
+texture_region_size = Vector2i(16, 32)
+0:0/0 = 0
+0:0/0/texture_origin = Vector2i(0, 8)
+0:0/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_6exic")
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:0/0/physics_layer_0/polygon_0/one_way_margin = 0.0
+
+[sub_resource type="TileSet" id="TileSet_htemk"]
+occlusion_layer_0/light_mask = 1
+occlusion_layer_0/sdf_collision = true
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_2a5b4")
+sources/1 = SubResource("TileSetAtlasSource_ywco0")
+pattern_0 = SubResource("TileMapPattern_iss55")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d35ny"]
+shader = ExtResource("6_6exic")
+shader_parameter/pixelation = Vector2(84, 84)
+shader_parameter/player_pos = Vector2(0, 0)
+
+[sub_resource type="Gradient" id="Gradient_d35ny"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d35ny"]
+gradient = SubResource("Gradient_d35ny")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.7619048, 0.26839826)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0kyq7"]
+seed = 23295
+frequency = 0.0339
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ugcl7"]
+width = 384
+height = 216
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_0kyq7")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pj0hq"]
+shader = ExtResource("6_6exic")
+shader_parameter/pixelation = Vector2(84, 84)
+shader_parameter/noise = SubResource("NoiseTexture2D_ugcl7")
+shader_parameter/player_pos = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_stgpn"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.5304878)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4xwx6"]
+noise_type = 3
+frequency = 0.0178
+fractal_octaves = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0s8lr"]
+noise = SubResource("FastNoiseLite_4xwx6")
+color_ramp = SubResource("Gradient_stgpn")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_egmcr"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lmvdy"]
+noise = SubResource("FastNoiseLite_egmcr")
+seamless = true
+
+[sub_resource type="Gradient" id="Gradient_ue0mf"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.27407408)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kqym7"]
+gradient = SubResource("Gradient_ue0mf")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_htemk"]
+shader = ExtResource("2_ue0mf")
+shader_parameter/pixelation = Vector2(256, 256)
+shader_parameter/cloud_noise1 = SubResource("NoiseTexture2D_lmvdy")
+shader_parameter/scroll_speed1 = Vector2(0.02, 0.007)
+shader_parameter/scroll_speed2 = Vector2(-0.015, -0.004)
+shader_parameter/center_pos = Vector2(0.5, 0.5)
+shader_parameter/position_impact = 0.52999998815344
+shader_parameter/color_gardient = SubResource("GradientTexture1D_kqym7")
+
+[node name="exploration" type="Node2D" unique_id=1527149665]
+script = ExtResource("1_gh8vw")
+speed = 2000.0
+
+[node name="background" type="CanvasLayer" parent="." unique_id=2111901761]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="background" unique_id=1701401091]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 8
+color = Color(0, 0, 0, 1)
+
+[node name="tilemap" type="TileMapLayer" parent="." unique_id=1454337304]
+y_sort_enabled = true
+texture_filter = 1
+tile_set = SubResource("TileSet_htemk")
+y_sort_origin = 1
+
+[node name="Ysort" type="Node2D" parent="." unique_id=1624141549]
+y_sort_enabled = true
+
+[node name="tilemap_wall" type="TileMapLayer" parent="Ysort" unique_id=1267515272]
+y_sort_enabled = true
+texture_filter = 1
+tile_set = SubResource("TileSet_htemk")
+y_sort_origin = 1
+
+[node name="player" parent="Ysort" unique_id=278813971 instance=ExtResource("3_ue0mf")]
+z_index = 0
+z_as_relative = false
+
+[node name="fog" type="PointLight2D" parent="Ysort/player" unique_id=1329898546]
+material = SubResource("ShaderMaterial_d35ny")
+use_parent_material = true
+blend_mode = 2
+range_item_cull_mask = 3
+shadow_enabled = true
+shadow_item_cull_mask = 0
+texture = SubResource("GradientTexture2D_d35ny")
+texture_scale = 30.0
+
+[node name="darker_area" type="CanvasModulate" parent="." unique_id=1132029224]
+color = Color(0.2520276, 0.25202766, 0.25202763, 1)
+
+[node name="canvas_fog" type="CanvasLayer" parent="darker_area" unique_id=954603733]
+
+[node name="fog_texture" type="ColorRect" parent="darker_area/canvas_fog" unique_id=306045168]
+visible = false
+material = SubResource("ShaderMaterial_pj0hq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="cam" type="Camera2D" parent="." unique_id=1321165422]
+limit_enabled = false
+
+[node name="noise" type="Sprite2D" parent="." unique_id=779630262]
+visible = false
+position = Vector2(-260, -68)
+texture = SubResource("NoiseTexture2D_0s8lr")
+
+[node name="UI" type="Node2D" parent="." unique_id=564675393]
+
+[node name="dialogue" parent="UI" unique_id=31305971 instance=ExtResource("5_6exic")]
+
+[node name="backpack" parent="UI" unique_id=1402109859 instance=ExtResource("6_ywco0")]
+visible = false
+
+[node name="minimap" parent="UI" unique_id=1472598883 instance=ExtResource("7_stgpn")]
+visible = false
+
+[node name="interaction" parent="UI" unique_id=817276631 instance=ExtResource("7_gh8vw")]
+
+[node name="central_inventory" parent="UI" unique_id=1493145807 instance=ExtResource("10_6exic")]
+visible = false
+
+[node name="item_count_central" parent="UI" unique_id=2042369158 instance=ExtResource("11_ywco0")]
+visible = false
+
+[node name="cooking_inventory" parent="UI" unique_id=1975286521 instance=ExtResource("12_stgpn")]
+visible = false
+
+[node name="pelanggan" parent="." unique_id=991122665 instance=ExtResource("13_yedeh")]
+visible = false
+
+[node name="Cooking" parent="." unique_id=1038864092 instance=ExtResource("6_yedeh")]
+visible = false
+
+[node name="cloud" type="ColorRect" parent="." unique_id=1334844623]
+visible = false
+material = SubResource("ShaderMaterial_htemk")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 408.0
+offset_top = 28.0
+offset_right = 792.0
+offset_bottom = 244.0
+grow_horizontal = 2
+grow_vertical = 2

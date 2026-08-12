@@ -13,6 +13,7 @@ var gen_obj_interior = {}
 var chunks = {}
 var chunks_wall = {}
 var chunks_obj = {}
+var chunks_enemy = {}
 #var cur_chunk : Vector2i
 var backpack_inventory = {}
 var central_inventory = {}

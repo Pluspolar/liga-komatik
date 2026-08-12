@@ -159,6 +159,10 @@ var objects := { #[x_size, y_vertical_size, how much free space under "y"], scen
 	"abandoned_apartment" : [[3,1,0], "1_aband_apart", preload("res://scenes/structures/abandoned_apartment.tscn")]
 }
 
+var enemies := {
+	"soldier" : preload("res://scenes/enemy/enemy_1.tscn"),
+}
+
 func rand_interior_data():
 	interior_data = {
 	"1_aband_house" : [0.2, [randi_range(10,20), randi_range(10,20)], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}, 0.125, {"can" : 0.5, "mie": 0.5}], 
@@ -173,6 +177,7 @@ var minimap_img_explore : Image = Image.create(512, 288, false, Image.FORMAT_RGB
 @onready var chunk_size = Global.chunk_size
 @onready var chunks = Global.chunks
 @onready var chunks_wall = Global.chunks_wall
+@onready var chunks_enemy = Global.chunks_enemy
 @onready var chunks_obj = Global.chunks_obj
 @onready var astargrid : AStarGrid2D = AStarGrid2D.new()
 
@@ -263,6 +268,7 @@ func _set_tile():
 			if !chunks.has(cur_chunk): chunks[cur_chunk] = []
 			if !chunks_wall.has(cur_chunk): chunks_wall[cur_chunk] = []
 			if !chunks_obj.has(cur_chunk): chunks_obj[cur_chunk] = []
+			if !chunks_enemy.has(cur_chunk): chunks_enemy[cur_chunk] = []
 			
 			if _urban > 0:
 				if _road >= -0.08 and _road <= 0: place_tile_biome(pos, "city_road")
@@ -337,6 +343,20 @@ func place_tile_biome(pos : Vector2i, _biome: String):
 	chunks[cur_chunk].append([pos, tiles_data[tile]])
 	place_wall_biome(pos, _biome, minimap_pos)
 	create_object(pos, _biome)
+	place_enemy_biome(pos, _biome)
+	
+func place_enemy_biome(pos, _biome: String) -> void:
+	if objects_pos.get(pos) or randf_range(0,1) <= 0.998: return
+	
+	var obj_data = enemies["soldier"]
+	var obj = obj_data.instantiate()
+	obj.global_position = tile_map.map_to_local(pos)
+	obj._cur_tile = pos
+	objects_pos[pos] = "enemy"
+
+	chunks_enemy[cur_chunk].append(obj)
+	ysort.add_child(obj)
+	
 	
 func place_wall_biome(pos : Vector2i, _biome: String, minimap_pos : Vector2i) -> void:
 	rand_tiles_data()
@@ -580,6 +600,7 @@ func _load_scene():
 						for _tile in chunks[place_tile]: tile_map.set_cell(_tile[0], 0, _tile[1])
 						for _wall in chunks_wall[place_tile]: tilemap_wall.set_cell(_wall[0], 1, _wall[1])
 						for _obj in chunks_obj[place_tile]: _obj.call_deferred("show")
+						for _enemy in chunks_enemy[place_tile]: _enemy.call_deferred("show")
 						generated_chunks.append(place_tile)
 					elif generated_chunks.has(place_tile): temp_chunk.erase(place_tile)
 					
@@ -587,6 +608,7 @@ func _load_scene():
 				for _tile in chunks[_chunk]: tile_map.set_cell(_tile[0], -1)
 				for _wall in chunks_wall[_chunk]: tilemap_wall.set_cell(_wall[0], -1)
 				for _obj in chunks_obj[_chunk]: _obj.call_deferred("hide")
+				for _enemy in chunks_enemy[_chunk]: _enemy.call_deferred("hide")
 				generated_chunks.erase(_chunk)
 				
 		elif Global.cur_scene == "interior" and Global.changing_scene and Global.cur_interior != null:
@@ -679,28 +701,65 @@ func _exploring(delta: float) -> void:
 	
 	_update_player_minimap()
 	check_interaction()
+	_enemy_ai(delta)
+	
+func _enemy_ai(delta):
+	for _chunk_enemy in generated_chunks:
+		for _enemy in chunks_enemy[_chunk_enemy]:
+			var enemy_global_pos = _enemy.global_position
+			var cur_chunk_before : Vector2i = pos_to_chunk(enemy_global_pos)
+			_enemy.pathing_interval -= delta
+			if _enemy.pathing_interval <= 0:
+				var path_data = find_path_to(enemy_global_pos, player.global_position)
+				_enemy.cur_path = path_data[0]
+				_enemy.cur_path_tile = path_data[1]
+				_enemy.pathing_interval = 0.5
 		
-func find_path(cur_pos):
+			var cur_chunk_after : Vector2i = pos_to_chunk(_enemy.go_to_path())
+			
+			_enemy._cur_tile = tile_map.local_to_map(_enemy.global_position)
+			
+			if cur_chunk_before != cur_chunk_after:
+				chunks_enemy[cur_chunk_before].erase(_enemy)
+				chunks_enemy[cur_chunk_after].append(_enemy)
+				
+func find_path_to(cur_pos, target_pos):
+	var cur_pos_tile = tile_map.local_to_map(cur_pos)
+	var cur_target_tile = tile_map.local_to_map(target_pos)
+  
+	var cur_point_solid_y = point_solid_check(cur_pos_tile)
+	var target_point_solid_y = point_solid_check(cur_target_tile)
+	
+	var path_taken = astargrid.get_id_path(cur_pos_tile, cur_target_tile)
+		
+	point_solid_return(cur_point_solid_y, cur_pos_tile)
+	point_solid_return(target_point_solid_y, cur_target_tile)
+		
+	var path_taken_tile = path_taken.duplicate()
+	for i in range(path_taken.size()):
+		#tile_map.set_cell(path_taken[i], 0, tiles_data["grass"])
+		path_taken[i] = tile_map.map_to_local(path_taken[i])
+		
+	return [path_taken, path_taken_tile]
+	
+func point_solid_check(_tile):
 	var point_solid_y = -1
-	if astargrid.is_point_solid(Global.player_tile):
+	if astargrid.is_point_solid(_tile):
 		point_solid_y += 1
-		astargrid.set_point_solid(Global.player_tile, false)  
-		if !astargrid.is_point_solid(Global.player_tile+Vector2i(0,-1)):
+		astargrid.set_point_solid(_tile, false)  
+		if !astargrid.is_point_solid(_tile+Vector2i(0,-1)):
 			point_solid_y += 1
-			astargrid.set_point_solid(Global.player_tile+Vector2i(0,-1), true)  
-		
-	var path_taken = astargrid.get_id_path(tile_map.local_to_map(cur_pos), Global.player_tile)
-		
+			astargrid.set_point_solid(_tile+Vector2i(0,-1), true)
+	return point_solid_y
+	
+func point_solid_return(point_solid_y, _tile):
 	if point_solid_y >= 0: 
 		for i in range(point_solid_y+1):
 			if i == 0:
-				astargrid.set_point_solid(Global.player_tile, true)
+				astargrid.set_point_solid(_tile, true)
 			if i == 1:
-				astargrid.set_point_solid(Global.player_tile+Vector2i(0,-1), false)
-		
-		for i in path_taken:
-			tile_map.set_cell(i, 0, tiles_data["grass"])
-		
+				astargrid.set_point_solid(_tile+Vector2i(0,-1), false)
+				
 func player_move_and_slide():
 	var player_clamp
 	var player_offset

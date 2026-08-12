@@ -1,3 +1,35 @@
 [gd_scene format=3 uid="uid://poi4ja7s3h10"]
 
+[ext_resource type="Texture2D" uid="uid://dacd3fqmp651" path="res://textures/sprites/player/tuff_santoso_anim_down.png" id="1_d8iib"]
+[ext_resource type="Script" uid="uid://c7v55ucs64loa" path="res://scenes/enemy/enemy.gd" id="1_trh57"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trh57"]
+atlas = ExtResource("1_d8iib")
+region = Rect2(0, 0, 16, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_htemk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_trh57")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_htemk"]
+size = Vector2(12, 1)
+
 [node name="Enemy_1" type="CharacterBody2D" unique_id=1190393232]
+visible = false
+script = ExtResource("1_trh57")
+
+[node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1171042792]
+modulate = Color(1, 0.11774104, 0, 1)
+position = Vector2(0, -4)
+sprite_frames = SubResource("SpriteFrames_htemk")
+
+[node name="col_shape" type="CollisionShape2D" parent="." unique_id=1742114711]
+position = Vector2(0, 5.5)
+shape = SubResource("RectangleShape2D_htemk")
