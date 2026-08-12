@@ -46,7 +46,10 @@ var item_count_central : Object = null
 var cooking_inventory_scene : Object = null
 var dialogue : Object = null
 var cooking_scene : Object = null
+var pelanggan_scene : Object = null
 var cooking_inventory_list : Array = []
+var cooking_target : float = 0
+var cooking_obj : Array = []
 
 var mouse_cooldown : float = 0
 

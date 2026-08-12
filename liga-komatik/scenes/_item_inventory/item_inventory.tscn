@@ -12,9 +12,13 @@ size = Vector2(18, 26)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_14cdr"]
 size = Vector2(23, 40)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1s4xt"]
+radius = 7.0
+height = 42.0
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_14cdr"]
-radius = 4.009792
-height = 31.044245
+radius = 3.0
+height = 28.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q4lci"]
 radius = 4.468734
@@ -71,7 +75,7 @@ disabled = true
 [node name="sarden" type="CollisionShape2D" parent="." unique_id=532108264]
 visible = false
 rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_14cdr")
+shape = SubResource("CapsuleShape2D_1s4xt")
 disabled = true
 
 [node name="sawdust" type="CollisionShape2D" parent="." unique_id=1564302205]

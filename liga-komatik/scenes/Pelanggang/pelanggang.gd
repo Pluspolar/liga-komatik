@@ -3,26 +3,25 @@ class_name pelanggang
 @onready var sprite = $WomanShadow
 @onready var des = $"1"
 var first = true
-# Called when the node enters the scene tree for the first time.
+var entered = false
+
 func _ready() -> void:
+	Global.pelanggan_scene = self
+
+# Called when the node enters the scene tree for the first time.
+func _start() -> void:
 	if first:
 		sprite.getIn()
 	else:
 		print("work")
+		entered = false
+		first = true
 		sprite.getOut()
 		des.done()
 		
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
 func _on_woman_shadow_done() -> void:
 	sprite.position = Vector2(-112.19,102.0)
 	sprite.getIn()
 	
-
-
 func _on_woman_shadow_entered() -> void:
-	des.start()
+	des._start()

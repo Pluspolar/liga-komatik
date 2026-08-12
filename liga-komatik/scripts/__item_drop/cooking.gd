@@ -18,10 +18,7 @@ var lvl0 = "Tidak ada"
 var lvl1 = "Sedikit"
 var lvl2 = "Medium"
 var lvl3 = "Jumbo"
-var target = 0.7
-var total_nutrition : float = 0
-var cooking = true
-var holding = false
+#var target = 0.7
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -36,6 +33,8 @@ func _process(delta: float) -> void:
 		spatula_physics(delta)
 		if switch_shape.disabled:
 			switch_shape.disabled = false
+	
+	if total_nutrition <= 0: slop.scale = Vector2.ZERO
 	
 	#print(Global.cur_scene == "cooking")
 	
@@ -64,11 +63,10 @@ func bigger(nutri):
 	
 	#nutrition sizes indicator
 	
-	
 	var target_nutrition : float = total_nutrition
-	if target_nutrition > target : 
+	if target_nutrition > Global.cooking_target: 
 		done.disabled = false
-		done. visible = true
+		done.visible = true		
 	if target_nutrition > 0.05 and target_nutrition < 0.6:
 		nutri_level.text = lvl1
 	elif target_nutrition > 0.3 and target_nutrition < 0.7:
@@ -77,7 +75,7 @@ func bigger(nutri):
 		nutri_level.text = lvl3
 	elif target_nutrition == 0.0:
 		nutri_level.text = lvl0	
-	if target_nutrition > 0.863: target_nutrition = 0.8
+	if target_nutrition > 0.863: target_nutrition = 0.863
 	#if slop.scale.x < total_nutrition: #if slop.scale < Vector2(0.8,0.8):
 	tween.tween_property(slop, "scale", target_nutrition*Vector2(1,1), 1)
 		#slop.scale += pow((Vector2(nutrition, nutrition) - slop.scale), 0.95)
@@ -106,16 +104,32 @@ func newIngre(play) -> void :
 		
 		newFood.global_position = get_global_mouse_position()
 		
-		
-
-
 func _on_button_button_down() -> void:
-	var change = PELANGGANG.instantiate()
+	Global.change_scene_to("customer")
+	cooking_reset()
+	
+func cooking_reset():
+	Global.pelanggan_scene.first = false
+	total_nutrition = 0
+	Global.cooking_target = 0
+	slop.scale = Vector2.ZERO
+	nutri_level.text = lvl0
+	
+	done.disabled = true
+	done.visible = false
+	
+	for obj in Global.cooking_obj:
+		if Global.cooking_obj.has(obj): obj.call_deferred("queue_free")
+		
+	Global.cooking_obj.clear()
+
+	#Global.pelanggan_scene._start()
+	#var change = PELANGGANG.instantiate()
 	
 
-	change.first = false
+	#change.first = false
 	
 	# Add new scene to root and remove current scene safely
-	get_tree().root.add_child(change)
-	get_tree().current_scene.queue_free()
-	get_tree().current_scene = change
+	#get_tree().root.add_child(change)
+	#get_tree().current_scene.queue_free()
+	#get_tree().current_scene = change

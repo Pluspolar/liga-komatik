@@ -558,7 +558,8 @@ func _load_scene():
 					_cooking_inv_scene.show()
 				elif Global.cur_scene == "customer":
 					_customer_scene.show()
-					_customer_scene.get_node("Desciion")._run()
+					_customer_scene._start()
+					#_customer_scene.get_child(2)._start()
 				elif Global.cur_scene == "cooking":
 					_cooking_scene.show()
 				hand_interact.hide()

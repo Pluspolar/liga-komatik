@@ -3,24 +3,37 @@
 [ext_resource type="Script" uid="uid://uyyb0svkbpij" path="res://scripts/cooking/food.gd" id="1_u04j5"]
 [ext_resource type="SpriteFrames" uid="uid://i2k82erxbvjx" path="res://textures/Cooking/Ingredient/new_sprite_frames.tres" id="2_nkj5g"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ndmi3"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nkj5g"]
+radius = 5.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wae4q"]
-radius = 7.782922
-height = 28.28358
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dgs8j"]
+size = Vector2(18, 26)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_quang"]
-radius = 7.2102327
-height = 30.895744
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0t3q"]
+size = Vector2(23, 40)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wae4q"]
-size = Vector2(40, 22.5)
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7tk3i"]
-radius = 9.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dgs8j"]
+radius = 7.0
 height = 42.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r0t3q"]
+radius = 3.0
+height = 28.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_x3nv3"]
+radius = 4.468734
+height = 30.492031
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6jw7w"]
+radius = 9.433982
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1bgan"]
+radius = 8.000002
+height = 18.000004
+
 [node name="RigidBody2D" type="RigidBody2D" unique_id=2002989848]
+collision_layer = 512
+collision_mask = 512
 gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 4
@@ -33,38 +46,76 @@ sprite_frames = ExtResource("2_nkj5g")
 animation = &"sarden"
 
 [node name="Timer" type="Timer" parent="." unique_id=549622729]
+autostart = true
 
-[node name="udang" type="CollisionShape2D" parent="." unique_id=939039345]
-position = Vector2(2.42, 0)
-scale = Vector2(1.5, 1.5)
-shape = SubResource("CircleShape2D_ndmi3")
-disabled = true
-debug_color = Color(0.66369945, 0.31664118, 1, 0.41960785)
-
-[node name="rumput" type="CollisionShape2D" parent="." unique_id=1043592918]
-position = Vector2(-1, 0)
-rotation = -0.7784169
-scale = Vector2(1.5, 1.5)
-shape = SubResource("CapsuleShape2D_wae4q")
-disabled = true
-
-[node name="ubi" type="CollisionShape2D" parent="." unique_id=250023645]
-position = Vector2(1, 1)
-rotation = -1.2339478
-scale = Vector2(1.5, 1.5)
-shape = SubResource("CapsuleShape2D_quang")
-disabled = true
-
-[node name="kornet" type="CollisionShape2D" parent="." unique_id=549459461]
-position = Vector2(0, 0.25)
-scale = Vector2(1.5, 1.5)
-shape = SubResource("RectangleShape2D_wae4q")
-disabled = true
-
-[node name="sarden" type="CollisionShape2D" parent="." unique_id=1639673856]
+[node name="belalang" type="CollisionShape2D" parent="." unique_id=1065234599]
+visible = false
+position = Vector2(0, 1)
 rotation = 1.5707964
-scale = Vector2(1.5, 1.5)
-shape = SubResource("CapsuleShape2D_7tk3i")
+shape = SubResource("CapsuleShape2D_nkj5g")
+disabled = true
+
+[node name="can" type="CollisionShape2D" parent="." unique_id=1822400816]
+visible = false
+position = Vector2(0, 0.9999995)
+shape = SubResource("RectangleShape2D_dgs8j")
+disabled = true
+
+[node name="kornet" type="CollisionShape2D" parent="." unique_id=902814751]
+visible = false
+position = Vector2(9.947598e-14, 0.5)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_r0t3q")
+disabled = true
+
+[node name="mie" type="CollisionPolygon2D" parent="." unique_id=149703856]
+visible = false
+polygon = PackedVector2Array(-13, -6, -5, 12, 14, 7, 6, -11)
+disabled = true
+
+[node name="rumput" type="CollisionPolygon2D" parent="." unique_id=571714184]
+visible = false
+polygon = PackedVector2Array(-14, -6, 0, 13, 12, 4, -4, -14)
+disabled = true
+
+[node name="sarden" type="CollisionShape2D" parent="." unique_id=959319796]
+visible = false
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_dgs8j")
+disabled = true
+
+[node name="sawdust" type="CollisionShape2D" parent="." unique_id=446827070]
+visible = false
+position = Vector2(0, 4)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_r0t3q")
+disabled = true
+
+[node name="sosis" type="CollisionPolygon2D" parent="." unique_id=1002934344]
+visible = false
+polygon = PackedVector2Array(-12, -11, -4, -2, 5, 1, 11, 2, 14, 5, 14, 8, 11, 9, -4, 6, -14, 0, -15, -6, -16, -8, -14, -11)
+disabled = true
+
+[node name="ubi" type="CollisionShape2D" parent="." unique_id=2109942287]
+visible = false
+rotation = 2.073451
+shape = SubResource("CapsuleShape2D_x3nv3")
+disabled = true
+
+[node name="udang" type="CollisionShape2D" parent="." unique_id=794786804]
+visible = false
+position = Vector2(2, -5.9604645e-08)
+rotation = -2.1362832
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("CircleShape2D_6jw7w")
+disabled = true
+
+[node name="worm" type="CollisionShape2D" parent="." unique_id=1935626871]
+visible = false
+position = Vector2(-5, 0)
+rotation = 1.5707964
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("CapsuleShape2D_1bgan")
 disabled = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

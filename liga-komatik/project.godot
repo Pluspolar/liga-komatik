@@ -112,6 +112,7 @@ shift={
 2d_physics/layer_7="central_inventory"
 2d_physics/layer_8="item_central_interact"
 2d_physics/layer_9="cooking_interact"
+2d_physics/layer_10="cooking_items"
 2d_physics/size/viewport_height=144
 2d_physics/size/viewport_width=256
 
