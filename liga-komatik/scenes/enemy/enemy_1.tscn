@@ -23,6 +23,7 @@ size = Vector2(12, 1)
 
 [node name="Enemy_1" type="CharacterBody2D" unique_id=1190393232]
 visible = false
+collision_mask = 35
 script = ExtResource("1_trh57")
 
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1171042792]

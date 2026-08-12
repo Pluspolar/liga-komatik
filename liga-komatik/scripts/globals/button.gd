@@ -31,7 +31,9 @@ func _button_down():
 	cur_central_count_list.remove_at(0)
 	
 	if !cooking_inventory.has(cur_item_name): 
-		if cooking_inventory.size() >= 6: return
+		if cooking_inventory.size() >= 6: 
+			Global.item_count_central.hide()
+			return
 		cooking_inventory[cur_item_name] = Global._item_nutrition[cur_item_name][0].duplicate_deep()
 	
 	Global.cooking_invlist_queue_free()

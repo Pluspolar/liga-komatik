@@ -18,6 +18,7 @@ func getOut() -> void:
 	tween.tween_callback(emit_signal.bind("done"))
 	
 func getIn() -> void:
+	position = Vector2(-112.0, 102.0) 
 	var tween = create_tween()
 	tween.set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(self, "position", Vector2(211.0, 102.0), 2.0)	

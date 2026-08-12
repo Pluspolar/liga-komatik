@@ -21,7 +21,7 @@ var cooking_inventory = {}
 
 #var temp_cooking_inventory = {}
 
-var cur_cam_cooking : Vector2 = Vector2(192, 108)
+var cur_cam_cooking : Vector2 = Vector2(196.0, 108.0)
 var player_interior_out : Vector2 = Vector2(0,0)
 var item_id : int = 0
 var cam_coords : Vector2 = Vector2(0,0)
@@ -113,6 +113,20 @@ var sprite_counter = preload("res://scenes/global/counter.tscn")
 
 var item_inventory = preload("res://scenes/_item_inventory/item_inventory.tscn")
 
+func _ready() -> void:
+	add_preset_item("belalang", randi_range(2, 6))
+	add_preset_item("worm", randi_range(3, 5))
+	add_preset_item("sarden", randi_range(1, 3))
+	add_preset_item("sawdust", randi_range(3, 5))
+	add_preset_item("rumput", randi_range(2, 4))
+	for item_name in _item_nutrition:
+		central_inventory[item_name] = _item_nutrition[item_name][0].duplicate_deep()
+	#add_preset_item("kornet", randi_range(0, 1))
+
+func add_preset_item(item : String, amount : int):
+	cooking_inventory[item] = _item_nutrition[item][0].duplicate_deep()
+	cooking_inventory[item][0][0] = amount
+
 func _process(delta: float) -> void:
 	_timer += 1 * delta
 	if Input.is_action_just_pressed("left-hand"):
@@ -203,6 +217,10 @@ func change_scene_to(to_scene, interior = null):
 		
 	if to_scene == "central_inventory" and cur_scene != "central_inventory":
 		cooking_invlist_queue_free()
+		
+	if to_scene == "customer" and !cooking_scene_list.has(cur_scene):
+		pelanggan_scene.first = true
+		pelanggan_scene.entered = false
 		
 	if to_scene == "cooking":
 		get_tree().call_group("cooking_item_list", "_recount")

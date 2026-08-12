@@ -30,6 +30,8 @@ extends Node2D
 @onready var _cooking_inv_scene := $UI/cooking_inventory
 @onready var _customer_scene := $pelanggan
 @onready var _cooking_scene := $Cooking
+@onready var _loading_screen := $loading_screen
+@onready var gerobak := $Ysort/gerobak
 #@onready var _cooking_scene := $Cooking
 
 var noise = FastNoiseLite.new()
@@ -81,29 +83,49 @@ var tiles_data := {}
 var walls_data := {}
 var interior_data = {} #id, tiles, [x_size, y_size]
 
+#"sand" : Color8(209, 196, 158),
+#"water" : Color8(94, 125, 182),
+#"grass" : Color8(20, 93, 15),
 var tiles_color = {
-	"dirt" : Color8(104, 61, 43),
-	"sand" : Color8(209, 196, 158),
-	"water" : Color8(94, 125, 182),
-	"grass" : Color8(20, 93, 15),
+	"red_soil" : Color(0.397, 0.043, 0.0),
+	"dirt" : Color(0.467, 0.128, 0.0),
+	"sand" : Color(1.0, 0.9, 0.5),
+	"water" : Color(0.0, 0.35, 0.68),
+	"grass" : Color(0.0, 0.25, 0.0),
 	"stone" : Color(0.35, 0.35, 0.35),
 	"asphalt" : Color(0.25, 0.25, 0.25),
 	"gravel" : Color(0.3, 0.3, 0.3),
 }
 
+#"crate" : Color8(104, 61, 43)
 var walls_color = {
-	"crate" : Color8(104, 61, 43)
+	"crate" : Color(0.4, 0.1, 0),
+	"gray_concrete" : Color(0.1, 0.075, 0.07),
+	"gray_concrete_cracked" : Color(0.05, 0.05, 0.05),
+	"dark_gray_concrete" : Color(0.1, 0.075, 0.07),
+	"dark_gray_concrete_cracked" : Color(0.05, 0.05, 0.05),
 }
 
 func rand_tiles_data():
 	tiles_data = {
-	"dirt" : Vector2i(randi_range(0,1), randi_range(0,1))*2,
-	"sand" : Vector2i(randi_range(2,3), randi_range(0,1))*2,
-	"water" : Vector2i(8,0),
-	"grass" : Vector2i(11,1),
-	"stone" : Vector2i(0,4),
-	"asphalt" : Vector2i(4,4),
-	"gravel" : Vector2i(17,1),
+	"dirt" : Vector2i(randi_range(0,1), randi_range(0,1)),
+	"red_soil" : Vector2i(randi_range(0,1), randi_range(2,3)),
+	"sand" : Vector2i(randi_range(4,5), randi_range(0,1)),
+	"water" : Vector2i(15,0),
+	"grass" : Vector2i(randi_range(6,7), randi_range(0,1)),
+	"stone" : Vector2i(randi_range(4,5), randi_range(2,3)),
+	"asphalt" : Vector2i(randi_range(2,3), randi_range(2,3)),
+	"gravel" : Vector2i(randi_range(6,7), randi_range(2,3)),
+	"wooden_board" : Vector2i(14, 0),
+	"spruce_planks" : Vector2i(13, 2),
+	"birch_planks" : Vector2i(14, 2),
+	"oak_planks" : Vector2i(15, 2),
+	"blue_concrete" : Vector2i(12, 0),
+	"blue_concrete_cracked" : Vector2i(13, 0),
+	"gray_concrete" : Vector2i(14, 3),
+	"gray_concrete_cracked" : Vector2i(15, 3),
+	"dark_gray_concrete" : Vector2i(13, 4),
+	"dark_gray_concrete_cracked" : Vector2i(15, 4),
 	}
 
 	#tiles_data = {
@@ -117,15 +139,30 @@ func rand_tiles_data():
 	#}
 func rand_walls_data():
 	walls_data = {
-		"crate" : Vector2i(0, 0)
+		"crate" : Vector2i(0, 0),
+		"blue_concrete_cut" : Vector2i(1, 0),
+		"blue_concrete" : Vector2i(2, 0),
+		"blue_concrete_cracked" : Vector2i(3, 0),
+		"crate_2" : Vector2i(4, 0),
+		"crate_3" : Vector2i(5, 0),
+		"wooden_board" : Vector2i(6, 0),
+		"spruce_planks" : Vector2i(7, 0),
+		"birch_planks" : Vector2i(8, 0),
+		"oak_planks" : Vector2i(9, 0),
+		"gray_concrete_cut" : Vector2i(10, 0),
+		"gray_concrete" : Vector2i(11, 0),
+		"gray_concrete_cracked" : Vector2i(12, 0),
+		"dark_gray_concrete" : Vector2i(13, 0),
+		"dark_gray_concrete_cut" : Vector2i(14, 0),
+		"dark_gray_concrete_cracked" : Vector2i(15, 0),
 	}
 
 var biomes_data := {
 	"plains" : {"grass" : 1, "dirt" : 0},
 	"beach" : {"sand" : 1},
 	"ocean" : {"water" : 1},
-	"eucalyptus" : {"grass" : 0.05, "dirt" : 0.95},
-	"urban" : {"stone" : 0.998, "dirt" : 0.002},
+	"eucalyptus" : {"dirt" : 0.1, "red_soil" : 0.9},
+	"urban" : {"stone" : 0.995, "red_soil" : 0.0025, "dirt" : 0.0025},
 	"city" : {"asphalt" : 1},
 	"city_transition" : {"asphalt" : 1},
 	"city_road" : {"gravel" : 1},
@@ -138,7 +175,7 @@ var biomes_wall_data := {
 	"eucalyptus" : {},
 	"urban" : {},
 	"city" : {},
-	"city_transition" : {"crate" : 1},
+	"city_transition" : {"dark_gray_concrete" : 0.95, "dark_gray_concrete_cracked" : 0.05},
 	"city_road" : {},
 }
 
@@ -165,8 +202,8 @@ var enemies := {
 
 func rand_interior_data():
 	interior_data = {
-	"1_aband_house" : [0.2, [randi_range(10,20), randi_range(10,20)], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}, 0.125, {"can" : 0.5, "mie": 0.5}], 
-	"1_aband_apart" : [0.1, [randi_range(20,35), randi_range(20,35)], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}, 0.06, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}]
+	"1_aband_house" : [0.2, [randi_range(10,20), randi_range(10,20)], {"oak_planks" : 0.9, "red_soil" : 0.1}, {"wooden_board" : 1}, 0.125, {"can" : 0.5, "mie": 0.5}], 
+	"1_aband_apart" : [0.1, [randi_range(20,35), randi_range(20,35)], {"gray_concrete" : 0.85, "gray_concrete_cracked" : 0.075, "red_soil" : 0.075}, {"dark_gray_concrete" : 0.89, "dark_gray_concrete_cracked" : 0.1, "dark_gray_concrete_cut" : 0.01}, 0.06, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}]
 } #room_abundance, [x_size, y_size], tiles, chance_item_per_tile, item_list #old: id, [x_size, y_size], tiles, chance_item_per_tile, item_loot_table
 
 var objects_pos := {}
@@ -181,12 +218,15 @@ var minimap_img_explore : Image = Image.create(512, 288, false, Image.FORMAT_RGB
 @onready var chunks_obj = Global.chunks_obj
 @onready var astargrid : AStarGrid2D = AStarGrid2D.new()
 
+var generating : bool = true
+
 func _ready_rand():
 	rand_tiles_data()
 	rand_walls_data()
 	rand_interior_data()
 
 func _ready() -> void:
+	await get_tree().create_timer(0.1).timeout
 	_ready_rand()
 	minimap_img_explore.fill(Color.BLACK)
 	interior_pos = tile_map.map_to_local(interior_tile)
@@ -206,10 +246,22 @@ func _ready() -> void:
 	#road = generate_noise(0.0125, 2, "cellular", 1, 0.6, false, "sign")
 	#road = generate_noise(0.015, 2, "cellular", 1, 0.5, false, "sign")
 	destruction = generate_noise(0.003, 3, "cellular", 1, 0.2)
+	await get_tree().create_timer(0.1).timeout
 	_set_tile()
 	_player_minimap()
 	
 	thread_1.start(_load_scene)
+	generating = false
+	
+	await get_tree().create_timer(0.1).timeout
+	done_loading()
+	Global.change_scene_to("customer")
+	
+func done_loading():
+	for i in range(60):
+		_loading_screen.offset.x += (400 - _loading_screen.offset.x) * 0.1
+		await get_tree().process_frame
+	_loading_screen.queue_free()
 	
 func _exit_tree() -> void:
 	thread_1.wait_to_finish()
@@ -252,6 +304,7 @@ func _set_tile():
 	setup_astargrid()
 	
 	for x in range(-width_half-1, width_half+1):
+		#await get_tree().create_timer(0.05).timeout
 		for y in range(-height_half-1, height_half+1):
 			var pos = Vector2i(x, y)
 			if pos.x == (-width_half-1) or pos.y == (-height_half-1) or pos.x == width_half or pos.y == height_half:
@@ -299,14 +352,24 @@ func _player_minimap():
 	var new_sprite = Sprite2D.new()
 	new_sprite.texture = preload("res://textures/sprites/UI/map_player_2.png")
 	new_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	new_sprite.scale = Vector2(1,1)*0.5
+	new_sprite.scale = Vector2(1,1)*0.6
+	var gerobak_sprite = Sprite2D.new()
+	gerobak_sprite.texture = preload("res://textures/sprites/UI/gerobak_minimap.png")
+	gerobak_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	gerobak_sprite.scale = Vector2(1,1)*0.75
 	player.map_sprite = new_sprite
+	gerobak.map_sprite = gerobak_sprite
 	mini_map.add_child(new_sprite)
+	mini_map.add_child(gerobak_sprite)
 	
 func _update_player_minimap():
 	if Global.cur_scene == "outside" and !Global.changing_scene: 
 		player.map_sprite.position = player.global_position/(16*float(boundary_x)/512)+Vector2(256, 144)
+		gerobak.map_sprite.position = gerobak.global_position/(16*float(boundary_x)/512)+Vector2(256, 144)
 		map_unlock_section()
+	if Global.cur_scene == "outside" or Global.cur_scene == "interior":
+		gerobak.map_sprite.modulate = Color(1,1,1,1) * (1.3 + sin(Global._timer*5) * 0.3)
+		gerobak.map_sprite.modulate.a = 1
 	
 func map_unlock_section():
 	var pixel_change : bool = false
@@ -346,7 +409,7 @@ func place_tile_biome(pos : Vector2i, _biome: String):
 	place_enemy_biome(pos, _biome)
 	
 func place_enemy_biome(pos, _biome: String) -> void:
-	if objects_pos.get(pos) or randf_range(0,1) <= 0.998: return
+	if objects_pos.get(pos) or randf_range(0,1) <= 0.9999: return
 	
 	var obj_data = enemies["soldier"]
 	var obj = obj_data.instantiate()
@@ -652,6 +715,7 @@ func erase_all_chunks():
 		for _tile in chunks[_chunk]: tile_map.set_cell(_tile[0], -1)
 		for _wall in chunks_wall[_chunk]: tilemap_wall.set_cell(_wall[0], -1)
 		for _obj in chunks_obj[_chunk]: _obj.call_deferred("hide")
+		for _enemy in chunks_enemy[_chunk]: _enemy.call_deferred("hide")
 	generated_chunks.clear()
 		
 func is_in_water():
@@ -671,6 +735,7 @@ func _exploring(delta: float) -> void:
 	
 	if _is_in_water: player.velocity *= pow(0.4, delta*60)
 	else: player.velocity *= pow(0.85, delta*60)
+	gerobak.velocity *= pow(0.85, 60 * delta)
 	
 	camera.position += (player.global_position - camera.position) * 10 * delta
 	
@@ -768,7 +833,9 @@ func player_move_and_slide():
 	var last_pos
 	
 	var old_pos : Vector2 = player.position
-	if Global.cur_scene == "outside": player.position = Vector2(clamp(player.position.x, -boundary_player.x, boundary_player.x), clamp(player.position.y, -boundary_player.y, boundary_player.y))
+	if Global.cur_scene == "outside": 
+		player.position = Vector2(clamp(player.position.x, -boundary_player.x, boundary_player.x), clamp(player.position.y, -boundary_player.y, boundary_player.y))
+		gerobak.position = Vector2(clamp(gerobak.position.x, -boundary_player.x, boundary_player.x), clamp(gerobak.position.y, -boundary_player.y, boundary_player.y))
 	elif Global.cur_scene == "interior" and !Global.changing_scene: 
 		player_offset = Vector2(2,2)
 		tiles_interior = generated_interior[Global.cur_interior]
@@ -780,13 +847,20 @@ func player_move_and_slide():
 	if old_pos.x != player.position.x: player.velocity.x = 0
 	if old_pos.y != player.position.y: player.velocity.y = 0
 
+	gerobak.move_and_slide()
 	player.move_and_slide()
+	
+	#gerobak.position = Vector2(clamp(gerobak.position.x, first_pos.x, last_pos.x), clamp(gerobak.position.y, first_pos.y, last_pos.y))
 
 	#if Global.cur_scene == "outside": player.position = Vector2(clamp(player.position.x, -boundary_player.x, boundary_player.x), clamp(player.position.y, -boundary_player.y, boundary_player.y))
 	#elif Global.cur_scene == "interior" and !Global.changing_scene: player.position = Vector2(clamp(player.position.x, first_pos.x, last_pos.x), clamp(player.position.y, first_pos.y, last_pos.y))
 		
 func _physics_process(delta: float) -> void:
-	if Global.is_exploring: _exploring(delta)
+	if generating: return
+	player.hide()
+	if Global.is_exploring: 
+		player.show()
+		_exploring(delta)
 	elif Global.cur_scene == "central_inventory": camera_follow_mouse(delta)
 	elif Global.cur_scene == "customer": camera.position = Global.viewport_tree.size/2
 	elif Global.cur_scene == "cooking": camera.position = Global.cur_cam_cooking
@@ -806,7 +880,7 @@ func camera_follow_mouse(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("inventory"):
-		Global.spawn_new_item(Global.player_pos, Global.player_chunk, rng_calculator({"can" : 0.5, "mie" : 0.5}))
+		Global.spawn_new_item(Global.player_pos, Global.player_chunk, rng_calculator({"can" : 0.1, "mie" : 0.1, "belalang" : 0.1, "kornet" : 0.1, "ubi" : 0.1, "sarden" : 0.1, "worm" : 0.1, "sawdust" : 0.1, "sosis" : 0.1, "udang" : 0.1}))
 		if Global.is_opening_inventory: 
 			backpack.hide()
 			Global.is_opening_inventory = false

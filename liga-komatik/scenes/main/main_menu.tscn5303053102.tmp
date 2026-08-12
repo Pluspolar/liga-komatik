@@ -1,0 +1,197 @@
+[gd_scene format=3 uid="uid://c7ncaymvee0ul"]
+
+[ext_resource type="Shader" uid="uid://c0acgjq117e6d" path="res://scripts/gdshaders/old_fog.gdshader" id="1_sd5it"]
+[ext_resource type="Script" uid="uid://d31nkv4dlxeav" path="res://scripts/main_menu.gd" id="1_w6ykx"]
+[ext_resource type="FontFile" uid="uid://bpmogubtg5vj" path="res://textures/fonts/Snowbell-Wp4g9.ttf" id="2_5vafy"]
+[ext_resource type="Script" uid="uid://cybkx43bx3u6w" path="res://scripts/globals/main_menu_button.gd" id="2_byqcc"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5vafy"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lmvdy"]
+noise = SubResource("FastNoiseLite_5vafy")
+seamless = true
+
+[sub_resource type="Gradient" id="Gradient_byqcc"]
+colors = PackedColorArray(1, 1, 1, 1, 0.7519803, 0.95382863, 0.99780685, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kqym7"]
+gradient = SubResource("Gradient_byqcc")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w6ykx"]
+shader = ExtResource("1_sd5it")
+shader_parameter/pixelation = Vector2(256, 256)
+shader_parameter/cloud_noise1 = SubResource("NoiseTexture2D_lmvdy")
+shader_parameter/scroll_speed1 = Vector2(0.02, 0.007)
+shader_parameter/scroll_speed2 = Vector2(-0.015, -0.004)
+shader_parameter/center_pos = Vector2(0.5, 0.5)
+shader_parameter/position_impact = 0.52999998815344
+shader_parameter/color_gardient = SubResource("GradientTexture1D_kqym7")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_htemk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_byqcc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_14cdr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w6ykx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pj0hq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ugcl7"]
+
+[sub_resource type="Gradient" id="Gradient_w6ykx"]
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_htemk"]
+gradient = SubResource("Gradient_w6ykx")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="main_menu" type="CanvasLayer" unique_id=570199120]
+script = ExtResource("1_w6ykx")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1498856503]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.39632824, 0.17069378, 0, 1)
+
+[node name="cloud2" type="ColorRect" parent="." unique_id=1028928748]
+visible = false
+material = SubResource("ShaderMaterial_w6ykx")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -341.33337
+offset_top = -192.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="cloud" type="ColorRect" parent="." unique_id=710797439]
+material = SubResource("ShaderMaterial_w6ykx")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -170.66669
+offset_top = -96.0
+offset_right = 170.66669
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=2093884530]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.272)
+
+[node name="Button" type="Button" parent="." unique_id=207059616]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -66.7742
+offset_top = -20.0
+offset_right = 66.7742
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_htemk")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_byqcc")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_14cdr")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_w6ykx")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_pj0hq")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ugcl7")
+script = ExtResource("2_byqcc")
+
+[node name="mulai" type="RichTextLabel" parent="Button" unique_id=1145360063]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -9.5
+offset_right = 62.0
+offset_bottom = 9.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(64, 7)
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("2_5vafy")
+theme_override_font_sizes/normal_font_size = 27
+bbcode_enabled = true
+text = "[tornado radius=0.8 freq=4.0]MULAI"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button2" type="Button" parent="." unique_id=786832469]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -47.0
+offset_top = -86.69501
+offset_right = 46.999573
+offset_bottom = -56.875
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_htemk")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_byqcc")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_14cdr")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_w6ykx")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_pj0hq")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ugcl7")
+script = ExtResource("2_byqcc")
+
+[node name="mulai" type="RichTextLabel" parent="Button2" unique_id=1714346487]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -9.5
+offset_right = 62.0
+offset_bottom = 9.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(64, 7)
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("2_5vafy")
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "[tornado radius=0.8 freq=4.0]KELUAR"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="vignette" type="Sprite2D" parent="." unique_id=1389884604]
+position = Vector2(191.00002, 108)
+scale = Vector2(6.1250005, 3.4999998)
+texture = SubResource("GradientTexture2D_htemk")

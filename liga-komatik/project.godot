@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Order Up, Heads Down! - Liga Komatik"
-run/main_scene="uid://i3hypxykcult"
+run/main_scene="uid://c7ncaymvee0ul"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="uid://k61uwhx25f8b"
 
@@ -33,6 +33,8 @@ interior_interaction=""
 item_drop=""
 item_central_interact=""
 cooking_interact=""
+gerobak=""
+gerobak_interact=""
 
 [input]
 
@@ -113,6 +115,7 @@ shift={
 2d_physics/layer_8="item_central_interact"
 2d_physics/layer_9="cooking_interact"
 2d_physics/layer_10="cooking_items"
+2d_physics/layer_11="gerobak"
 2d_physics/size/viewport_height=144
 2d_physics/size/viewport_width=256
 

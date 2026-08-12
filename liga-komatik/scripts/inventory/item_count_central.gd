@@ -16,6 +16,7 @@ func create_items(item_name : String, amount : int):
 		cur_central_count_list.clear()
 		
 	cur_central_count_list.append(item_name)
+	
 	for i in range(amount):
 		var item_list = item_central_interact.instantiate()
 		item_list.item_name = item_name

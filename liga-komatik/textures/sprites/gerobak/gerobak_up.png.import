@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bde7amsm6s1rv"
-path="res://.godot/imported/wall_palette.png-9932dfe6ed2d7ad4b46e0ebbe202b3f4.ctex"
+uid="uid://bvkamnddl1qy5"
+path="res://.godot/imported/gerobak_up.png-f5fe987d8bcc79c35ba4026c058e705f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/tiles/wall_palette.png"
-dest_files=["res://.godot/imported/wall_palette.png-9932dfe6ed2d7ad4b46e0ebbe202b3f4.ctex"]
+source_file="res://textures/sprites/gerobak/gerobak_up.png"
+dest_files=["res://.godot/imported/gerobak_up.png-f5fe987d8bcc79c35ba4026c058e705f.ctex"]
 
 [params]
 
