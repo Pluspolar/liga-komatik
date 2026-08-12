@@ -1,33 +1,39 @@
 extends CanvasLayer
-@onready var dialog = $dialogue
+#@onready var dialog = $dialogue
 const COOK = preload("uid://cnqh7ocygiu32")
 
 var list = ["Aku laparrrr banget, keluargaku dibunuh, cuma ini yang kupunya", "Uhhhh, aku lapar", "Aku mau porsi Jumbo"]
 var times = 1
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	dialog.add_text(list[0],15,"Random Woman")
-	
+func _run() -> void:
+	Global.dialogue.add_text(list[0],15,"Random Woman")
+
+#func _ready() -> void:
+#	Global.dialogue.add_text(list[0],15,"Random Woman")
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	visible = get_parent().visible
 
 
 func _on_cooook_button_down() -> void:
+	if Global.cur_scene != "customer": return
+	Global.change_scene_to("cooking")
 	
-	var change : cooks = COOK.instantiate()
-	get_tree().root.add_child(change)
-	get_tree().current_scene = change
+	#var change : cooks = COOK.instantiate()
+	#get_tree().root.add_child(change)
+	#get_tree().current_scene = change
 
 # 4. Free the old scene (self)
-	queue_free()
+	#queue_free()
 
 func _on_repeat_button_down() -> void:
+	if Global.cur_scene != "customer": return
 	if times < list.size():
-		dialog.add_text(list[times],15,"Random Woman")
+		Global.dialogue.add_text(list[times],15,"Random Woman")
 		times += 1
 
 func _on_gossip_button_down() -> void:
-	dialog.add_text("di sigma ada skibidi, kalo skibid ke sigma",15,"Random Woman")
+	if Global.cur_scene != "customer": return
+	Global.dialogue.add_text("di sigma ada skibidi, kalo skibid ke sigma",15,"Random Woman")

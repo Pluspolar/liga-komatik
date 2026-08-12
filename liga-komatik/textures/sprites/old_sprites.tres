@@ -1,0 +1,41 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://cf2rty8gjlh3u"]
+
+[ext_resource type="Texture2D" uid="uid://db713odxq0240" path="res://textures/sprites/item/belalang.png" id="1_wsae0"]
+[ext_resource type="Texture2D" uid="uid://diqlpm0cs32ox" path="res://textures/sprites/item/can.png" id="2_3rjub"]
+[ext_resource type="Texture2D" uid="uid://djx44ybt5uf5d" path="res://textures/sprites/item/mie.png" id="3_t4nh7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhso2"]
+atlas = ExtResource("2_3rjub")
+region = Rect2(0, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [],
+"loop": 0,
+"name": &"_",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_wsae0")
+}],
+"loop": 1,
+"name": &"belalang",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nhso2")
+}],
+"loop": 0,
+"name": &"can",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_t4nh7")
+}],
+"loop": 0,
+"name": &"mie",
+"speed": 5.0
+}]

@@ -32,6 +32,7 @@ window/stretch/aspect="expand"
 interior_interaction=""
 item_drop=""
 item_central_interact=""
+cooking_interact=""
 
 [input]
 
@@ -110,6 +111,7 @@ shift={
 2d_physics/layer_6="tiles"
 2d_physics/layer_7="central_inventory"
 2d_physics/layer_8="item_central_interact"
+2d_physics/layer_9="cooking_interact"
 2d_physics/size/viewport_height=144
 2d_physics/size/viewport_width=256
 

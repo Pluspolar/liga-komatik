@@ -6,18 +6,19 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_ndmi3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wae4q"]
-radius = 14.114229
-height = 48.165977
+radius = 7.782922
+height = 28.28358
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_quang"]
-height = 50.446663
+radius = 7.2102327
+height = 30.895744
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wae4q"]
-size = Vector2(76, 45)
+size = Vector2(40, 22.5)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7tk3i"]
-radius = 15.019955
-height = 82.07326
+radius = 9.0
+height = 42.0
 
 [node name="RigidBody2D" type="RigidBody2D" unique_id=2002989848]
 gravity_scale = 0.0
@@ -26,38 +27,43 @@ max_contacts_reported = 4
 linear_damp = 1.6
 script = ExtResource("1_u04j5")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=984923059]
+scale = Vector2(1.5, 1.5)
+sprite_frames = ExtResource("2_nkj5g")
+animation = &"sarden"
+
+[node name="Timer" type="Timer" parent="." unique_id=549622729]
+
 [node name="udang" type="CollisionShape2D" parent="." unique_id=939039345]
-visible = false
+position = Vector2(2.42, 0)
+scale = Vector2(1.5, 1.5)
 shape = SubResource("CircleShape2D_ndmi3")
 disabled = true
 debug_color = Color(0.66369945, 0.31664118, 1, 0.41960785)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=984923059]
-sprite_frames = ExtResource("2_nkj5g")
-animation = &"rumput"
-
-[node name="Timer" type="Timer" parent="." unique_id=549622729]
-
 [node name="rumput" type="CollisionShape2D" parent="." unique_id=1043592918]
-position = Vector2(-3.9999995, -14)
-rotation = -0.84823
+position = Vector2(-1, 0)
+rotation = -0.7784169
+scale = Vector2(1.5, 1.5)
 shape = SubResource("CapsuleShape2D_wae4q")
 disabled = true
 
 [node name="ubi" type="CollisionShape2D" parent="." unique_id=250023645]
-position = Vector2(-3, 1)
-rotation = -0.9983283
+position = Vector2(1, 1)
+rotation = -1.2339478
+scale = Vector2(1.5, 1.5)
 shape = SubResource("CapsuleShape2D_quang")
 disabled = true
 
 [node name="kornet" type="CollisionShape2D" parent="." unique_id=549459461]
-visible = false
-position = Vector2(0, -17.5)
+position = Vector2(0, 0.25)
+scale = Vector2(1.5, 1.5)
 shape = SubResource("RectangleShape2D_wae4q")
 disabled = true
 
 [node name="sarden" type="CollisionShape2D" parent="." unique_id=1639673856]
 rotation = 1.5707964
+scale = Vector2(1.5, 1.5)
 shape = SubResource("CapsuleShape2D_7tk3i")
 disabled = true
 

@@ -18,7 +18,16 @@ const GRABABLE = preload("uid://0q5f1qfe1crj")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	self.get_child(2).text = str(Inventory[self.name])
-
+	collision_layer = 256
+	add_to_group("cooking_item_list")
+	
+	var cur_sprite = self.get_child(0)
+	var _sprite_frames = cur_sprite.sprite_frames
+	var cur_sprite_texture = _sprite_frames.get_frame_texture(cur_sprite.animation, 0).get_size()
+	cur_sprite.position.y -= cur_sprite_texture.y/4
+	#print(cur_sprite_texture)
+	#print()
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
@@ -33,16 +42,13 @@ func sub_inv(pick, label) -> void :
 	Inventory[pick] -= 1
 	label.text = str(Inventory[pick])
 	
-
-
-
 func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+	if false and Global.cur_scene == "cooking" and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		var list = [s1,s2,s3,s4,s5,s6]
 		for i in list:
 			if self.get_child(0) == i:
 				sub_inv(self.name, self.get_child(2))
-				root.holding = true
+				Global.cooking_scene.holding = true
 				var newGrab : grabable = GRABABLE.instantiate()
 				newGrab.play(i.animation)
 				newGrab.done.connect(root.newIngre)
@@ -51,4 +57,14 @@ func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void
 				if Inventory[self.name] < 1:
 					queue_free()
 				
+func create_sprite():
+	sub_inv(self.name, self.get_child(2))
+	Global.cooking_scene.holding = true
+	var newGrab : grabable = GRABABLE.instantiate()
+	newGrab.play(self.get_child(0).animation)
+	newGrab.done.connect(root.newIngre)
+	newGrab.position = get_global_mouse_position()
+	get_parent().add_child(newGrab)
+	if Inventory[self.name] < 1:
+		queue_free()
 				

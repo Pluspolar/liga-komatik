@@ -28,6 +28,8 @@ extends Node2D
 @onready var darker_area := $darker_area
 @onready var _central_inventory := $UI/central_inventory
 @onready var _cooking_inv_scene := $UI/cooking_inventory
+@onready var _customer_scene := $pelanggan
+@onready var _cooking_scene := $Cooking
 #@onready var _cooking_scene := $Cooking
 
 var noise = FastNoiseLite.new()
@@ -136,7 +138,7 @@ var biomes_wall_data := {
 	"eucalyptus" : {},
 	"urban" : {},
 	"city" : {},
-	"city_transition" : {"crate" : 0.35},
+	"city_transition" : {"crate" : 1},
 	"city_road" : {},
 }
 
@@ -160,7 +162,7 @@ var objects := { #[x_size, y_vertical_size, how much free space under "y"], scen
 func rand_interior_data():
 	interior_data = {
 	"1_aband_house" : [0.2, [randi_range(10,20), randi_range(10,20)], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}, 0.125, {"can" : 0.5, "mie": 0.5}], 
-	"1_aband_apart" : [0.1, [randi_range(20,35), randi_range(20,35)], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}, 0.06, {"can" : 1}]
+	"1_aband_apart" : [0.1, [randi_range(20,35), randi_range(20,35)], {"stone" : 0.9, "dirt" : 0.1}, {"crate" : 1}, 0.06, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}]
 } #room_abundance, [x_size, y_size], tiles, chance_item_per_tile, item_list #old: id, [x_size, y_size], tiles, chance_item_per_tile, item_loot_table
 
 var objects_pos := {}
@@ -544,6 +546,8 @@ func _load_scene():
 		if Global.changing_scene:
 			_central_inventory.hide()
 			_cooking_inv_scene.hide()
+			_customer_scene.hide()
+			_cooking_scene.hide()
 			#_cooking_scene.hide()
 			if Global.is_exploring: 
 				darker_area.show()
@@ -552,8 +556,11 @@ func _load_scene():
 				if Global.cur_scene == "central_inventory": 
 					_central_inventory.show()
 					_cooking_inv_scene.show()
-				#elif Global.cur_scene == "cooking":
-					#_cooking_scene.show()
+				elif Global.cur_scene == "customer":
+					_customer_scene.show()
+					_customer_scene.get_node("Desciion")._run()
+				elif Global.cur_scene == "cooking":
+					_cooking_scene.show()
 				hand_interact.hide()
 				darker_area.hide()
 		
@@ -707,7 +714,9 @@ func player_move_and_slide():
 func _physics_process(delta: float) -> void:
 	if Global.is_exploring: _exploring(delta)
 	elif Global.cur_scene == "central_inventory": camera_follow_mouse(delta)
-
+	elif Global.cur_scene == "customer": camera.position = Global.viewport_tree.size/2
+	elif Global.cur_scene == "cooking": camera.position = Global.cur_cam_cooking
+	
 func check_interaction():
 	if Global.is_interacting: 
 		hand_interact.show()

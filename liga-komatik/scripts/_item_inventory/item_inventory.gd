@@ -3,8 +3,25 @@ var item_name: String = ""
 var item_id: String
 var item_count: int = -1
 var left_hold: float = 0
+@onready var costume_sprite = $costume_sprite
+@onready var col_shape : Dictionary = {
+	"belalang" : $belalang,
+	"can" : $can,
+	"kornet" : $kornet,
+	"mie" : $mie,
+	"rumput" : $rumput,
+	"sarden" : $sarden,
+	"sawdust" : $sawdust,
+	"sosis" : $sosis,
+	"ubi" : $ubi,
+	"udang" : $udang,
+	"worm" : $worm,
+}
 
 func _ready():
+	costume_sprite.play(item_name)
+	col_shape[item_name].show()
+	col_shape[item_name].disabled = false
 	if Global.cur_scene == "central_inventory": 
 		add_to_group("item_central")
 		gravity_scale = 0

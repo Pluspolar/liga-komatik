@@ -11,5 +11,5 @@ func _process(delta: float) -> void:
 	else: modulate = Color(1, 1, 1)
 	
 func _button_down():
-	Global.change_scene_to("cooking")
+	Global.change_scene_to("customer")
 	#print("yo")

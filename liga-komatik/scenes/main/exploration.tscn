@@ -7,12 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://dxmns207wwbdx" path="res://scenes/main/player.tscn" id="3_ue0mf"]
 [ext_resource type="PackedScene" uid="uid://cw23mt2nx3v4p" path="res://scenes/UI/dialogue.tscn" id="5_6exic"]
 [ext_resource type="Shader" uid="uid://cl3mjp7tmxktk" path="res://scripts/gdshaders/fog.gdshader" id="6_6exic"]
+[ext_resource type="PackedScene" uid="uid://cnqh7ocygiu32" path="res://scenes/Cooking/Cooking.tscn" id="6_yedeh"]
 [ext_resource type="PackedScene" uid="uid://rxqck54a35se" path="res://scenes/inventory/backpack.tscn" id="6_ywco0"]
 [ext_resource type="PackedScene" uid="uid://ckj6wchsv4182" path="res://scenes/UI/interaction.tscn" id="7_gh8vw"]
 [ext_resource type="PackedScene" uid="uid://brrw8jkdg77xa" path="res://scenes/UI/minimap.tscn" id="7_stgpn"]
 [ext_resource type="PackedScene" uid="uid://dgwdd7ce5jhvc" path="res://scenes/inventory/central_inventory.tscn" id="10_6exic"]
 [ext_resource type="PackedScene" uid="uid://dnbe6vjwdojl5" path="res://scenes/inventory/item_count_central.tscn" id="11_ywco0"]
 [ext_resource type="PackedScene" uid="uid://dnw733uuasa1y" path="res://scenes/inventory/cooking_inventory.tscn" id="12_stgpn"]
+[ext_resource type="PackedScene" uid="uid://s52wyhn4tb6m" path="res://scenes/Pelanggang/Pelanggang.tscn" id="13_yedeh"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_iss55"]
 tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 1)
@@ -206,7 +208,6 @@ texture = SubResource("NoiseTexture2D_0s8lr")
 [node name="UI" type="Node2D" parent="." unique_id=564675393]
 
 [node name="dialogue" parent="UI" unique_id=31305971 instance=ExtResource("5_6exic")]
-visible = false
 
 [node name="backpack" parent="UI" unique_id=1402109859 instance=ExtResource("6_ywco0")]
 visible = false
@@ -223,6 +224,12 @@ visible = false
 visible = false
 
 [node name="cooking_inventory" parent="UI" unique_id=1975286521 instance=ExtResource("12_stgpn")]
+visible = false
+
+[node name="pelanggan" parent="." unique_id=991122665 instance=ExtResource("13_yedeh")]
+visible = false
+
+[node name="Cooking" parent="." unique_id=1038864092 instance=ExtResource("6_yedeh")]
 visible = false
 
 [node name="cloud" type="ColorRect" parent="." unique_id=1334844623]

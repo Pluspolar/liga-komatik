@@ -20,6 +20,7 @@ var cooking_inventory = {}
 
 #var temp_cooking_inventory = {}
 
+var cur_cam_cooking : Vector2 = Vector2(192, 108)
 var player_interior_out : Vector2 = Vector2(0,0)
 var item_id : int = 0
 var cam_coords : Vector2 = Vector2(0,0)
@@ -43,6 +44,8 @@ var central_item_list : Dictionary = {}
 var cur_central_count_list : Array = []
 var item_count_central : Object = null
 var cooking_inventory_scene : Object = null
+var dialogue : Object = null
+var cooking_scene : Object = null
 var cooking_inventory_list : Array = []
 
 var mouse_cooldown : float = 0
@@ -56,21 +59,55 @@ var item_drop = preload("res://scenes/__item_drop/item_drop.tscn")
 #} #scene, nutrition
 
 var _item_nutrition : Dictionary = {
+	"belalang" : [
+		{0 : [0, 30], 1 : [0, 60], 2 : [0, 150], 3 : [0, 350]}, 
+		{0 : 0.65, 1 : 0.2, 2 : 0.1, 3 : 0.05}],
+		
 	"can" : [
-		{0 : [0, 0.5], 1 : [0, 1.5], 2 : [0, 3.5], 3 : [0, 7.0]}, 
+		{0 : [0, 15], 1 : [0, 35], 2 : [0, 80], 3 : [0, 150]}, 
+		{0 : 0.65, 1 : 0.2, 2 : 0.1, 3 : 0.05}],
+		
+	"kornet" : [
+		{0 : [0, 45], 1 : [0, 80], 2 : [0, 5], 3 : [0, 250]}, 
 		{0 : 0.65, 1 : 0.2, 2 : 0.1, 3 : 0.05}],
 		
 	"mie" : [
-		{0 : [0, 0.5], 1 : [0, 1.5], 2 : [0, 3.5], 3 : [0, 7.0]}, 
-		{0 : 0.65, 1 : 0.2, 2 : 0.1, 3 : 0.05}]
+		{0 : [0, 30], 1 : [0, 60], 2 : [0, 135], 3 : [0, 350]}, 
+		{0 : 0.65, 1 : 0.2, 2 : 0.1, 3 : 0.05}],
+		
+	"rumput" : [
+		{0 : [0, 20], 1 : [0, 50], 2 : [0, 125], 3 : [0, 250]}, 
+		{0 : 0.65, 1 : 0.2, 2 : 0.1, 3 : 0.05}],
+		
+	"sarden" : [
+		{0 : [0, 20], 1 : [0, 50], 2 : [0, 125], 3 : [0, 250]}, 
+		{0 : 0.65, 1 : 0.2, 2 : 0.1, 3 : 0.05}],
+		
+	"sawdust" : [
+		{0 : [0, 20], 1 : [0, 50], 2 : [0, 125], 3 : [0, 250]}, 
+		{0 : 0.65, 1 : 0.2, 2 : 0.1, 3 : 0.05}],
+		
+	"sosis" : [
+		{0 : [0, 20], 1 : [0, 50], 2 : [0, 125], 3 : [0, 250]}, 
+		{0 : 0.65, 1 : 0.2, 2 : 0.1, 3 : 0.05}],
+
+	"ubi" : [
+		{0 : [0, 20], 1 : [0, 50], 2 : [0, 125], 3 : [0, 250]}, 
+		{0 : 0.65, 1 : 0.2, 2 : 0.1, 3 : 0.05}],
+
+	"udang" : [
+		{0 : [0, 20], 1 : [0, 50], 2 : [0, 125], 3 : [0, 250]}, 
+		{0 : 0.65, 1 : 0.2, 2 : 0.1, 3 : 0.05}],
+		
+	"worm" : [
+		{0 : [0, 20], 1 : [0, 50], 2 : [0, 125], 3 : [0, 250]}, 
+		{0 : 0.65, 1 : 0.2, 2 : 0.1, 3 : 0.05}],
+
 } #nutrition_value_per_star [amount (0), nutrition], star_chance
 
 var sprite_counter = preload("res://scenes/global/counter.tscn")
 
-var item_inventory : Dictionary = {
-	"can" : preload("res://scenes/_item_inventory/can.tscn"),
-	"mie" : preload("res://scenes/_item_inventory/mie.tscn")
-}
+var item_inventory = preload("res://scenes/_item_inventory/item_inventory.tscn")
 
 func _process(delta: float) -> void:
 	_timer += 1 * delta
@@ -127,9 +164,10 @@ func spawn_item(_item_id: String, pos: Vector2, chunk_pos: Vector2i, item_name: 
 	get_tree().current_scene.get_node("Ysort").add_child(drop_item)
 
 func add_item(object, chunk_pos : Vector2i, _item_id: String, item_name: String, item_star: int, item_nutrition: float): #item_weight: float):
-	var item_backpack = item_inventory[item_name].instantiate()
+	var item_backpack = item_inventory.instantiate()
 	item_backpack.position = Vector2(randf_range(viewport_tree.size.x/2-20, viewport_tree.size.x/2+20), 0)
 	item_backpack.item_id = _item_id
+	item_backpack.item_name = item_name
 	item_backpack.modulate += Color(1,0,1) * (pow(1.3, item_star)-1)
 	backpack_inventory[_item_id] = [item_name, item_star, item_nutrition, item_backpack]
 	chunks_obj[chunk_pos].erase(object)
@@ -192,7 +230,7 @@ func central_item(item_name: String, amount: int) -> void:
 	if amount <= 0: return
 	var central_inv_scene = get_tree().current_scene.get_node("UI/central_inventory")
 
-	var item_central = item_inventory[item_name].instantiate()
+	var item_central = item_inventory.instantiate()
 	var _sprite_counter = sprite_counter.instantiate()
 	item_central.position = viewport_tree.size/2 + Vector2(randi_range(-80,80), randi_range(-80,80))
 	item_central.item_count = amount

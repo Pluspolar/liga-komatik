@@ -16,12 +16,12 @@ func _ready():
 	#mouse_area_follow.add_child(shape)
 	
 	mouse_area.collision_layer = 0
-	mouse_area.collision_mask = 196 #4+64+128
+	mouse_area.collision_mask = 452 #4+64+128+256
 	add_child(mouse_area)
 	
 func _process(_delta: float) -> void:
 	
-	if Global.cur_scene == "central_inventory" and !Global.item_count_central.visible: mouse_area.position = get_global_mouse_position()
+	if (Global.cur_scene == "central_inventory" and !Global.item_count_central.visible) or Global.cur_scene == "cooking" : mouse_area.position = get_global_mouse_position()
 	else: mouse_area.position = get_viewport().get_mouse_position()
 	var bodies = mouse_area.get_overlapping_bodies()
 	var areas = mouse_area.get_overlapping_areas()
@@ -58,6 +58,23 @@ func _process(_delta: float) -> void:
 				new_hovered = null
 				hovered = null
 			break
+		
+		if Global.cur_scene == "cooking":
+			if _area.is_in_group("cooking_interact"):
+				_area.get_parent()._on_swicth_mouse_entered()
+				var cur_cooking = _area.get_parent().cooking
+				var cur_shape = _area.get_child(0)
+				#if cur_cooking: _area.position = Vector2(0,0)
+				#else: _area.position = Vector2(384,0)
+				cur_shape.call_deferred("set_disabled", true)
+				#_area.position.x = Global.cur_cam_cooking.x-Global.viewport_tree.size.x/2
+				#print(_area.get_parent().cooking)
+				break
+			
+			elif _area.is_in_group("cooking_item_list"):
+				if Input.is_action_just_pressed("left_click"):
+					_area.create_sprite()
+				break
 			
 	if not Global.is_opening_inventory and Global.cur_scene != "central_inventory":
 		new_hovered = null

@@ -7,11 +7,12 @@ const FOOD = preload("uid://dhnglshdg05fo")
 @onready var total_nutrition : float = 0
 @onready var cooking = true
 @onready var holding = false
-@onready var Cam = $Camera2D
+#@onready var Cam = $Camera2D
 @onready var cook = $Marker2D
 @onready var ingre = $Marker2D2
 @onready var nutri_level = $nutriLevel
 @onready var done = $Button
+@onready var switch_shape = $Swicth/CollisionShape2D
 var lvl0 = "Tidak ada"
 var lvl1 = "Sedikit"
 var lvl2 = "Medium"
@@ -19,15 +20,19 @@ var lvl3 = "Jumbo"
 var target = 0.7
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Global.cooking_scene = self
 	slop.scale= Vector2(0,0)
 	nutri_level.text = lvl0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	#$Slop/AnimationPlayer.play("new_animation")
+	if Global.cur_scene == "cooking": 
+		spatula_physics(delta)
+		if switch_shape.disabled:
+			switch_shape.disabled = false
 	
-		
-	spatula_physics(delta)
+	#print(Global.cur_scene == "cooking")
 	
 func spatula_physics(delta: float) -> void:
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and cooking and !holding:
@@ -77,12 +82,13 @@ func bigger(nutri):
 
 func _on_swicth_mouse_entered() -> void:
 	if cooking == true:
-		Cam.position = Vector2(-195.485, 108.0 )
+		Global.cur_cam_cooking = Vector2(-195.485, 108.0)
+		#Cam.position = Vector2(-195.485, 108.0)
 		cooking = false
 	else : 
-		Cam.position = Vector2(196.0, 108.0)
+		Global.cur_cam_cooking = Vector2(196.0, 108.0)
+		#Cam.position = Vector2(196.0, 108.0)
 		cooking = true
-
 
 func newIngre(play) -> void :
 		holding = false

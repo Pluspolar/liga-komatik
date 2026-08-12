@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dg54283h68cjq" path="res://scripts/cooking/grabable.gd" id="2_futpd"]
 
 [node name="grabable" type="AnimatedSprite2D" unique_id=1879483802]
+scale = Vector2(1.5, 1.5)
 sprite_frames = ExtResource("1_u15f5")
 animation = &"rumput"
 script = ExtResource("2_futpd")

@@ -1,0 +1,73 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://ck8d4ynyl8om4"]
+
+[ext_resource type="Texture2D" uid="uid://diqlpm0cs32ox" path="res://textures/sprites/item/can.png" id="1_0htmg"]
+[ext_resource type="Texture2D" uid="uid://elutf0nk1c1u" path="res://textures/Cooking/Ingredient/Kornet.png" id="2_eepfy"]
+[ext_resource type="Texture2D" uid="uid://djx44ybt5uf5d" path="res://textures/sprites/item/mie.png" id="3_chqd5"]
+[ext_resource type="Texture2D" uid="uid://dysf2hx71oa2f" path="res://textures/Cooking/Ingredient/Rumput.png" id="4_djx4r"]
+[ext_resource type="Texture2D" uid="uid://sj77wnyeew2s" path="res://textures/Cooking/Ingredient/Sarden.png" id="5_ayq1c"]
+[ext_resource type="Texture2D" uid="uid://bx5qsx2iqlgtd" path="res://textures/Cooking/Ingredient/Ubi.png" id="6_ana40"]
+[ext_resource type="Texture2D" uid="uid://qmhkckw7gorx" path="res://textures/Cooking/Ingredient/udang.png" id="7_c44yd"]
+
+[resource]
+animations = [{
+"frames": [],
+"loop": 1,
+"name": &"-",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0htmg")
+}],
+"loop": 1,
+"name": &"can",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_eepfy")
+}],
+"loop": 1,
+"name": &"kornet",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_chqd5")
+}],
+"loop": 1,
+"name": &"mie",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_djx4r")
+}],
+"loop": 1,
+"name": &"rumput",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_ayq1c")
+}],
+"loop": 1,
+"name": &"sarden",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_ana40")
+}],
+"loop": 1,
+"name": &"ubi",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_c44yd")
+}],
+"loop": 1,
+"name": &"udang",
+"speed": 5.0
+}]

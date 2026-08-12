@@ -9,6 +9,9 @@ var char_text_ : String
 var tween: Tween
 var text_array: Array = []
 
+func _ready() -> void:
+	Global.dialogue = self
+
 enum state {
 	READY,
 	TALKING,

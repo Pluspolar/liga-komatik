@@ -155,10 +155,9 @@ position = Vector2(-195, 110)
 scale = Vector2(1.5078125, 1)
 texture = ExtResource("8_lbay0")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1239452147]
-position = Vector2(196, 108)
-
-[node name="Swicth" type="Area2D" parent="." unique_id=1645597865]
+[node name="Swicth" type="Area2D" parent="." unique_id=1645597865 groups=["cooking_interact"]]
+collision_layer = 256
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Swicth" unique_id=683643372]
 position = Vector2(2.5, 114)
@@ -166,10 +165,13 @@ shape = SubResource("RectangleShape2D_7tk3i")
 
 [node name="1" type="Area2D" parent="." unique_id=1551558150]
 position = Vector2(-313, 71)
+collision_layer = 256
+collision_mask = 0
 script = ExtResource("8_6dxfr")
 
 [node name="AnimatedSprite2D1" type="AnimatedSprite2D" parent="1" unique_id=1760026995]
 position = Vector2(-0.049987793, 1)
+scale = Vector2(1.5, 1.5)
 sprite_frames = ExtResource("9_qvev4")
 animation = &"rumput"
 
@@ -188,12 +190,14 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="2" type="Area2D" parent="." unique_id=1818578458]
-visible = false
 position = Vector2(-198.26, 71)
+collision_layer = 256
+collision_mask = 0
 script = ExtResource("8_6dxfr")
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="2" unique_id=584744935]
 position = Vector2(1.2599945, 1)
+scale = Vector2(1.5, 1.5)
 sprite_frames = ExtResource("9_qvev4")
 animation = &"sarden"
 
@@ -213,10 +217,13 @@ vertical_alignment = 1
 
 [node name="3" type="Area2D" parent="." unique_id=1876275875]
 position = Vector2(-81.965, 71)
+collision_layer = 256
+collision_mask = 0
 script = ExtResource("8_6dxfr")
 
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="3" unique_id=1955545647]
 position = Vector2(-0.08000946, 1)
+scale = Vector2(1.5, 1.5)
 sprite_frames = ExtResource("9_qvev4")
 animation = &"kornet"
 
@@ -234,12 +241,37 @@ label_settings = SubResource("LabelSettings_wae4q")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="4" type="Area2D" parent="." unique_id=1646543432]
+position = Vector2(-312.61, 181.38)
+script = ExtResource("8_6dxfr")
+
+[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="4" unique_id=2045024730]
+position = Vector2(-0.44000244, -1.3800049)
+scale = Vector2(1.5, 1.5)
+sprite_frames = ExtResource("9_qvev4")
+animation = &"rumput"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="4" unique_id=1369385189]
+position = Vector2(0.5, -16.75)
+shape = SubResource("RectangleShape2D_quang")
+
+[node name="Label" type="Label" parent="4" unique_id=1864986521]
+offset_left = -19.390015
+offset_top = 16.619995
+offset_right = 21.102142
+offset_bottom = 28.619995
+text = "1"
+label_settings = SubResource("LabelSettings_wae4q")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="5" type="Area2D" parent="." unique_id=1388612232]
 position = Vector2(-196.785, 178.58)
 script = ExtResource("8_6dxfr")
 
 [node name="AnimatedSprite2D5" type="AnimatedSprite2D" parent="5" unique_id=2123458986]
 position = Vector2(-0.21499634, 1.4199982)
+scale = Vector2(1.5, 1.5)
 sprite_frames = ExtResource("9_qvev4")
 animation = &"sarden"
 
@@ -263,6 +295,7 @@ script = ExtResource("8_6dxfr")
 
 [node name="AnimatedSprite2D6" type="AnimatedSprite2D" parent="6" unique_id=1033572677]
 position = Vector2(-0.1000061, 1.4199982)
+scale = Vector2(1.5, 1.5)
 sprite_frames = ExtResource("9_qvev4")
 animation = &"ubi"
 
@@ -275,29 +308,6 @@ offset_left = -19.39
 offset_top = 19.295
 offset_right = 21.102158
 offset_bottom = 31.295
-text = "1"
-label_settings = SubResource("LabelSettings_wae4q")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="4" type="Area2D" parent="." unique_id=1646543432]
-position = Vector2(-312.61, 181.38)
-script = ExtResource("8_6dxfr")
-
-[node name="AnimatedSprite2D4" type="AnimatedSprite2D" parent="4" unique_id=2045024730]
-position = Vector2(-0.44000244, -1.3800049)
-sprite_frames = ExtResource("9_qvev4")
-animation = &"rumput"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="4" unique_id=1369385189]
-position = Vector2(0.5, -16.75)
-shape = SubResource("RectangleShape2D_quang")
-
-[node name="Label" type="Label" parent="4" unique_id=1864986521]
-offset_left = -19.390015
-offset_top = 16.619995
-offset_right = 21.102142
-offset_bottom = 28.619995
 text = "1"
 label_settings = SubResource("LabelSettings_wae4q")
 horizontal_alignment = 1
@@ -330,17 +340,16 @@ label_settings = SubResource("LabelSettings_quang")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="mouse_entered" from="Swicth" to="." method="_on_swicth_mouse_entered"]
 [connection signal="mouse_entered" from="1" to="1" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="1" to="1" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="2" to="2" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="2" to="2" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="3" to="3" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="3" to="3" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="4" to="4" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="4" to="4" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="5" to="5" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="5" to="5" method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="6" to="6" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="6" to="6" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="4" to="4" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="4" to="4" method="_on_mouse_exited"]
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]

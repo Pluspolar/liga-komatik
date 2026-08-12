@@ -1,16 +1,56 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://i2k82erxbvjx"]
 
-[ext_resource type="Texture2D" uid="uid://elutf0nk1c1u" path="res://textures/Cooking/Ingredient/Kornet.png" id="1_88j4h"]
-[ext_resource type="Texture2D" uid="uid://dysf2hx71oa2f" path="res://textures/Cooking/Ingredient/Rumput.png" id="2_it2ny"]
-[ext_resource type="Texture2D" uid="uid://sj77wnyeew2s" path="res://textures/Cooking/Ingredient/Sarden.png" id="3_u0vhr"]
-[ext_resource type="Texture2D" uid="uid://bx5qsx2iqlgtd" path="res://textures/Cooking/Ingredient/Ubi.png" id="4_65c7t"]
-[ext_resource type="Texture2D" uid="uid://qmhkckw7gorx" path="res://textures/Cooking/Ingredient/udang.png" id="5_juu4v"]
+[ext_resource type="Texture2D" uid="uid://c8j2sgwyinq0q" path="res://textures/sprites/icon.svg" id="1_ki6rk"]
+[ext_resource type="Texture2D" uid="uid://diqlpm0cs32ox" path="res://textures/sprites/item/can.png" id="1_u0vhr"]
+[ext_resource type="Texture2D" uid="uid://db713odxq0240" path="res://textures/sprites/item/belalang.png" id="1_xmur3"]
+[ext_resource type="Texture2D" uid="uid://blrhlltueqwt0" path="res://textures/sprites/UI/hand_1.png" id="2_eb8cb"]
+[ext_resource type="Texture2D" uid="uid://djx44ybt5uf5d" path="res://textures/sprites/item/mie.png" id="3_65c7t"]
+[ext_resource type="Texture2D" uid="uid://cwvtixtwm4at" path="res://textures/sprites/item/kornet.png" id="3_ki6rk"]
+[ext_resource type="Texture2D" uid="uid://cpudtahcaex3f" path="res://textures/sprites/item/rumput-new.png" id="5_eb8cb"]
+[ext_resource type="Texture2D" uid="uid://de25kd4ty3f2e" path="res://textures/sprites/item/sarden-mew.png" id="6_igvre"]
+[ext_resource type="Texture2D" uid="uid://cgywagc65icbb" path="res://textures/sprites/item/sawdust-new.png" id="7_tgdy0"]
+[ext_resource type="Texture2D" uid="uid://c887456a0yvsd" path="res://textures/sprites/item/sosis-new.png" id="8_6ufwn"]
+[ext_resource type="Texture2D" uid="uid://c234yyos8hxb5" path="res://textures/sprites/item/ubi-new.png" id="9_p5gdt"]
+[ext_resource type="Texture2D" uid="uid://dvje5jf57wgv0" path="res://textures/sprites/item/udang-new.png" id="10_pxq2n"]
+[ext_resource type="Texture2D" uid="uid://cv7d1qn6df1fs" path="res://textures/sprites/item/worm-new.png" id="11_8gnj8"]
 
 [resource]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_88j4h")
+"texture": ExtResource("1_ki6rk")
+}],
+"loop": 1,
+"name": &"-",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_eb8cb")
+}],
+"loop": 1,
+"name": &"_",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_xmur3")
+}],
+"loop": 1,
+"name": &"belalang",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_u0vhr")
+}],
+"loop": 1,
+"name": &"can",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ki6rk")
 }],
 "loop": 1,
 "name": &"kornet",
@@ -18,7 +58,15 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_it2ny")
+"texture": ExtResource("3_65c7t")
+}],
+"loop": 1,
+"name": &"mie",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_eb8cb")
 }],
 "loop": 1,
 "name": &"rumput",
@@ -26,7 +74,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_u0vhr")
+"texture": ExtResource("6_igvre")
 }],
 "loop": 1,
 "name": &"sarden",
@@ -34,7 +82,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_65c7t")
+"texture": ExtResource("7_tgdy0")
+}],
+"loop": 1,
+"name": &"sawdust",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_6ufwn")
+}],
+"loop": 1,
+"name": &"sosis",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_p5gdt")
 }],
 "loop": 1,
 "name": &"ubi",
@@ -42,9 +106,17 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_juu4v")
+"texture": ExtResource("10_pxq2n")
 }],
 "loop": 1,
 "name": &"udang",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_8gnj8")
+}],
+"loop": 1,
+"name": &"worm",
 "speed": 5.0
 }]
