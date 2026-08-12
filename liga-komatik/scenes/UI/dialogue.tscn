@@ -20,6 +20,7 @@ offset_top = -52.0
 offset_right = 128.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 theme_override_constants/margin_left = 9
 theme_override_constants/margin_top = -5
 theme_override_constants/margin_right = 9
@@ -28,9 +29,11 @@ theme_override_constants/margin_bottom = 11
 [node name="Panel" type="Panel" parent="MarginContainer" unique_id=1074255754]
 visible = false
 layout_mode = 2
+mouse_filter = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer" unique_id=251357035]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 7
 theme_override_constants/margin_top = 7
 theme_override_constants/margin_right = 7
@@ -39,10 +42,12 @@ theme_override_constants/margin_bottom = -2
 [node name="Panel" type="Panel" parent="MarginContainer/MarginContainer2" unique_id=1315268963]
 visible = false
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pj0hq")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer2" unique_id=1331474214]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="text" type="RichTextLabel" parent="MarginContainer/MarginContainer2/HBoxContainer" unique_id=787563750]
 clip_contents = false
@@ -50,6 +55,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 offset_transform_enabled = true
 offset_transform_position = Vector2(1.135, 0)
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/line_separation = 1
@@ -71,6 +77,7 @@ size_flags_stretch_ratio = 0.02
 offset_transform_enabled = true
 offset_transform_position = Vector2(-1.745, 0.9)
 offset_transform_rotation = 0.12391838
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_outline_size = 1

@@ -100,6 +100,15 @@ func newIngre(play) -> void :
 		
 		add_child(newFood)
 		newFood.activate(play)
+		for _amount in Global.cooking_inventory[play]:
+			var cur_key = Global.cooking_inventory[play][_amount]
+			if cur_key[0] > 0:
+				cur_key[0] -= 1
+				newFood.nutrition = cur_key[1]
+				break
+		
+		newFood.nutrition = 150
+		print(Global.cooking_inventory)
 		newFood.sprite.play(play)
 		
 		newFood.global_position = get_global_mouse_position()

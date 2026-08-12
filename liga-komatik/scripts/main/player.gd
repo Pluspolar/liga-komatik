@@ -2,6 +2,12 @@ extends CharacterBody2D
 var _areas
 var area_interact
 var map_sprite: Sprite2D
+@onready var player_sprite = $sprite
+var player_sf
+var bigger_velocity : Array = ["x", 0]
+
+func _ready() -> void:
+	player_sf = player_sprite.sprite_frames
 
 func _physics_process(_delta: float) -> void:
 	Global.player_pos = global_position
@@ -18,6 +24,39 @@ func _physics_process(_delta: float) -> void:
 	if Global.cur_scene == "interior" and global_position.distance_to(Global.player_interior_out) <= 23:
 		Global.is_interacting = true
 
+	#if Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right"): is_walking() 
+	#else: is_idle()
+	if velocity.length() < 2.0: is_idle()
+	else: is_walking()
+
+
+func is_idle():
+	if player_sprite.animation == "walk_side":
+		player_sprite.play("idle side")
+	elif player_sprite.animation == "walk_down":
+		player_sprite.play("idle down")
+	elif player_sprite.animation == "walk_up":
+		player_sprite.play("idle up")
+	
+func is_walking():
+	if abs(velocity.x) > abs(velocity.y): bigger_velocity = ["x", velocity.x]
+	else: bigger_velocity = ["y", velocity.y]
+	if bigger_velocity[0] == "x":
+		player_sprite.play("walk_side")
+		
+	elif bigger_velocity[0] == "y":
+		if bigger_velocity[1] > 0:
+			player_sprite.play("walk_down")
+		else:
+			player_sprite.play("walk_up")
+	
+	if velocity.x > 0:
+		player_sprite.scale.x = 1
+	else:
+		player_sprite.scale.x = -1
+			
+	player_sf.set_animation_speed(player_sprite.animation, abs(velocity.length())*0.085)
+	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and Global.cur_scene == "interior" and global_position.distance_to(Global.player_interior_out) <= 23:
 		Global.change_scene_to("outside")

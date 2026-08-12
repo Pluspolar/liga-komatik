@@ -661,15 +661,8 @@ func _exploring(delta: float) -> void:
 	cam_global = camera.global_position
 		
 	if Input.is_action_just_pressed("right_click"):
-		var point_solid = false
-		if astargrid.is_point_solid(Global.player_tile):
-			point_solid = true
-			astargrid.set_point_solid(Global.player_tile, false)  
-		var path_taken = astargrid.get_id_path(tile_map.local_to_map(get_global_mouse_position()), Global.player_tile)
-		if point_solid: astargrid.set_point_solid(Global.player_tile, true)
-		
-		for i in path_taken:
-			tile_map.set_cell(i, 0, tiles_data["grass"])
+		pass
+
 		
 		#new_minimap_image.fill(Color.WHITE)
 		#pass
@@ -686,6 +679,27 @@ func _exploring(delta: float) -> void:
 	
 	_update_player_minimap()
 	check_interaction()
+		
+func find_path(cur_pos):
+	var point_solid_y = -1
+	if astargrid.is_point_solid(Global.player_tile):
+		point_solid_y += 1
+		astargrid.set_point_solid(Global.player_tile, false)  
+		if !astargrid.is_point_solid(Global.player_tile+Vector2i(0,-1)):
+			point_solid_y += 1
+			astargrid.set_point_solid(Global.player_tile+Vector2i(0,-1), true)  
+		
+	var path_taken = astargrid.get_id_path(tile_map.local_to_map(cur_pos), Global.player_tile)
+		
+	if point_solid_y >= 0: 
+		for i in range(point_solid_y+1):
+			if i == 0:
+				astargrid.set_point_solid(Global.player_tile, true)
+			if i == 1:
+				astargrid.set_point_solid(Global.player_tile+Vector2i(0,-1), false)
+		
+		for i in path_taken:
+			tile_map.set_cell(i, 0, tiles_data["grass"])
 		
 func player_move_and_slide():
 	var player_clamp

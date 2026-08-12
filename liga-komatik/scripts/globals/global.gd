@@ -196,9 +196,33 @@ func change_scene_to(to_scene, interior = null):
 		
 		is_exploring = false
 		
+	var cooking_scene_list = ["customer", "cooking"]
+	if !cooking_scene_list.has(to_scene) and cooking_scene_list.has(cur_scene) and !cooking_inventory.is_empty():
+		add_cookinginv_centralinv()
+		
+	if to_scene == "central_inventory" and cur_scene != "central_inventory":
+		cooking_invlist_queue_free()
+		
+	if to_scene == "cooking":
+		get_tree().call_group("cooking_item_list", "_recount")
+		
 	if interior != null: cur_interior = interior
 	cur_scene = to_scene
 	changing_scene = true
+
+func add_cookinginv_centralinv():
+	for cur_item in cooking_inventory:
+		for star in cooking_inventory[cur_item]:
+			if central_inventory.has(cur_item):
+				central_inventory[cur_item][star][0] += cooking_inventory[cur_item][star][0]
+					
+	cooking_inventory.clear()
+
+func cooking_invlist_queue_free():
+	for cur_obj in cooking_inventory_list:
+		cur_obj.call_deferred("queue_free")
+			
+	cooking_inventory_list.clear()
 
 func convert_to_central_inv():
 	for _item_id in backpack_inventory:
@@ -210,9 +234,9 @@ func convert_to_central_inv():
 		item_obj.call_deferred("queue_free")
 	backpack_inventory.clear()
 	
-	for cur_obj in cooking_inventory_list:
-		cur_obj.call_deferred("queue_free")
-	cooking_inventory_list.clear()
+	#for cur_obj in cooking_inventory_list:
+	#	cur_obj.call_deferred("queue_free")
+	#cooking_inventory_list.clear()
 	
 	for _item_name in central_inventory:
 		var total_num : int = 0
@@ -228,6 +252,7 @@ func convert_to_central_inv():
 				cur_obj.show()
 				
 		else: central_item(_item_name, total_num)
+	
 
 func central_item(item_name: String, amount: int) -> void:
 	if amount <= 0: return

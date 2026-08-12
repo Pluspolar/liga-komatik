@@ -25,17 +25,16 @@ func _process(delta: float) -> void:
 func _button_down():
 	#print(cur_central_count_list.is_empty())
 	if cur_central_count_list.is_empty(): return
-	for cur_obj in Global.cooking_inventory_list:
-		cur_obj.call_deferred("queue_free")
-		
-	Global.cooking_inventory_list.clear()
 	Global.mouse_cooldown = 0.2
 	
 	var cur_item_name : String = cur_central_count_list[0]
 	cur_central_count_list.remove_at(0)
 	
 	if !cooking_inventory.has(cur_item_name): 
+		if cooking_inventory.size() >= 6: return
 		cooking_inventory[cur_item_name] = Global._item_nutrition[cur_item_name][0].duplicate_deep()
+	
+	Global.cooking_invlist_queue_free()
 	
 	var total_count : int = 0
 	var total_count_pick : int = 0

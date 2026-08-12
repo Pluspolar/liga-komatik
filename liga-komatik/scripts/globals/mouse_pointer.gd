@@ -39,7 +39,6 @@ func _process(_delta: float) -> void:
 				hovered = null
 			break
 
-			
 		elif _body.is_in_group("item_central") and !Global.item_count_central.visible:
 			new_hovered = _body
 			break
