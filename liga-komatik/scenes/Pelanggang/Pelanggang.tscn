@@ -3,19 +3,24 @@
 [ext_resource type="Texture2D" uid="uid://c3328hr7e2e2n" path="res://scenes/Pelanggang/gerobak.png" id="1_4fq5t"]
 [ext_resource type="Script" uid="uid://dre6cauiy8lau" path="res://scenes/Pelanggang/pelanggang.gd" id="1_8ntrl"]
 [ext_resource type="Texture2D" uid="uid://dnyeykn4uixhu" path="res://scenes/Pelanggang/WomanShadow.png" id="2_ro1co"]
+[ext_resource type="Script" uid="uid://jkbst64qalfe" path="res://scenes/Pelanggang/woman_shadow.gd" id="3_8ntrl"]
 [ext_resource type="PackedScene" uid="uid://svxdinll71xh" path="res://scenes/Pelanggang/desciion.tscn" id="5_6jbvm"]
 
 [node name="pelanggan" type="Node2D" unique_id=991122665]
 script = ExtResource("1_8ntrl")
 
 [node name="WomanShadow" type="Sprite2D" parent="." unique_id=1630625720]
-position = Vector2(211, 102)
+position = Vector2(-112.19, 102)
 scale = Vector2(0.57161456, 0.57161456)
 texture = ExtResource("2_ro1co")
+script = ExtResource("3_8ntrl")
 
 [node name="Gerobak" type="Sprite2D" parent="." unique_id=1979030437]
 position = Vector2(192, 107.5)
 scale = Vector2(1.5000001, 0.84765625)
 texture = ExtResource("1_4fq5t")
 
-[node name="Desciion" parent="." unique_id=2096890935 instance=ExtResource("5_6jbvm")]
+[node name="1" parent="." unique_id=2096890935 instance=ExtResource("5_6jbvm")]
+
+[connection signal="done" from="WomanShadow" to="." method="_on_woman_shadow_done"]
+[connection signal="entered" from="WomanShadow" to="." method="_on_woman_shadow_entered"]

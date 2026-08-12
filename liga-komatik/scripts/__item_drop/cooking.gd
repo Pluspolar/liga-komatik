@@ -1,6 +1,7 @@
 extends Node2D
 class_name cooks
 
+
 @onready var slop = $Slop
 @onready var spatula = $Spatula
 const FOOD = preload("uid://dhnglshdg05fo")
@@ -18,6 +19,10 @@ var lvl1 = "Sedikit"
 var lvl2 = "Medium"
 var lvl3 = "Jumbo"
 var target = 0.7
+var total_nutrition : float = 0
+var cooking = true
+var holding = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.cooking_scene = self
@@ -105,4 +110,12 @@ func newIngre(play) -> void :
 
 
 func _on_button_button_down() -> void:
-	pass # Replace with function body.
+	var change = PELANGGANG.instantiate()
+	
+
+	change.first = false
+	
+	# Add new scene to root and remove current scene safely
+	get_tree().root.add_child(change)
+	get_tree().current_scene.queue_free()
+	get_tree().current_scene = change

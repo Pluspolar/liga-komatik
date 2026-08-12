@@ -46,7 +46,7 @@ func display_text():
 	cur_state = state.TALKING
 	text.text = text_array[0][0]
 	char_text.text = text_array[0][2]
-	text.visible_ratio = 0
+	text.visible_ratio= 0
 	end_text.visible_ratio = 0
 	var text_len = text.get_total_character_count()
 	
