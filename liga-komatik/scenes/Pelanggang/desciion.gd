@@ -21,7 +21,7 @@ var dialogue_list = {
 		"Kasih yang kamu bisa kasi kumohon"],
 		
 	"man_1" : 
-		["Aku [wave]laparrrr[/wave] banget, keluargaku dibunuh, cuma ini yang kupunya", 
+		["Aku [wave]laparrrr[/wave] banget, cuma ini yang kupunya", #keluargaku dibunuh,
 		"Uhhhh, aku lapar", 
 		"Aku mau porsi Jumbo"],
 		
@@ -73,6 +73,21 @@ var dialogue_done = {
 		["[wave]MAKANNN", "[wave]YESSSS"], 
 		["[shake]INI APAAAN?", "[shake]AKU MAKAN KAMU"]],
 }
+var char_cooking_target = {}
+# < 0.05: Tidak ada, 
+#[0.05, 0.3): sedikit, 
+#[0.3, 0.65): medium, 
+#>= 0.65: jumbo
+
+func rand_cooking_target():
+	char_cooking_target = {
+	"woman_1" : randf_range(0.35, 0.6),
+	"woman_2" : 0.05,
+	"man_1" : randf_range(0.65, 0.7),
+	"man_2" : randf_range(0.65, 0.725),
+	"man_3" : randf_range(0.7, 0.8),
+}
+
 
 func _start() -> void:
 	times = 1
@@ -109,11 +124,15 @@ func _on_explore_button_down() -> void:
 	Global.change_scene_to("outside")
 
 func _on_cooook_button_down() -> void:
-	print("Test")
+	#print("Test")
 	if Global.cur_scene != "customer" and !Global.pelanggan_scene.entered: return
+	rand_cooking_target()
+	if Global.pelanggan_scene.read_repeat: Global.cooking_scene.done_label.text = "Finish\nEarly"
+	else: Global.cooking_scene.done_label.text = "Finish"
+	
 	Global.change_scene_to("cooking")
 	Global.target_nutrition = 0
-	Global.cooking_target = 0.7
+	Global.cooking_target = char_cooking_target[Global.pelanggan_scene.cur_pelanggan]
 	
 	#var change : cooks = COOK.instantiate()
 	#get_tree().root.add_child(change)
@@ -129,14 +148,21 @@ func _on_cooook_button_down() -> void:
 
 func _on_repeat_button_down() -> void:
 	if Global.cur_scene != "customer" and !Global.pelanggan_scene.entered: return
-	if times < dialogue_list.size():
+	var cur_dialogue_list = dialogue_list[Global.pelanggan_scene.cur_pelanggan]
+	if times < cur_dialogue_list.size():
+		if Global.dialogue.visible: Global.skip_dialogue = true
 		Global.dialogue.add_text(dialogue_list[Global.pelanggan_scene.cur_pelanggan][times],15,_char)
 		times += 1
+		
+		if times >= cur_dialogue_list.size(): 
+			Global.pelanggan_scene.read_repeat = true
 
 func _on_gossip_button_down() -> void:
 	if Global.cur_scene != "customer" and !Global.pelanggan_scene.entered: return
 	#Global.dialogue.add_text("di sigma ada skibidi, kalo skibid ke sigma",15,_char)
+	if Global.dialogue.visible: Global.skip_dialogue = true
 	Global.dialogue.add_text(dialogue_gossips[Global.pelanggan_scene.cur_pelanggan],15,_char)
+	
 	
 func done()-> void:
 	if Global.target_nutrition >= Global.cooking_target:

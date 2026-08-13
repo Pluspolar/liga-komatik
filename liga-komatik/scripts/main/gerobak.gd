@@ -8,7 +8,6 @@ var map_sprite: Sprite2D
 func _process(delta: float) -> void:
 	anim_check()
 	
-	
 func anim_check():
 	if abs(velocity.x) >= abs(velocity.y): bigger_velocity = ["x", velocity.x]
 	else: bigger_velocity = ["y", velocity.y]

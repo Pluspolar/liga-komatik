@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://svxdinll71xh"]
 
 [ext_resource type="Script" uid="uid://bqjw8bil1s68" path="res://scenes/Pelanggang/desciion.gd" id="1_s6b8t"]
-[ext_resource type="PackedScene" uid="uid://cw23mt2nx3v4p" path="res://scenes/UI/dialogue.tscn" id="2_0p0mj"]
 [ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="3_rcnrg"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7tk3i"]
@@ -10,8 +9,6 @@ font_size = 8
 
 [node name="Desciion" type="CanvasLayer" unique_id=2096890935]
 script = ExtResource("1_s6b8t")
-
-[node name="dialogue" parent="." unique_id=31305971 instance=ExtResource("2_0p0mj")]
 
 [node name="Gossip" type="Button" parent="." unique_id=883061946]
 offset_left = 294.0

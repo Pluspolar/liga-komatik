@@ -126,6 +126,8 @@ func rand_tiles_data():
 	"gray_concrete_cracked" : Vector2i(15, 3),
 	"dark_gray_concrete" : Vector2i(13, 4),
 	"dark_gray_concrete_cracked" : Vector2i(15, 4),
+	"cyanish_concrete" : Vector2i(13, 5),
+	"cyanish_concrete_cracked" : Vector2i(15, 5),
 	}
 
 	#tiles_data = {
@@ -204,8 +206,9 @@ var objects_data := {
 var objects := { #[x_size, y_vertical_size, how much free space under "y"], scene
 	"tree" : [[1,1,0], null, preload("res://scenes/structures/tree.tscn")],
 	"abandoned_house_1" : [[3,1,0], "1_aband_house", preload("res://scenes/structures/abandoned_house.tscn")],
-	"abandoned_apartment_1" : [[3,1,0], "1_aband_apart", preload("res://scenes/structures/abandoned_apartment_1.tscn")],
-	"abandoned_apartment_2" : [[3,1,0], "2_aband_apart", preload("res://scenes/structures/abandoned_apartment_2.tscn")],
+	#"abandoned_apartment_1" : [[3,1,0], "1_aband_apart", preload("res://scenes/structures/abandoned_apartment_1.tscn")],
+	"abandoned_apartment_1" : [[6,2,0], "1_aband_apart", preload("res://scenes/structures/abandoned_apartment_1.tscn")],
+	"abandoned_apartment_2" : [[6,2,0], "2_aband_apart", preload("res://scenes/structures/abandoned_apartment_2.tscn")],
 }
 
 var enemies := preload("res://scenes/enemy/enemy.tscn")
@@ -213,7 +216,7 @@ var enemies := preload("res://scenes/enemy/enemy.tscn")
 func rand_interior_data():
 	interior_data = {
 	"1_aband_house" : [0.2, [randi_range(10,20), randi_range(10,20)], {"oak_planks" : 0.9, "red_soil" : 0.1}, {"wooden_board" : 1}, 0.125, {"can" : 0.5, "mie": 0.5}], 
-	"1_aband_apart" : [0.1, [randi_range(20,35), randi_range(20,35)], {"gray_concrete" : 0.85, "gray_concrete_cracked" : 0.075, "red_soil" : 0.075}, {"dark_gray_concrete" : 0.89, "dark_gray_concrete_cracked" : 0.1, "dark_gray_concrete_cut" : 0.01}, 0.06, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}],
+	"1_aband_apart" : [0.1, [randi_range(20,35), randi_range(20,35)], {"cyanish_concrete" : 0.85, "cyanish_concrete_cracked" : 0.075, "red_soil" : 0.075}, {"dark_gray_concrete" : 0.89, "dark_gray_concrete_cracked" : 0.1, "dark_gray_concrete_cut" : 0.01}, 0.06, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}],
 	"2_aband_apart" : [0.1, [randi_range(25,40), randi_range(25,40)], {"spruce_planks" : 0.85, "dirt" : 0.075, "red_soil" : 0.075}, {"dark_gray_concrete" : 0.89, "dark_gray_concrete_cracked" : 0.1, "dark_gray_concrete_cut" : 0.01}, 0.06, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}],
 } #room_abundance, [x_size, y_size], tiles, chance_item_per_tile, item_list #old: id, [x_size, y_size], tiles, chance_item_per_tile, item_loot_table
 
@@ -468,7 +471,7 @@ func check_accessibility(pos, random_obj):
 				return false
 			temp_acc_coords.append(new_pos)
 	for coords in temp_acc_coords: 
-		astargrid.set_point_solid(coords, true)
+		if astargrid.is_in_boundsv(coords): astargrid.set_point_solid(coords, true)
 		objects_pos[coords] = random_obj
 	return true
 	

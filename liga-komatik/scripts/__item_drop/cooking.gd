@@ -55,9 +55,10 @@ func spatula_physics(delta: float) -> void:
 	slop.rotation_degrees += 8 * delta
 		
 func bigger(nutri):
-	print(nutri)
-	var nutrition : float = nutri/300
-	print(nutrition)
+	#print(nutri)
+	var nutrition : float = nutri/200
+	#var nutrition : float = nutri/300
+	#print(nutrition)
 	var tween = create_tween()
 	tween.set_trans(Tween.TRANS_SINE)
 	total_nutrition += nutrition
@@ -69,17 +70,16 @@ func bigger(nutri):
 		#done.disabled = false
 		#done.visible = true
 		done_label.text = "Finish"
-	else:
-		done_label.text = "Finish\nEarly"
-		
-	if Global.target_nutrition > 0.05 and Global.target_nutrition < 0.6:
-		nutri_level.text = lvl1
-	elif Global.target_nutrition > 0.3 and Global.target_nutrition < 0.7:
-		nutri_level.text = lvl2
-	elif Global.target_nutrition > 0.7:
-		nutri_level.text = lvl3
-	elif Global.target_nutrition == 0.0:
+	elif Global.pelanggan_scene.read_repeat: done_label.text = "Finish\nEarly"
+	
+	if Global.target_nutrition < 0.05:
 		nutri_level.text = lvl0	
+	elif Global.target_nutrition >= 0.05 and Global.target_nutrition < 0.3:
+		nutri_level.text = lvl1
+	elif Global.target_nutrition >= 0.3 and Global.target_nutrition < 0.65:
+		nutri_level.text = lvl2
+	elif Global.target_nutrition >= 0.65: 
+		nutri_level.text = lvl3
 	if Global.target_nutrition > 0.863: Global.target_nutrition = 0.863
 	#if slop.scale.x < total_nutrition: #if slop.scale < Vector2(0.8,0.8):
 	tween.tween_property(slop, "scale", Global.target_nutrition*Vector2(1,1), 1)
@@ -105,15 +105,15 @@ func newIngre(play) -> void :
 		
 		add_child(newFood)
 		newFood.activate(play)
-		for _amount in Global.cooking_inventory[play]:
-			var cur_key = Global.cooking_inventory[play][_amount]
+		for _star in Global.cooking_inventory[play]:
+			var cur_key = Global.cooking_inventory[play][_star]
 			if cur_key[0] > 0:
 				cur_key[0] -= 1
 				newFood.nutrition = cur_key[1]
 				break
 		
-		newFood.nutrition = 150
-		print(Global.cooking_inventory)
+		#newFood.nutrition = 150
+		#print(Global.cooking_inventory)
 		newFood.sprite.play(play)
 		
 		newFood.global_position = get_global_mouse_position()
@@ -124,7 +124,8 @@ func _on_button_button_down() -> void:
 	
 func cooking_reset():
 	Global.pelanggan_scene.first = false
-	done_label.text = "Finish\nEarly"
+	Global.pelanggan_scene.read_repeat = false
+	done_label.text = "Finish"
 	total_nutrition = 0
 	#Global.cooking_target = 0
 	slop.scale = Vector2.ZERO

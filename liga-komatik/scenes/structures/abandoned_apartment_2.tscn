@@ -3,10 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://j5hui61c5wen" path="res://textures/sprites/structures/apartment_2.png" id="1_yjs4k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sh1ho"]
-size = Vector2(13, 13)
+size = Vector2(26, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_casn1"]
-size = Vector2(34, 13.445)
+size = Vector2(68, 26.0875)
 
 [node name="abandoned_apartment" type="StaticBody2D" unique_id=871894099]
 visible = false
@@ -16,7 +16,8 @@ collision_layer = 2
 
 [node name="sprite" type="Sprite2D" parent="move" unique_id=1865504026]
 texture_filter = 1
-position = Vector2(0, -2)
+position = Vector2(0, -10.09)
+scale = Vector2(2, 2)
 texture = ExtResource("1_yjs4k")
 offset = Vector2(0, -17.9)
 
@@ -25,11 +26,11 @@ collision_layer = 2
 metadata/_edit_lock_ = true
 
 [node name="area_col" type="CollisionShape2D" parent="move/interior" unique_id=1673600672]
-position = Vector2(-0.5, -0.5)
+position = Vector2(-1, -6)
 shape = SubResource("RectangleShape2D_sh1ho")
 debug_color = Color(0.99967283, 0.02300573, 9.62615e-07, 0.41960785)
 
 [node name="static_col2" type="CollisionShape2D" parent="." unique_id=1856453539]
-position = Vector2(4.7683716e-07, -0.635)
+position = Vector2(4.7683716e-07, -6.95625)
 shape = SubResource("RectangleShape2D_casn1")
 metadata/_edit_lock_ = true

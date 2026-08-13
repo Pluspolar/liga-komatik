@@ -30,18 +30,19 @@ func _process(_delta: float) -> void:
 				display_text()
 			else: hide()
 		state.TALKING:
-			if Input.is_action_just_pressed("ui_accept") or text.visible_ratio == 1:
-				text.visible_ratio = 1.0
-				end_text.visible_ratio = 1.0
+			if Input.is_action_just_pressed("ui_accept") or text.visible_ratio == 1 or Global.skip_dialogue:
+				if !Global.skip_dialogue:
+					text.visible_ratio = 1.0
+					end_text.visible_ratio = 1.0
 				tween.stop()
 				cur_state = state.END
 		state.END:
-			if Input.is_action_just_pressed("ui_accept"):
+			if Input.is_action_just_pressed("ui_accept") or Global.skip_dialogue:
+				if Global.skip_dialogue: Global.skip_dialogue = false
 				text.visible_ratio = 0
 				end_text.visible_ratio = 0
 				cur_state = state.READY
-				
-
+			
 func display_text():
 	cur_state = state.TALKING
 	text.text = text_array[0][0]

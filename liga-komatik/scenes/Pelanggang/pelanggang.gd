@@ -4,6 +4,7 @@ class_name pelanggang
 @onready var des = $"1"
 var first = true
 var entered = false
+var read_repeat : bool = false
 var pelanggan_list = ["woman_1", "woman_2", "man_1", "man_2", "man_3"]
 var cur_pelanggan = "woman_1"
 
@@ -15,7 +16,7 @@ func _start() -> void:
 	if first:
 		sprite.getIn()
 	else:
-		print("work")
+		#print("work")
 		entered = false
 		first = true
 		sprite.getOut()

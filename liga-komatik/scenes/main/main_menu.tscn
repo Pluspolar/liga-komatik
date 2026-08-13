@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c7ncaymvee0ul"]
 
 [ext_resource type="Shader" uid="uid://c0acgjq117e6d" path="res://scripts/gdshaders/old_fog.gdshader" id="1_sd5it"]
-[ext_resource type="Script" uid="uid://d31nkv4dlxeav" path="res://scripts/main_menu.gd" id="1_w6ykx"]
+[ext_resource type="Script" uid="uid://d31nkv4dlxeav" path="res://scripts/UI/main_menu.gd" id="1_w6ykx"]
 [ext_resource type="FontFile" uid="uid://bpmogubtg5vj" path="res://textures/fonts/Snowbell-Wp4g9.ttf" id="2_5vafy"]
 [ext_resource type="Script" uid="uid://cybkx43bx3u6w" path="res://scripts/globals/main_menu_button.gd" id="2_byqcc"]
 
@@ -56,7 +56,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.39632824, 0.17069378, 0, 1)
+color = Color(0.09216676, 0.022129692, 0, 1)
 
 [node name="cloud2" type="ColorRect" parent="." unique_id=1028928748]
 visible = false

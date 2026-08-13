@@ -1,4 +1,0 @@
-[gd_resource type="OccluderPolygon2D" format=3 uid="uid://b7eoraap8o4cq"]
-
-[resource]
-polygon = PackedVector2Array(-8, -8, -8, -4.9571877, 8, -5.014496, 8, -8, 8, 8, 8, -5.014496, -8, -4.9571877, -8, 8)

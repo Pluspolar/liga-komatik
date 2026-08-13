@@ -56,6 +56,7 @@ var player_health : float = 100
 
 var mouse_cooldown : float = 0
 
+var skip_dialogue : bool = false
 var item_list_amount : int = 0
 var item_drop = preload("res://scenes/__item_drop/item_drop.tscn")
 

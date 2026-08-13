@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://d0hg6rj3ehwxy" path="res://textures/Cooking/Sprite-0001.png" id="8_lbay0"]
 [ext_resource type="SpriteFrames" uid="uid://i2k82erxbvjx" path="res://textures/Cooking/Ingredient/new_sprite_frames.tres" id="9_qvev4"]
 [ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="10_qvev4"]
+[ext_resource type="Texture2D" uid="uid://bikx65vm0nyya" path="res://textures/Cooking/left-right-arrow-2.png" id="12_o2wga"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ncnqo"]
 radius = 107.0
@@ -75,7 +76,7 @@ _data = {
 size = Vector2(49.040207, 52.944817)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7tk3i"]
-size = Vector2(49, 248)
+size = Vector2(51, 248)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_quang"]
 size = Vector2(83, 64.5)
@@ -91,6 +92,33 @@ font_size = 12
 [sub_resource type="LabelSettings" id="LabelSettings_quang"]
 font = ExtResource("10_qvev4")
 font_size = 14
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_s7qke"]
+frequency = 0.0539
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pa0ky"]
+noise = SubResource("FastNoiseLite_s7qke")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xeaur"]
+shader = ExtResource("4_7c8ge")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_pa0ky")
+shader_parameter/center_pos = Vector2(0.5, -0.25)
+shader_parameter/distance_val = 0.0
+shader_parameter/noise_scale = 1.0
+shader_parameter/distortion_strength = 0.00800000038
+shader_parameter/pixelation = Vector2(32, 32)
+shader_parameter/speed = 0.0125
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a3aoe"]
+shader = ExtResource("4_7c8ge")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_pa0ky")
+shader_parameter/center_pos = Vector2(0.5, -0.25)
+shader_parameter/distance_val = 0.0
+shader_parameter/noise_scale = 1.0
+shader_parameter/distortion_strength = 0.00800000038
+shader_parameter/pixelation = Vector2(32, 32)
+shader_parameter/speed = 0.0125
 
 [node name="Cooking" type="Node2D" unique_id=1038864092]
 script = ExtResource("1_eexf5")
@@ -130,7 +158,7 @@ shape = SubResource("CapsuleShape2D_ncnqo")
 [node name="Slop" type="Sprite2D" parent="." unique_id=235939960]
 texture_filter = 1
 material = SubResource("ShaderMaterial_jjvtj")
-position = Vector2(192.805, 106.865)
+position = Vector2(196, 104)
 scale = Vector2(0.863, 0.863)
 texture = ExtResource("6_jjvtj")
 offset = Vector2(3.6231842, 20.531395)
@@ -169,7 +197,7 @@ collision_layer = 256
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Swicth" unique_id=683643372]
-position = Vector2(2.5, 114)
+position = Vector2(1.5, 114)
 shape = SubResource("RectangleShape2D_7tk3i")
 
 [node name="0" type="Area2D" parent="." unique_id=1551558150]
@@ -351,13 +379,24 @@ offset_right = 47.5
 offset_bottom = 16.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Finish
-Early"
+text = "Finish"
 label_settings = SubResource("LabelSettings_quang")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1789469921]
+
+[node name="LeftRightArrow" type="Sprite2D" parent="." unique_id=1131492491]
+material = SubResource("ShaderMaterial_xeaur")
+position = Vector2(17.265, 108)
+scale = Vector2(1.4375, 2)
+texture = ExtResource("12_o2wga")
+
+[node name="LeftRightArrow2" type="Sprite2D" parent="." unique_id=1357128537]
+material = SubResource("ShaderMaterial_a3aoe")
+position = Vector2(-15.3, 108)
+scale = Vector2(-1.438, -2)
+texture = ExtResource("12_o2wga")
 
 [connection signal="mouse_entered" from="0" to="0" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="0" to="0" method="_on_mouse_exited"]

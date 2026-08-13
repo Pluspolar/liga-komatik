@@ -59,17 +59,17 @@ func _on_timer_timeout() -> void:
 		queue_free()
 	else: 
 		timePass += 1
-		print("continue")
+		#print("continue")
 
 func mulai(junk):
 	if junk == self: 
 		time.start()
-		print("start")
+		#print("start")
 
 func _on_body_entered(body: Node) -> void:
 	if body == spatula:
 		timePass += 1
-		print("kena")
+		#print("kena")
 		
 func activate(pick) -> void :
 	#shapes[pick][0].disabled = false
@@ -77,5 +77,5 @@ func activate(pick) -> void :
 	shapes[pick].scale = Vector2(1.5,1.5)
 	shapes[pick].show()
 	#nutrition = shapes[pick][1]
-	nutrition = Global._item_nutrition[pick][0][0][1]
-	print(nutrition)
+	#nutrition = Global._item_nutrition[pick][0][0][1]
+	#print(nutrition)

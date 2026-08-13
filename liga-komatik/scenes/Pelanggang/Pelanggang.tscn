@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c3328hr7e2e2n" path="res://scenes/Pelanggang/gerobak.png" id="1_4fq5t"]
 [ext_resource type="Script" uid="uid://dre6cauiy8lau" path="res://scenes/Pelanggang/pelanggang.gd" id="1_8ntrl"]
+[ext_resource type="Texture2D" uid="uid://cf45po18mnhaq" path="res://textures/Cooking/bg.png" id="2_3op8w"]
 [ext_resource type="Texture2D" uid="uid://c02r66wrd5y4h" path="res://textures/pelanggan/ManShadow.png" id="2_dou8t"]
 [ext_resource type="Texture2D" uid="uid://5sr0epjxhgeu" path="res://textures/pelanggan/ManShadow2.png" id="3_3op8w"]
 [ext_resource type="Script" uid="uid://jkbst64qalfe" path="res://scenes/Pelanggang/woman_shadow.gd" id="3_8ntrl"]
@@ -55,6 +56,10 @@ animations = [{
 
 [node name="pelanggan" type="Node2D" unique_id=991122665]
 script = ExtResource("1_8ntrl")
+
+[node name="background" type="Sprite2D" parent="." unique_id=1276640132]
+position = Vector2(192, 75)
+texture = ExtResource("2_3op8w")
 
 [node name="shadow" type="AnimatedSprite2D" parent="." unique_id=920235452]
 position = Vector2(-112.19, 102)
