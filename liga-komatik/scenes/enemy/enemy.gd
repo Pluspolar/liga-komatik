@@ -22,7 +22,8 @@ func go_to_path():
 	if !cur_path.is_empty(): 
 		if aggro_dur > 0: cur_angle_to = global_position.angle_to_point(cur_path[-1])
 		else: 
-			cur_angle_to = global_position.angle_to_point(cur_path[0])
+			if cur_path.size() == 1: cur_angle_to = global_position.angle_to_point(cur_path[0])
+			else: cur_angle_to = global_position.angle_to_point(cur_path[1])
 			non_aggro_dir = cur_angle_to
 	else: cur_angle_to = non_aggro_dir
 	
