@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @onready var sprite = $sprite
+
 var bigger_velocity : Array = ["x", 0]
 var map_sprite: Sprite2D
 

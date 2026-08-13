@@ -303,6 +303,10 @@ func _set_tile():
 	minimap_image.fill(Color.BLACK)
 	setup_astargrid()
 	
+	for x in range(-18, 18+1):
+		for y in range(-18, 18+1):
+			objects_pos[Vector2i(x,y)] = "player"
+	
 	for x in range(-width_half-1, width_half+1):
 		#await get_tree().create_timer(0.05).timeout
 		for y in range(-height_half-1, height_half+1):
@@ -409,7 +413,7 @@ func place_tile_biome(pos : Vector2i, _biome: String):
 	place_enemy_biome(pos, _biome)
 	
 func place_enemy_biome(pos, _biome: String) -> void:
-	if objects_pos.get(pos) or randf_range(0,1) <= 0.9999: return
+	if objects_pos.get(pos) or randf_range(0,1) <= 0.999: return
 	
 	var obj_data = enemies["soldier"]
 	var obj = obj_data.instantiate()
@@ -773,9 +777,17 @@ func _enemy_ai(delta):
 		for _enemy in chunks_enemy[_chunk_enemy]:
 			var enemy_global_pos = _enemy.global_position
 			var cur_chunk_before : Vector2i = pos_to_chunk(enemy_global_pos)
-			_enemy.pathing_interval -= delta
-			if _enemy.pathing_interval <= 0:
+			if _enemy.pathing_interval > 0: _enemy.pathing_interval -= delta
+			if _enemy.aggro_dur > 0: _enemy.aggro_dur -= delta
+			else: _enemy.non_aggro_dir += randf_range(0.0, 2.5) * delta
+			
+			if _enemy.pathing_interval <= 0 and _enemy.aggro_dur > 0:
 				var path_data = find_path_to(enemy_global_pos, player.global_position)
+				_enemy.cur_path = path_data[0]
+				_enemy.cur_path_tile = path_data[1]
+				_enemy.pathing_interval = 0.5
+			elif _enemy.pathing_interval <= 0 and _enemy.aggro_dur <= 0 and randf_range(0, 1) <= (0.005*60*delta):
+				var path_data = find_path_to(enemy_global_pos, enemy_global_pos+Vector2(randf_range(-7,7)*16, randf_range(-7,7)*16))
 				_enemy.cur_path = path_data[0]
 				_enemy.cur_path_tile = path_data[1]
 				_enemy.pathing_interval = 0.5
@@ -804,6 +816,8 @@ func find_path_to(cur_pos, target_pos):
 	for i in range(path_taken.size()):
 		#tile_map.set_cell(path_taken[i], 0, tiles_data["grass"])
 		path_taken[i] = tile_map.map_to_local(path_taken[i])
+		
+	if !path_taken.is_empty(): path_taken[-1] = target_pos
 		
 	return [path_taken, path_taken_tile]
 	

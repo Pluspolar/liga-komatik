@@ -19,10 +19,12 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_htemk"]
-size = Vector2(12, 1)
+size = Vector2(8, 1)
 
-[node name="Enemy_1" type="CharacterBody2D" unique_id=1190393232]
-visible = false
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_14cdr"]
+size = Vector2(8, 16)
+
+[node name="enemy" type="CharacterBody2D" unique_id=1190393232]
 collision_mask = 35
 script = ExtResource("1_trh57")
 
@@ -34,3 +36,25 @@ sprite_frames = SubResource("SpriteFrames_htemk")
 [node name="col_shape" type="CollisionShape2D" parent="." unique_id=1742114711]
 position = Vector2(0, 5.5)
 shape = SubResource("RectangleShape2D_htemk")
+
+[node name="raycast_1" type="RayCast2D" parent="." unique_id=109591167]
+collision_mask = 2082
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="raycast_2" type="RayCast2D" parent="." unique_id=36260688]
+collision_mask = 2082
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="raycast_3" type="RayCast2D" parent="." unique_id=719732056]
+collision_mask = 2082
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="area_interact" type="Area2D" parent="." unique_id=1635109706]
+
+[node name="col_shape" type="CollisionShape2D" parent="area_interact" unique_id=1280141642]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_14cdr")
+debug_color = Color(0.58320606, 0.5510713, 1.92523e-07, 0.41960785)
