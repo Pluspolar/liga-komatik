@@ -61,6 +61,23 @@ label_settings = SubResource("LabelSettings_7tk3i")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Explore" type="Button" parent="." unique_id=1099902680]
+offset_left = 294.0
+offset_top = 137.77
+offset_right = 363.0
+offset_bottom = 159.77002
+focus_mode = 0
+
+[node name="Label" type="Label" parent="Explore" unique_id=1994275502]
+layout_mode = 0
+offset_right = 69.0
+offset_bottom = 23.0
+text = "EXPLORE"
+label_settings = SubResource("LabelSettings_7tk3i")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="button_down" from="Gossip" to="." method="_on_gossip_button_down"]
 [connection signal="button_down" from="Repeat" to="." method="_on_repeat_button_down"]
 [connection signal="button_down" from="COOOOK" to="." method="_on_cooook_button_down"]
+[connection signal="button_down" from="Explore" to="." method="_on_explore_button_down"]

@@ -20,8 +20,10 @@ func _start() -> void:
 		des.done()
 		
 func _on_woman_shadow_done() -> void:
-	sprite.position = Vector2(-112.19,102.0)
+	#sprite.position = Vector2(-112.19,102.0)
 	sprite.getIn()
+	Global.cooking_scene.done.disabled = false
+	Global.cooking_scene.done.visible = true
 	
 func _on_woman_shadow_entered() -> void:
 	des._start()

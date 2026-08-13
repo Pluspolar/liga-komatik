@@ -17,7 +17,6 @@ func _start() -> void:
 	
 #func _ready() -> void:
 	#Global.dialogue.add_text(list[0],15,"Random Woman")
-	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -33,10 +32,14 @@ func _process(delta: float) -> void:
 	
 #	dialog.add_text(list[0],15,char)
 
+func _on_explore_button_down() -> void:
+	Global.change_scene_to("outside")
+
 func _on_cooook_button_down() -> void:
 	print("Test")
 	if Global.cur_scene != "customer" and !Global.pelanggan_scene.entered: return
 	Global.change_scene_to("cooking")
+	Global.target_nutrition = 0
 	Global.cooking_target = 0.7
 	
 	#var change : cooks = COOK.instantiate()
@@ -62,4 +65,7 @@ func _on_gossip_button_down() -> void:
 	Global.dialogue.add_text("di sigma ada skibidi, kalo skibid ke sigma",15,_char)
 		
 func done()-> void:
-	Global.dialogue.add_text("YIPPPEEEEE",15)
+	if Global.target_nutrition >= Global.cooking_target:
+		Global.dialogue.add_text("[wave]YIPPPEEEEE", 15)
+	else:
+		Global.dialogue.add_text("Ini kurang",15)

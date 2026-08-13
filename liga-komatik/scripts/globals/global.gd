@@ -51,11 +51,19 @@ var pelanggan_scene : Object = null
 var cooking_inventory_list : Array = []
 var cooking_target : float = 0
 var cooking_obj : Array = []
+var target_nutrition : float = 0
+var player_health : float = 100
 
 var mouse_cooldown : float = 0
 
 var item_list_amount : int = 0
 var item_drop = preload("res://scenes/__item_drop/item_drop.tscn")
+
+enum state {
+	READY,
+	TALKING,
+	END
+}
 
 #var item_drop : Dictionary = {
 #	"can" : preload("res://scenes/__item_drop/can.tscn"), 
@@ -129,12 +137,12 @@ func add_preset_item(item : String, amount : int):
 
 func _process(delta: float) -> void:
 	_timer += 1 * delta
-	if Input.is_action_just_pressed("left-hand"):
-		change_scene_to("central_inventory")
-		print(central_inventory)
-	if Input.is_action_just_pressed("right-hand"):
-		change_scene_to("outside")
-		print(backpack_inventory)
+	#if Input.is_action_just_pressed("left-hand"):
+	#	change_scene_to("central_inventory")
+	#	print(central_inventory)
+	#if Input.is_action_just_pressed("right-hand"):
+	#	change_scene_to("outside")
+	#	print(backpack_inventory)
 	if mouse_cooldown > 0:
 		mouse_cooldown -= delta
 
@@ -211,6 +219,8 @@ func change_scene_to(to_scene, interior = null):
 		
 		is_exploring = false
 		
+	dialogue.cur_state = state.READY
+	dialogue.text_array.clear()
 	var cooking_scene_list = ["customer", "cooking"]
 	if !cooking_scene_list.has(to_scene) and cooking_scene_list.has(cur_scene) and !cooking_inventory.is_empty():
 		add_cookinginv_centralinv()
@@ -272,7 +282,6 @@ func convert_to_central_inv():
 				
 		else: central_item(_item_name, total_num)
 	
-
 func central_item(item_name: String, amount: int) -> void:
 	if amount <= 0: return
 	var central_inv_scene = get_tree().current_scene.get_node("UI/central_inventory")
