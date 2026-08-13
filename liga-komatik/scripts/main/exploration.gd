@@ -667,7 +667,7 @@ func _load_scene():
 						for _tile in chunks[place_tile]: tile_map.set_cell(_tile[0], 0, _tile[1])
 						for _wall in chunks_wall[place_tile]: tilemap_wall.set_cell(_wall[0], 1, _wall[1])
 						for _obj in chunks_obj[place_tile]: _obj.call_deferred("show")
-						for _enemy in chunks_enemy[place_tile]: _enemy.call_deferred("show")
+						#for _enemy in chunks_enemy[place_tile]: _enemy.call_deferred("show")
 						generated_chunks.append(place_tile)
 					elif generated_chunks.has(place_tile): temp_chunk.erase(place_tile)
 					
@@ -754,7 +754,6 @@ func _exploring(delta: float) -> void:
 	if Input.is_action_just_pressed("right_click"):
 		pass
 
-		
 		#new_minimap_image.fill(Color.WHITE)
 		#pass
 		#dialogue.add_text("Kami mendapatkan info dari beberapa orang bahwa stok di kota [wave]GURT[/wave] telah diisi kembali.", 20, "Radio") #[wave amp=15 freq=5]
@@ -775,6 +774,10 @@ func _exploring(delta: float) -> void:
 func _enemy_ai(delta):
 	for _chunk_enemy in generated_chunks:
 		for _enemy in chunks_enemy[_chunk_enemy]:
+			if !_enemy.visible:
+				_enemy.show()
+				_enemy.aggro_dur = 0
+			
 			var enemy_global_pos = _enemy.global_position
 			var cur_chunk_before : Vector2i = pos_to_chunk(enemy_global_pos)
 			if _enemy.pathing_interval > 0: _enemy.pathing_interval -= delta
@@ -794,6 +797,7 @@ func _enemy_ai(delta):
 				_enemy.pathing_interval = 0.5
 		
 			var cur_chunk_after : Vector2i = pos_to_chunk(_enemy.go_to_path())
+			_enemy._check_anim()
 			
 			_enemy._cur_tile = tile_map.local_to_map(_enemy.global_position)
 			
