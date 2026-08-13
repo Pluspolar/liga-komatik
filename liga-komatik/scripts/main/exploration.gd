@@ -787,7 +787,8 @@ func _enemy_ai(delta):
 				_enemy.cur_path_tile = path_data[1]
 				_enemy.pathing_interval = 0.5
 			elif _enemy.pathing_interval <= 0 and _enemy.aggro_dur <= 0 and randf_range(0, 1) <= (0.005*60*delta):
-				var path_data = find_path_to(enemy_global_pos, enemy_global_pos+Vector2(randf_range(-7,7)*16, randf_range(-7,7)*16))
+				var cur_enemy_angle = _enemy.cur_angle_to
+				var path_data = find_path_to(enemy_global_pos, enemy_global_pos+ Vector2(cos(cur_enemy_angle), sin(cur_enemy_angle))*randf_range(2.5, 6.5)*16 + Vector2(randf_range(-1.5, 1.5)*16, randf_range(-1.5, 1.5)*16))
 				_enemy.cur_path = path_data[0]
 				_enemy.cur_path_tile = path_data[1]
 				_enemy.pathing_interval = 0.5

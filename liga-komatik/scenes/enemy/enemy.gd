@@ -5,6 +5,8 @@ var _cur_tile : Vector2i = Vector2(0,0)
 var pathing_interval : float = 0.5
 var aggro_dur : float = 0
 var non_aggro_dir : float = 0
+var cur_angle_to : float = 0
+
 @onready var raycast_1 = $raycast_1
 @onready var raycast_2 = $raycast_2
 @onready var raycast_3 = $raycast_3
@@ -17,7 +19,6 @@ var non_aggro_dir : float = 0
 func go_to_path():
 	
 	#var target_pos = cur_path[-1] - global_position
-	var cur_angle_to
 	if !cur_path.is_empty(): 
 		if aggro_dur > 0: cur_angle_to = global_position.angle_to_point(cur_path[-1])
 		else: 
