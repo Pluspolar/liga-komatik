@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bv6wuxb26a54v" path="res://textures/Cooking/MejaMasak.png" id="1_4orch"]
 [ext_resource type="Script" uid="uid://bxdmqbp5ifobv" path="res://scripts/__item_drop/cooking.gd" id="1_eexf5"]
 [ext_resource type="Texture2D" uid="uid://di0pssqy3hpv7" path="res://textures/Cooking/wajan.png" id="2_ls771"]
+[ext_resource type="Texture2D" uid="uid://cf45po18mnhaq" path="res://textures/Cooking/bg.png" id="2_nlxw6"]
 [ext_resource type="Shader" uid="uid://5qxx3cjbh8ja" path="res://scripts/gdshaders/pixel_wobble.gdshader" id="4_7c8ge"]
 [ext_resource type="Texture2D" uid="uid://bipjqlj3l86jq" path="res://textures/Cooking/spatula.png" id="4_j8mjs"]
 [ext_resource type="Texture2D" uid="uid://bbr5bk5201ki" path="res://textures/Cooking/slop.png" id="6_jjvtj"]
@@ -93,6 +94,10 @@ font_size = 14
 
 [node name="Cooking" type="Node2D" unique_id=1038864092]
 script = ExtResource("1_eexf5")
+
+[node name="Bg" type="Sprite2D" parent="." unique_id=1551457531]
+position = Vector2(-195, 167)
+texture = ExtResource("2_nlxw6")
 
 [node name="MejaMasak" type="Sprite2D" parent="." unique_id=191318821]
 texture_filter = 1
@@ -343,6 +348,8 @@ text = "Finish"
 label_settings = SubResource("LabelSettings_quang")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1789469921]
 
 [connection signal="mouse_entered" from="0" to="0" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="0" to="0" method="_on_mouse_exited"]

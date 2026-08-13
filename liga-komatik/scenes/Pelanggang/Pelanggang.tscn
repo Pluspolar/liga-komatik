@@ -2,12 +2,17 @@
 
 [ext_resource type="Texture2D" uid="uid://c3328hr7e2e2n" path="res://scenes/Pelanggang/gerobak.png" id="1_4fq5t"]
 [ext_resource type="Script" uid="uid://dre6cauiy8lau" path="res://scenes/Pelanggang/pelanggang.gd" id="1_8ntrl"]
+[ext_resource type="Texture2D" uid="uid://cf45po18mnhaq" path="res://textures/Cooking/bg.png" id="2_nqos7"]
 [ext_resource type="Texture2D" uid="uid://dnyeykn4uixhu" path="res://scenes/Pelanggang/WomanShadow.png" id="2_ro1co"]
 [ext_resource type="Script" uid="uid://jkbst64qalfe" path="res://scenes/Pelanggang/woman_shadow.gd" id="3_8ntrl"]
 [ext_resource type="PackedScene" uid="uid://svxdinll71xh" path="res://scenes/Pelanggang/desciion.tscn" id="5_6jbvm"]
 
 [node name="pelanggan" type="Node2D" unique_id=991122665]
 script = ExtResource("1_8ntrl")
+
+[node name="Bg" type="Sprite2D" parent="." unique_id=1620625233]
+position = Vector2(193, 120)
+texture = ExtResource("2_nqos7")
 
 [node name="WomanShadow" type="Sprite2D" parent="." unique_id=1630625720]
 position = Vector2(-112.19, 102)
