@@ -179,31 +179,42 @@ var biomes_wall_data := {
 	"city_road" : {},
 }
 
+var biomes_enemy_data := {
+	"plains" : {"enemy_1" : 0.001},
+	"beach" : {},
+	"ocean" : {},
+	"eucalyptus" : {},
+	"urban" : {},
+	"city" : {"enemy_1" : 0.001},
+	"city_transition" : {},
+	"city_road" : {},
+}
+
 var objects_data := {
-	"plains" : {"tree" : 0.025, "abandoned_house" : 0.0012},
+	"plains" : {"tree" : 0.025, "abandoned_house_1" : 0.0012},
 	"beach" : {},
 	"ocean" : {},
 	"eucalyptus" : {"tree" : 0.01},
 	"urban" : {},
-	"city" : {"abandoned_apartment" : 0.01},
+	"city" : {"abandoned_apartment_1" : 0.005, "abandoned_apartment_2" : 0.005},
 	"city_transition" : {},
 	"city_road" : {},
 }
 
 var objects := { #[x_size, y_vertical_size, how much free space under "y"], scene
 	"tree" : [[1,1,0], null, preload("res://scenes/structures/tree.tscn")],
-	"abandoned_house" : [[3,1,0], "1_aband_house", preload("res://scenes/structures/abandoned_house.tscn")],
-	"abandoned_apartment" : [[3,1,0], "1_aband_apart", preload("res://scenes/structures/abandoned_apartment.tscn")]
+	"abandoned_house_1" : [[3,1,0], "1_aband_house", preload("res://scenes/structures/abandoned_house.tscn")],
+	"abandoned_apartment_1" : [[3,1,0], "1_aband_apart", preload("res://scenes/structures/abandoned_apartment_1.tscn")],
+	"abandoned_apartment_2" : [[3,1,0], "2_aband_apart", preload("res://scenes/structures/abandoned_apartment_2.tscn")],
 }
 
-var enemies := {
-	"soldier" : preload("res://scenes/enemy/enemy_1.tscn"),
-}
+var enemies := preload("res://scenes/enemy/enemy.tscn")
 
 func rand_interior_data():
 	interior_data = {
 	"1_aband_house" : [0.2, [randi_range(10,20), randi_range(10,20)], {"oak_planks" : 0.9, "red_soil" : 0.1}, {"wooden_board" : 1}, 0.125, {"can" : 0.5, "mie": 0.5}], 
-	"1_aband_apart" : [0.1, [randi_range(20,35), randi_range(20,35)], {"gray_concrete" : 0.85, "gray_concrete_cracked" : 0.075, "red_soil" : 0.075}, {"dark_gray_concrete" : 0.89, "dark_gray_concrete_cracked" : 0.1, "dark_gray_concrete_cut" : 0.01}, 0.06, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}]
+	"1_aband_apart" : [0.1, [randi_range(20,35), randi_range(20,35)], {"gray_concrete" : 0.85, "gray_concrete_cracked" : 0.075, "red_soil" : 0.075}, {"dark_gray_concrete" : 0.89, "dark_gray_concrete_cracked" : 0.1, "dark_gray_concrete_cut" : 0.01}, 0.06, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}],
+	"2_aband_apart" : [0.1, [randi_range(25,40), randi_range(25,40)], {"spruce_planks" : 0.85, "dirt" : 0.075, "red_soil" : 0.075}, {"dark_gray_concrete" : 0.89, "dark_gray_concrete_cracked" : 0.1, "dark_gray_concrete_cut" : 0.01}, 0.06, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}],
 } #room_abundance, [x_size, y_size], tiles, chance_item_per_tile, item_list #old: id, [x_size, y_size], tiles, chance_item_per_tile, item_loot_table
 
 var objects_pos := {}
@@ -413,12 +424,15 @@ func place_tile_biome(pos : Vector2i, _biome: String):
 	place_enemy_biome(pos, _biome)
 	
 func place_enemy_biome(pos, _biome: String) -> void:
-	if objects_pos.get(pos) or randf_range(0,1) <= 0.999: return
+	var cur_enemy = rng_calculator(biomes_enemy_data, _biome)
 	
-	var obj_data = enemies["soldier"]
-	var obj = obj_data.instantiate()
+	if objects_pos.get(pos) or cur_enemy == null: return
+	
+	#var obj_data = enemies[cur_enemy]
+	var obj = enemies.instantiate()
 	obj.global_position = tile_map.map_to_local(pos)
 	obj._cur_tile = pos
+	obj.enemy_name = cur_enemy
 	objects_pos[pos] = "enemy"
 
 	chunks_enemy[cur_chunk].append(obj)
@@ -675,7 +689,11 @@ func _load_scene():
 				for _tile in chunks[_chunk]: tile_map.set_cell(_tile[0], -1)
 				for _wall in chunks_wall[_chunk]: tilemap_wall.set_cell(_wall[0], -1)
 				for _obj in chunks_obj[_chunk]: _obj.call_deferred("hide")
-				for _enemy in chunks_enemy[_chunk]: _enemy.call_deferred("hide")
+				for _enemy in chunks_enemy[_chunk]: 
+					_enemy.get_node("raycast_1").call_deferred("set_enabled", false)
+					_enemy.get_node("raycast_2").call_deferred("set_enabled", false)
+					_enemy.get_node("raycast_3").call_deferred("set_enabled", false)
+					_enemy.call_deferred("hide")
 				generated_chunks.erase(_chunk)
 				
 		elif Global.cur_scene == "interior" and Global.changing_scene and Global.cur_interior != null:
@@ -719,7 +737,11 @@ func erase_all_chunks():
 		for _tile in chunks[_chunk]: tile_map.set_cell(_tile[0], -1)
 		for _wall in chunks_wall[_chunk]: tilemap_wall.set_cell(_wall[0], -1)
 		for _obj in chunks_obj[_chunk]: _obj.call_deferred("hide")
-		for _enemy in chunks_enemy[_chunk]: _enemy.call_deferred("hide")
+		for _enemy in chunks_enemy[_chunk]: 
+			_enemy.get_node("raycast_1").call_deferred("set_enabled", false)
+			_enemy.get_node("raycast_2").call_deferred("set_enabled", false)
+			_enemy.get_node("raycast_3").call_deferred("set_enabled", false)
+			_enemy.call_deferred("hide")
 	generated_chunks.clear()
 		
 func is_in_water():
@@ -804,6 +826,9 @@ func _enemy_ai(delta):
 			if cur_chunk_before != cur_chunk_after:
 				chunks_enemy[cur_chunk_before].erase(_enemy)
 				chunks_enemy[cur_chunk_after].append(_enemy)
+				if !generated_chunks.has(cur_chunk_after):
+					for _ray in _enemy.all_raycast: _ray.enabled = false
+					_enemy.hide()
 				
 func find_path_to(cur_pos, target_pos):
 	var cur_pos_tile = tile_map.local_to_map(cur_pos)
@@ -845,7 +870,6 @@ func point_solid_return(point_solid_y, _tile):
 				astargrid.set_point_solid(_tile+Vector2i(0,-1), false)
 				
 func player_move_and_slide():
-	var player_clamp
 	var player_offset
 	var tiles_interior
 	var first_pos
@@ -877,8 +901,10 @@ func player_move_and_slide():
 func _physics_process(delta: float) -> void:
 	if generating: return
 	player.hide()
+	gerobak.hide()
 	if Global.is_exploring: 
 		player.show()
+		gerobak.show()
 		_exploring(delta)
 	elif Global.cur_scene == "central_inventory": camera_follow_mouse(delta)
 	elif Global.cur_scene == "customer": camera.position = Global.viewport_tree.size/2

@@ -122,16 +122,19 @@ position = Vector2(0, 5.5)
 shape = SubResource("RectangleShape2D_htemk")
 
 [node name="raycast_1" type="RayCast2D" parent="." unique_id=109591167]
+enabled = false
 collision_mask = 2082
 hit_from_inside = true
 collide_with_areas = true
 
 [node name="raycast_2" type="RayCast2D" parent="." unique_id=36260688]
+enabled = false
 collision_mask = 2082
 hit_from_inside = true
 collide_with_areas = true
 
 [node name="raycast_3" type="RayCast2D" parent="." unique_id=719732056]
+enabled = false
 collision_mask = 2082
 hit_from_inside = true
 collide_with_areas = true

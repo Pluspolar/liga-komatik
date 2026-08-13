@@ -21,6 +21,8 @@ var bigger_velocity : Array = ["y", 0]
 
 func go_to_path():
 	#var target_pos = cur_path[-1] - global_position
+	if !raycast_1.enabled: for _ray in all_raycast: _ray.enabled = true
+	
 	if !cur_path.is_empty(): 
 		if aggro_dur > 0: cur_angle_to = global_position.angle_to_point(cur_path[-1])
 		else: 
@@ -44,7 +46,9 @@ func go_to_path():
 	
 	#var raycast_angles : Array = [0,0,0]
 	
-	if cur_path.is_empty(): return global_position
+	if cur_path.is_empty(): 
+		#for _ray in all_raycast: _ray.enabled = false
+		return global_position
 	velocity = global_position.direction_to(cur_path[0])*speed
 	if _cur_tile == cur_path_tile[0]: 
 		cur_path.remove_at(0)
@@ -52,6 +56,7 @@ func go_to_path():
 	
 	move_and_slide()
 	
+	#for _ray in all_raycast: _ray.enabled = false
 	return global_position
 	
 func _check_anim():

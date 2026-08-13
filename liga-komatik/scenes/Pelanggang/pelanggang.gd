@@ -1,9 +1,11 @@
 extends Node2D
 class_name pelanggang
-@onready var sprite = $WomanShadow
+@onready var sprite = $shadow
 @onready var des = $"1"
 var first = true
 var entered = false
+var pelanggan_list = ["woman_1", "woman_2", "man_1", "man_2", "man_3"]
+var cur_pelanggan = "woman_1"
 
 func _ready() -> void:
 	Global.pelanggan_scene = self
@@ -19,11 +21,10 @@ func _start() -> void:
 		sprite.getOut()
 		des.done()
 		
-func _on_woman_shadow_done() -> void:
-	#sprite.position = Vector2(-112.19,102.0)
+func _on_shadow_done() -> void:
 	sprite.getIn()
 	Global.cooking_scene.done.disabled = false
 	Global.cooking_scene.done.visible = true
-	
-func _on_woman_shadow_entered() -> void:
+
+func _on_shadow_entered() -> void:
 	des._start()
