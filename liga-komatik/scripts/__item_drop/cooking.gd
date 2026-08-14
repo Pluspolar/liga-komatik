@@ -15,10 +15,10 @@ const FOOD = preload("uid://dhnglshdg05fo")
 @onready var done = $Button
 @onready var done_label = $Button/Label
 @onready var switch_shape = $Swicth/CollisionShape2D
-var lvl0 = "Tidak ada"
-var lvl1 = "Sedikit"
-var lvl2 = "Medium"
-var lvl3 = "Jumbo"
+var lvl0 = "[wave]KOSONG"
+var lvl1 = "[wave]SEDIKIT"
+var lvl2 = "[wave]MEDIUM"
+var lvl3 = "[shake]JUMBO"
 #var target = 0.7
 
 # Called when the node enters the scene tree for the first time.
@@ -67,10 +67,10 @@ func bigger(nutri):
 	
 	Global.target_nutrition = total_nutrition
 	if Global.target_nutrition >= Global.cooking_target: 
+		done_label.text = "Selesai"
 		#done.disabled = false
 		#done.visible = true
-		done_label.text = "Finish"
-	elif Global.pelanggan_scene.read_repeat: done_label.text = "Finish\nEarly"
+	#elif Global.pelanggan_scene.read_repeat: done_label.text = "Finish\nEarly"
 	
 	if Global.target_nutrition < 0.05:
 		nutri_level.text = lvl0	
@@ -125,7 +125,7 @@ func _on_button_button_down() -> void:
 func cooking_reset():
 	Global.pelanggan_scene.first = false
 	Global.pelanggan_scene.read_repeat = false
-	done_label.text = "Finish"
+	done_label.text = "Selesai"
 	total_nutrition = 0
 	#Global.cooking_target = 0
 	slop.scale = Vector2.ZERO

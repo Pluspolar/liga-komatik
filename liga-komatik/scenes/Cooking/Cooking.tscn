@@ -85,13 +85,42 @@ size = Vector2(83, 64.5)
 font = ExtResource("10_qvev4")
 font_size = 7
 
-[sub_resource type="LabelSettings" id="LabelSettings_7tk3i"]
-font = ExtResource("10_qvev4")
-font_size = 12
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ii1gk"]
+bg_color = Color(0, 0, 0, 0.163)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o2wga"]
+bg_color = Color(0, 0, 0, 0.42800003)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6dxfr"]
+bg_color = Color(0, 0, 0, 0.37300003)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 1
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_se63s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ubes0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_quang"]
 font = ExtResource("10_qvev4")
-font_size = 14
+font_size = 10
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(1.5, 1.5)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_s7qke"]
 frequency = 0.0539
@@ -350,21 +379,38 @@ label_settings = SubResource("LabelSettings_wae4q")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="nutriLevel" type="Label" parent="." unique_id=799367641]
-offset_left = 275.835
-offset_right = 383.83508
-offset_bottom = 22.794996
-text = "Tidak Ada"
-label_settings = SubResource("LabelSettings_7tk3i")
+[node name="nutriLevel" type="RichTextLabel" parent="." unique_id=1118858682]
+clip_contents = false
+offset_left = 199.0
+offset_top = 3.0
+offset_right = 379.83508
+offset_bottom = 25.794996
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 3
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 5
+theme_override_fonts/normal_font = ExtResource("10_qvev4")
+theme_override_font_sizes/normal_font_size = 13
+bbcode_enabled = true
+text = "[wave]KOSONG"
+scroll_active = false
 horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="Button" type="Button" parent="." unique_id=900251225]
-offset_left = 286.0
-offset_top = 172.0
+offset_left = 303.0
+offset_top = 178.0
 offset_right = 381.0
 offset_bottom = 213.0
 focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_ii1gk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_o2wga")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6dxfr")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_se63s")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ubes0")
 
 [node name="Label" type="Label" parent="Button" unique_id=239639603]
 layout_mode = 1
@@ -379,7 +425,7 @@ offset_right = 47.5
 offset_bottom = 16.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Finish"
+text = "SELESAI"
 label_settings = SubResource("LabelSettings_quang")
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -15,8 +15,8 @@ var bigger_velocity : Array = ["y", 0]
 @onready var raycast_3 = $raycast_3
 @onready var all_raycast = [raycast_1, raycast_2, raycast_3]
 
-@export var speed : float = 65
-@export var sight_range : float = 125
+@export var speed : float = 100
+@export var sight_range : float =75
 @export var follow_dur : float = 8
 
 func go_to_path():
@@ -60,8 +60,26 @@ func go_to_path():
 	return global_position
 	
 func _check_anim():
-	if velocity.length() < 7.0: is_idle()
-	else: is_walking()
+	var dir_cur_angle = Vector2(cos(cur_angle_to), sin(cur_angle_to))
+	if (abs(dir_cur_angle.x) >= 0.5 and abs(dir_cur_angle.y) <= 0.5):
+		
+		if velocity.length() < 7.0: sprite.play(enemy_name + "_idle_side")
+		else: sprite.play(enemy_name + "_side")
+		
+		if dir_cur_angle.x > 0: sprite.scale.x = 1
+		else: sprite.scale.x = -1
+		
+	elif (abs(dir_cur_angle.x) < 0.5 and dir_cur_angle.y > 0.5):
+		if velocity.length() < 7.0: sprite.play(enemy_name + "_idle_down")
+		else: sprite.play(enemy_name + "_down")
+	elif (abs(dir_cur_angle.x) < 0.5 and dir_cur_angle.y < -0.5) :
+		if velocity.length() < 7.0: sprite.play(enemy_name + "_idle_up")
+		else: sprite.play(enemy_name + "_up")
+	
+	var cur_sf = sprite.sprite_frames
+	cur_sf.set_animation_speed(sprite.animation, abs(velocity.length())*0.125)
+	#if velocity.length() < 7.0: is_idle()
+	#else: is_walking()
 	
 func is_walking():
 	if abs(velocity.x) >= abs(velocity.y): bigger_velocity = ["x", velocity.x]

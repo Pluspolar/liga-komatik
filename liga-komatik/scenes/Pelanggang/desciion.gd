@@ -127,8 +127,8 @@ func _on_cooook_button_down() -> void:
 	#print("Test")
 	if Global.cur_scene != "customer" and !Global.pelanggan_scene.entered: return
 	rand_cooking_target()
-	if Global.pelanggan_scene.read_repeat: Global.cooking_scene.done_label.text = "Finish\nEarly"
-	else: Global.cooking_scene.done_label.text = "Finish"
+	if Global.pelanggan_scene.read_repeat: Global.cooking_scene.done_label.text = "Selesai\nAwal"
+	else: Global.cooking_scene.done_label.text = "Selesai"
 	
 	Global.change_scene_to("cooking")
 	Global.target_nutrition = 0

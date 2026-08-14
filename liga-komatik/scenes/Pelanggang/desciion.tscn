@@ -3,9 +3,41 @@
 [ext_resource type="Script" uid="uid://bqjw8bil1s68" path="res://scenes/Pelanggang/desciion.gd" id="1_s6b8t"]
 [ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="3_rcnrg"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_7tk3i"]
+[sub_resource type="LabelSettings" id="LabelSettings_1a0xu"]
+font = ExtResource("3_rcnrg")
+font_size = 9
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(1.5, 1.5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_s6b8t"]
 font = ExtResource("3_rcnrg")
 font_size = 8
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(1.5, 1.5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0p0mj"]
+font = ExtResource("3_rcnrg")
+font_size = 9
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(1.5, 1.5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_rcnrg"]
+font = ExtResource("3_rcnrg")
+font_size = 9
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(1.5, 1.5)
 
 [node name="Desciion" type="CanvasLayer" unique_id=2096890935]
 script = ExtResource("1_s6b8t")
@@ -22,7 +54,7 @@ layout_mode = 0
 offset_right = 69.0
 offset_bottom = 23.0
 text = "Gossip"
-label_settings = SubResource("LabelSettings_7tk3i")
+label_settings = SubResource("LabelSettings_1a0xu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -38,7 +70,7 @@ layout_mode = 0
 offset_right = 69.0
 offset_bottom = 23.0
 text = "Repeat?"
-label_settings = SubResource("LabelSettings_7tk3i")
+label_settings = SubResource("LabelSettings_s6b8t")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -54,7 +86,7 @@ layout_mode = 0
 offset_right = 69.0
 offset_bottom = 23.0
 text = "COOOK!!"
-label_settings = SubResource("LabelSettings_7tk3i")
+label_settings = SubResource("LabelSettings_0p0mj")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -70,7 +102,7 @@ layout_mode = 0
 offset_right = 69.0
 offset_bottom = 23.0
 text = "EXPLORE"
-label_settings = SubResource("LabelSettings_7tk3i")
+label_settings = SubResource("LabelSettings_rcnrg")
 horizontal_alignment = 1
 vertical_alignment = 1
 

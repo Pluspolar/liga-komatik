@@ -78,7 +78,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"walk_down",
-"speed": 6.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -89,7 +89,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"walk_side",
-"speed": 6.0
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -100,7 +100,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"walk_up",
-"speed": 6.0
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g2els"]
@@ -117,8 +117,7 @@ script = ExtResource("1_g2els")
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=449552910]
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_htemk")
-animation = &"idle down"
-frame_progress = 0.01676685
+animation = &"walk_up"
 
 [node name="collision_box" type="CollisionShape2D" parent="." unique_id=1264086852]
 position = Vector2(0, 5.5)
