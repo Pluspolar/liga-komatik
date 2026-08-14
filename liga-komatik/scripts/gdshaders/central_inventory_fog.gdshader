@@ -23,7 +23,7 @@ void fragment() {
 	float noise_total = mix(noise_a_1*8.0, noise_a_2*8.0, 0.5);
 	COLOR.a = noise_total;
 	COLOR.a *= 0.6;
-	//if (COLOR.a < 0.0) COLOR.a = 0.0;
+
 	COLOR.a += 0.4;
 	COLOR.rgb += vec3(0.05);
 	

@@ -23,7 +23,6 @@ func _physics_process(delta: float) -> void:
 		elif _area.is_in_group("gerobak_interact"):
 			Global.is_interacting = true
 			can_cook = true
-			#print(_area)
 		elif _area.is_in_group("item_drop") and _area.item_dur == 0:
 			Global.add_item(_area, _area.chunk_pos, _area.item_id, _area.item_name, _area.item_star, _area.item_nutrition)
 			_area.call_deferred("queue_free")
@@ -33,9 +32,7 @@ func _physics_process(delta: float) -> void:
 	if Global.cur_scene == "interior" and global_position.distance_to(Global.player_interior_out) <= 23:
 		Global.is_interacting = true
 
-	#if Input.is_action_pressed("up") or Input.is_action_pressed("down") or Input.is_action_pressed("left") or Input.is_action_pressed("right"): is_walking() 
-	#else: is_idle()
-	if velocity.length() < 2.0: is_idle()
+	if velocity.length() < 4.0: is_idle()
 	else: is_walking()
 
 func is_idle():

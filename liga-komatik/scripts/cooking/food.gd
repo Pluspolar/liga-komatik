@@ -5,16 +5,8 @@ class_name foods
 @onready var spatula  = $"../Spatula"
 @onready var wajan = $"../wajan"
 @onready var sprite = $AnimatedSprite2D
-#first one is the collision, seccond nutrition value
-#@onready var shapes: Dictionary = {
-#	"sarden": [$sarden, 70],
-#	"rumput": [$rumput, 10],
-#	"kornet": [$kornet, 100],
-#	"udang": [$udang, 40],
-#	"ubi": [$ubi, 50]
-#}
 @onready var shapes: Dictionary = {
-	"belalang": $sarden,
+	"belalang": $belalang,
 	"can": $can,
 	"kornet": $kornet,
 	"mie": $mie,
@@ -30,7 +22,6 @@ class_name foods
 const cookTime = 10
 signal done(nutrition)
 var nutrition : float
-#@export var nutrition : float = 0.5
 @export var timePass = 0
 
 
@@ -59,23 +50,16 @@ func _on_timer_timeout() -> void:
 		queue_free()
 	else: 
 		timePass += 1
-		#print("continue")
 
 func mulai(junk):
 	if junk == self: 
 		time.start()
-		#print("start")
 
 func _on_body_entered(body: Node) -> void:
 	if body == spatula:
 		timePass += 1
-		#print("kena")
 		
 func activate(pick) -> void :
-	#shapes[pick][0].disabled = false
 	shapes[pick].disabled = false
 	shapes[pick].scale = Vector2(1.5,1.5)
 	shapes[pick].show()
-	#nutrition = shapes[pick][1]
-	#nutrition = Global._item_nutrition[pick][0][0][1]
-	#print(nutrition)

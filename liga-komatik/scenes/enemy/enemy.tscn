@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://poi4ja7s3h10"]
 
-[ext_resource type="Script" uid="uid://c7v55ucs64loa" path="res://scenes/enemy/enemy.gd" id="1_trh57"]
+[ext_resource type="Script" uid="uid://c7v55ucs64loa" path="res://scripts/enemy/enemy.gd" id="1_trh57"]
 [ext_resource type="Texture2D" uid="uid://d1hg8qmdlae63" path="res://textures/sprites/enemy_1/enemy_1_down.png" id="2_v31qn"]
 [ext_resource type="Texture2D" uid="uid://blls1qn5s2vv4" path="res://textures/sprites/enemy_1/enemy_1_side.png" id="3_co5vk"]
 [ext_resource type="Texture2D" uid="uid://8r4njbx7l5q3" path="res://textures/sprites/enemy_1/enemy_1_up.png" id="4_p8wfw"]

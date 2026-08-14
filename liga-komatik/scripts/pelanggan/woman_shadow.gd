@@ -2,20 +2,6 @@ extends AnimatedSprite2D
 signal entered
 signal done
 
-#var pelanggan_list = [ ]#Global.pelanggan_scene.pelanggan_list
-#var cur_pelanggan = "" #Global.pelanggan_scene.cur_pelanggan
-
-# Called when the node enters the scene tree for the first time.
-#func _ready() -> void:
-#	await get_tree().process_frame
-#	pelanggan_list = Global.pelanggan_scene.pelanggan_list
-#	cur_pelanggan = Global.pelanggan_scene.cur_pelanggan
-	#pass # Replace with function body.
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
 func getOut() -> void:
 	position = Vector2(211.0, 102.0) 
 	var tween = create_tween()

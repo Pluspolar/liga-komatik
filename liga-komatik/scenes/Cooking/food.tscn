@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dhnglshdg05fo"]
 
 [ext_resource type="Script" uid="uid://uyyb0svkbpij" path="res://scripts/cooking/food.gd" id="1_u04j5"]
-[ext_resource type="SpriteFrames" uid="uid://i2k82erxbvjx" path="res://textures/Cooking/Ingredient/new_sprite_frames.tres" id="2_nkj5g"]
+[ext_resource type="SpriteFrames" uid="uid://i2k82erxbvjx" path="res://textures/sprite_frames/cooking_ingredients.tres" id="2_nkj5g"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nkj5g"]
 radius = 5.0
@@ -43,7 +43,7 @@ script = ExtResource("1_u04j5")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=984923059]
 scale = Vector2(1.5, 1.5)
 sprite_frames = ExtResource("2_nkj5g")
-animation = &"sarden"
+animation = &"belalang"
 
 [node name="Timer" type="Timer" parent="." unique_id=549622729]
 autostart = true
@@ -52,6 +52,7 @@ autostart = true
 visible = false
 position = Vector2(0, 1)
 rotation = 1.5707964
+scale = Vector2(1.5, 1.5)
 shape = SubResource("CapsuleShape2D_nkj5g")
 disabled = true
 

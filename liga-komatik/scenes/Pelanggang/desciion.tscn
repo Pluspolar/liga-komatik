@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://svxdinll71xh"]
 
-[ext_resource type="Script" uid="uid://bqjw8bil1s68" path="res://scenes/Pelanggang/desciion.gd" id="1_s6b8t"]
+[ext_resource type="Script" uid="uid://bqjw8bil1s68" path="res://scripts/pelanggan/desciion.gd" id="1_s6b8t"]
 [ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="3_rcnrg"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_1a0xu"]
+[sub_resource type="LabelSettings" id="LabelSettings_s6b8t"]
 font = ExtResource("3_rcnrg")
 font_size = 9
 outline_size = 4
@@ -12,9 +12,9 @@ shadow_size = 2
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(1.5, 1.5)
 
-[sub_resource type="LabelSettings" id="LabelSettings_s6b8t"]
+[sub_resource type="LabelSettings" id="LabelSettings_1a0xu"]
 font = ExtResource("3_rcnrg")
-font_size = 8
+font_size = 9
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 2
@@ -32,7 +32,7 @@ shadow_offset = Vector2(1.5, 1.5)
 
 [sub_resource type="LabelSettings" id="LabelSettings_rcnrg"]
 font = ExtResource("3_rcnrg")
-font_size = 9
+font_size = 8
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 2
@@ -42,22 +42,6 @@ shadow_offset = Vector2(1.5, 1.5)
 [node name="Desciion" type="CanvasLayer" unique_id=2096890935]
 script = ExtResource("1_s6b8t")
 
-[node name="Gossip" type="Button" parent="." unique_id=883061946]
-offset_left = 294.0
-offset_top = 66.0
-offset_right = 363.0
-offset_bottom = 88.0
-focus_mode = 0
-
-[node name="Label" type="Label" parent="Gossip" unique_id=1141303412]
-layout_mode = 0
-offset_right = 69.0
-offset_bottom = 23.0
-text = "Gossip"
-label_settings = SubResource("LabelSettings_1a0xu")
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Repeat" type="Button" parent="." unique_id=1681468609]
 offset_left = 294.0
 offset_top = 42.0
@@ -66,47 +50,99 @@ offset_bottom = 64.0
 focus_mode = 0
 
 [node name="Label" type="Label" parent="Repeat" unique_id=1153383101]
-layout_mode = 0
-offset_right = 69.0
-offset_bottom = 23.0
-text = "Repeat?"
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.5
+offset_top = -11.5
+offset_right = 34.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "ULANGI?"
 label_settings = SubResource("LabelSettings_s6b8t")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Gossip" type="Button" parent="." unique_id=883061946]
+offset_left = 299.0
+offset_top = 66.0
+offset_right = 358.0
+offset_bottom = 88.0
+focus_mode = 0
+
+[node name="Label" type="Label" parent="Gossip" unique_id=1141303412]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.5
+offset_top = -11.5
+offset_right = 34.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "GOSIP"
+label_settings = SubResource("LabelSettings_1a0xu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="COOOOK" type="Button" parent="." unique_id=1556406260]
 offset_left = 294.0
-offset_top = 90.0
+offset_top = 105.0
 offset_right = 363.0
-offset_bottom = 112.0
+offset_bottom = 127.0
 focus_mode = 0
 
 [node name="Label" type="Label" parent="COOOOK" unique_id=1120541973]
-layout_mode = 0
-offset_right = 69.0
-offset_bottom = 23.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.5
+offset_top = -11.5
+offset_right = 34.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
 text = "COOOK!!"
 label_settings = SubResource("LabelSettings_0p0mj")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Explore" type="Button" parent="." unique_id=1099902680]
-offset_left = 294.0
-offset_top = 137.77
-offset_right = 363.0
-offset_bottom = 159.77002
+offset_left = 4.5
+offset_top = 4.5
+offset_right = 83.979996
+offset_bottom = 25.5
 focus_mode = 0
 
 [node name="Label" type="Label" parent="Explore" unique_id=1994275502]
-layout_mode = 0
-offset_right = 69.0
-offset_bottom = 23.0
-text = "EXPLORE"
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.5
+offset_top = -11.5
+offset_right = 34.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "EXPLORASI"
 label_settings = SubResource("LabelSettings_rcnrg")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="button_down" from="Gossip" to="." method="_on_gossip_button_down"]
 [connection signal="button_down" from="Repeat" to="." method="_on_repeat_button_down"]
+[connection signal="button_down" from="Gossip" to="." method="_on_gossip_button_down"]
 [connection signal="button_down" from="COOOOK" to="." method="_on_cooook_button_down"]
 [connection signal="button_down" from="Explore" to="." method="_on_explore_button_down"]

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cnqh7ocygiu32"]
 
 [ext_resource type="Texture2D" uid="uid://bv6wuxb26a54v" path="res://textures/Cooking/MejaMasak.png" id="1_4orch"]
-[ext_resource type="Script" uid="uid://bxdmqbp5ifobv" path="res://scripts/__item_drop/cooking.gd" id="1_eexf5"]
+[ext_resource type="Script" uid="uid://bxdmqbp5ifobv" path="res://scripts/cooking/cooking.gd" id="1_eexf5"]
 [ext_resource type="Texture2D" uid="uid://di0pssqy3hpv7" path="res://textures/Cooking/wajan.png" id="2_ls771"]
 [ext_resource type="Texture2D" uid="uid://cf45po18mnhaq" path="res://textures/Cooking/bg.png" id="2_nlxw6"]
 [ext_resource type="Shader" uid="uid://5qxx3cjbh8ja" path="res://scripts/gdshaders/pixel_wobble.gdshader" id="4_7c8ge"]
@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bbr5bk5201ki" path="res://textures/Cooking/slop.png" id="6_jjvtj"]
 [ext_resource type="Script" uid="uid://bon6gjyayap13" path="res://scripts/cooking/ingreButton.gd" id="8_6dxfr"]
 [ext_resource type="Texture2D" uid="uid://d0hg6rj3ehwxy" path="res://textures/Cooking/Sprite-0001.png" id="8_lbay0"]
-[ext_resource type="SpriteFrames" uid="uid://i2k82erxbvjx" path="res://textures/Cooking/Ingredient/new_sprite_frames.tres" id="9_qvev4"]
+[ext_resource type="SpriteFrames" uid="uid://i2k82erxbvjx" path="res://textures/sprite_frames/cooking_ingredients.tres" id="9_qvev4"]
 [ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="10_qvev4"]
 [ext_resource type="Texture2D" uid="uid://bikx65vm0nyya" path="res://textures/Cooking/left-right-arrow-2.png" id="12_o2wga"]
 

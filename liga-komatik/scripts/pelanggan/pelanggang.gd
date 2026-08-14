@@ -16,7 +16,6 @@ func _start() -> void:
 	if first:
 		sprite.getIn()
 	else:
-		#print("work")
 		entered = false
 		first = true
 		sprite.getOut()

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbnnh8ovne1sb"
-path="res://.godot/imported/warung_finished.png-08bb81ae1465e74ea4d59da92f061e80.ctex"
+uid="uid://c3328hr7e2e2n"
+path="res://.godot/imported/gerobak.png-20f09d0b052be5801369497787feb330.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/sprites/warung_finished.png"
-dest_files=["res://.godot/imported/warung_finished.png-08bb81ae1465e74ea4d59da92f061e80.ctex"]
+source_file="res://textures/Cooking/gerobak.png"
+dest_files=["res://.godot/imported/gerobak.png-20f09d0b052be5801369497787feb330.ctex"]
 
 [params]
 

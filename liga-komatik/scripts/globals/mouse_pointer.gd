@@ -3,17 +3,14 @@ extends Node2D
 var is_dragging : bool = false
 var hovered
 var mouse_area: Area2D
-#var mouse_area_follow: Area2D
 
 func _ready():
 	mouse_area = Area2D.new()
-	#mouse_area_follow = Area2D.new()
 	var shape = CollisionShape2D.new()
 	var circle = CircleShape2D.new()
 	circle.radius = 1
 	shape.shape = circle
 	mouse_area.add_child(shape)
-	#mouse_area_follow.add_child(shape)
 	
 	mouse_area.collision_layer = 0
 	mouse_area.collision_mask = 452 #4+64+128+256
@@ -63,11 +60,7 @@ func _process(_delta: float) -> void:
 				_area.get_parent()._on_swicth_mouse_entered()
 				var cur_cooking = _area.get_parent().cooking
 				var cur_shape = _area.get_child(0)
-				#if cur_cooking: _area.position = Vector2(0,0)
-				#else: _area.position = Vector2(384,0)
 				cur_shape.call_deferred("set_disabled", true)
-				#_area.position.x = Global.cur_cam_cooking.x-Global.viewport_tree.size.x/2
-				#print(_area.get_parent().cooking)
 				break
 			
 			elif _area.is_in_group("cooking_item_list"):

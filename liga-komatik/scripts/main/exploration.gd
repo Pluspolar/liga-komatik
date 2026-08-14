@@ -32,7 +32,6 @@ extends Node2D
 @onready var _cooking_scene := $Cooking
 @onready var _loading_screen := $loading_screen
 @onready var gerobak := $Ysort/gerobak
-#@onready var _cooking_scene := $Cooking
 
 var noise = FastNoiseLite.new()
 var corner_spot
@@ -83,9 +82,6 @@ var tiles_data := {}
 var walls_data := {}
 var interior_data = {} #id, tiles, [x_size, y_size]
 
-#"sand" : Color8(209, 196, 158),
-#"water" : Color8(94, 125, 182),
-#"grass" : Color8(20, 93, 15),
 var tiles_color = {
 	"red_soil" : Color(0.397, 0.043, 0.0),
 	"dirt" : Color(0.467, 0.128, 0.0),
@@ -97,7 +93,6 @@ var tiles_color = {
 	"gravel" : Color(0.3, 0.3, 0.3),
 }
 
-#"crate" : Color8(104, 61, 43)
 var walls_color = {
 	"crate" : Color(0.4, 0.1, 0),
 	"gray_concrete" : Color(0.1, 0.075, 0.07),
@@ -130,15 +125,6 @@ func rand_tiles_data():
 	"cyanish_concrete_cracked" : Vector2i(15, 5),
 	}
 
-	#tiles_data = {
-	#"dirt" : Vector2i(randi_range(0,1), randi_range(0,1))*2,
-	#"sand" : Vector2i(randi_range(2,3), randi_range(0,1))*2,
-	#"water" : Vector2i(4,0),
-	#"grass" : Vector2i(randi_range(6,7), randi_range(0,1)),
-	#"stone" : Vector2i(randi_range(0,1), randi_range(2,3)),
-	#"asphalt" : Vector2i(2,2),
-	#"gravel" : Vector2i(4,2),
-	#}
 func rand_walls_data():
 	walls_data = {
 		"crate" : Vector2i(0, 0),
@@ -206,7 +192,6 @@ var objects_data := {
 var objects := { #[x_size, y_vertical_size, how much free space under "y"], scene
 	"tree" : [[1,1,0], null, preload("res://scenes/structures/tree.tscn")],
 	"abandoned_house_1" : [[3,1,0], "1_aband_house", preload("res://scenes/structures/abandoned_house.tscn")],
-	#"abandoned_apartment_1" : [[3,1,0], "1_aband_apart", preload("res://scenes/structures/abandoned_apartment_1.tscn")],
 	"abandoned_apartment_1" : [[6,2,0], "1_aband_apart", preload("res://scenes/structures/abandoned_apartment_1.tscn")],
 	"abandoned_apartment_2" : [[6,2,0], "2_aband_apart", preload("res://scenes/structures/abandoned_apartment_2.tscn")],
 }
@@ -218,7 +203,7 @@ func rand_interior_data():
 	"1_aband_house" : [0.2, [randi_range(10,20), randi_range(10,20)], {"oak_planks" : 0.9, "red_soil" : 0.1}, {"wooden_board" : 1}, 0.125, {"can" : 0.5, "mie": 0.5}], 
 	"1_aband_apart" : [0.1, [randi_range(20,35), randi_range(20,35)], {"cyanish_concrete" : 0.85, "cyanish_concrete_cracked" : 0.075, "red_soil" : 0.075}, {"dark_gray_concrete" : 0.89, "dark_gray_concrete_cracked" : 0.1, "dark_gray_concrete_cut" : 0.01}, 0.06, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}],
 	"2_aband_apart" : [0.1, [randi_range(25,40), randi_range(25,40)], {"spruce_planks" : 0.85, "dirt" : 0.075, "red_soil" : 0.075}, {"dark_gray_concrete" : 0.89, "dark_gray_concrete_cracked" : 0.1, "dark_gray_concrete_cut" : 0.01}, 0.06, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}],
-} #room_abundance, [x_size, y_size], tiles, chance_item_per_tile, item_list #old: id, [x_size, y_size], tiles, chance_item_per_tile, item_loot_table
+} #room_abundance, [x_size, y_size], tiles, chance_item_per_tile, item_list
 
 var objects_pos := {}
 var new_minimap_image : Image = Image.create(512, 288, false, Image.FORMAT_RGB8)
@@ -248,17 +233,9 @@ func _ready() -> void:
 	altitude = generate_noise(0.03, 3, "perlin", 1, 0.2)
 	moisture = generate_noise(0.03, 3, "value_cubic")
 	temperature = generate_noise(0.025, 3, "simplex_smooth")
-	#urban = generate_noise(0.006, 3, "simplex", 1, 0.36)
-	#urban = generate_noise(0.006, 3, "simplex", 1, 0.45)
 	urban = generate_noise(0.0045, 3, "simplex", 1, 0.5)
 	city = generate_noise(0.003, 4, "cellular", 1, 0.3)
-	road = generate_noise(0.02, 2, "perlin", 1, 0)#, false, "sign")
-	#road = generate_noise(0.02, 2, "value_cubic", 1, 0)#, false, "sign")
-	#road = generate_noise(0.015, 2, "perlin", 1, 0.0, false, "sign")
-	#road = generate_noise(0.015, 2, "cellular", 1, 0.55, false, "sign")
-	#road = generate_noise(0.005, 2, "cellular", 1, 0.6, false, "sign")
-	#road = generate_noise(0.0125, 2, "cellular", 1, 0.6, false, "sign")
-	#road = generate_noise(0.015, 2, "cellular", 1, 0.5, false, "sign")
+	road = generate_noise(0.02, 2, "perlin", 1, 0)
 	destruction = generate_noise(0.003, 3, "cellular", 1, 0.2)
 	await get_tree().create_timer(0.1).timeout
 	_set_tile()
@@ -287,7 +264,7 @@ func pos_to_chunk(cur_pos : Vector2):
 	var _pos : Vector2i = tile_map.local_to_map(cur_pos)
 	return Vector2i(Vector2(_pos)/chunk_size)
 
-func generate_noise(freq : float, oct : int, noise_type: String, multiplier: float = 1, additive: float = 0, is_abs : bool = false, special_inst : String = ""):
+func generate_noise(freq : float, oct : int, noise_type: String, multiplier: float = 1, additive: float = 0, is_abs : bool = false):
 	noise.seed = randi()
 	noise.frequency = freq
 	noise.fractal_octaves = oct
@@ -297,8 +274,6 @@ func generate_noise(freq : float, oct : int, noise_type: String, multiplier: flo
 		for x in range(-width_half, width_half):
 			for y in range(-height_half, height_half):
 				var cur_val = multiplier*(noise.get_noise_2d(x, y)+additive)
-				#if special_inst == "sign": 
-				#	if cur_val > 0: cur_val = 1
 				grid_noise[Vector2i(x,y)] = cur_val
 		return grid_noise
 	else:
@@ -322,7 +297,6 @@ func _set_tile():
 			objects_pos[Vector2i(x,y)] = "player"
 	
 	for x in range(-width_half-1, width_half+1):
-		#await get_tree().create_timer(0.05).timeout
 		for y in range(-height_half-1, height_half+1):
 			var pos = Vector2i(x, y)
 			if pos.x == (-width_half-1) or pos.y == (-height_half-1) or pos.x == width_half or pos.y == height_half:
@@ -348,7 +322,6 @@ func _set_tile():
 						if _urban <= 0.07: place_tile_biome(pos, "eucalyptus")
 						elif _city > -0.31 and _city <= -0.3: place_tile_biome(pos, "city_transition")
 						
-						#elif _road >= 0 and _road < 0.09: place_tile_biome(pos, "city_road")
 						else: place_tile_biome(pos, "city")
 						
 					elif alt < -0.25: place_tile_biome(pos, "ocean")
@@ -431,7 +404,6 @@ func place_enemy_biome(pos, _biome: String) -> void:
 	
 	if objects_pos.get(pos) or cur_enemy == null: return
 	
-	#var obj_data = enemies[cur_enemy]
 	var obj = enemies.instantiate()
 	obj.global_position = tile_map.map_to_local(pos)
 	obj._cur_tile = pos
@@ -577,7 +549,6 @@ func create_room(total_wall, room_availability, middle, cur_interior, floor_pale
 			
 			rand_tiles_data()
 			
-			#if x == -room_size.x or y == -room_size.y or x == room_size.x or y == room_size.y:
 			if (abs(x) == room_size.x or abs(y) == room_size.y) and abs(x) < room_size.x+1 and abs(y) < room_size.y+1:
 				tile = "grass"
 				var wall_tile = rng_calculator(wall_palette)
@@ -585,7 +556,7 @@ func create_room(total_wall, room_availability, middle, cur_interior, floor_pale
 			else: 
 				if randf_range(0,1) <= chance_item_spawn: 
 					var rand_position = tile_map.map_to_local(local_pos)+Vector2(randf_range(-6, 6), randf_range(-6, 6))
-					Global.spawn_new_item(rand_position, Vector2i(0,0), rng_calculator(item_loot_table))#, 0.5)
+					Global.spawn_new_item(rand_position, Vector2i(0,0), rng_calculator(item_loot_table))
 				tile = rng_calculator(floor_palette)
 			
 			room_availability.append(local_pos)
@@ -652,7 +623,6 @@ func _load_scene():
 			_cooking_inv_scene.hide()
 			_customer_scene.hide()
 			_cooking_scene.hide()
-			#_cooking_scene.hide()
 			if Global.is_exploring: 
 				darker_area.show()
 			else:
@@ -663,7 +633,6 @@ func _load_scene():
 				elif Global.cur_scene == "customer":
 					_customer_scene.show()
 					_customer_scene._start()
-					#_customer_scene.get_child(2)._start()
 				elif Global.cur_scene == "cooking":
 					_cooking_scene.show()
 				hand_interact.hide()
@@ -684,7 +653,6 @@ func _load_scene():
 						for _tile in chunks[place_tile]: tile_map.set_cell(_tile[0], 0, _tile[1])
 						for _wall in chunks_wall[place_tile]: tilemap_wall.set_cell(_wall[0], 1, _wall[1])
 						for _obj in chunks_obj[place_tile]: _obj.call_deferred("show")
-						#for _enemy in chunks_enemy[place_tile]: _enemy.call_deferred("show")
 						generated_chunks.append(place_tile)
 					elif generated_chunks.has(place_tile): temp_chunk.erase(place_tile)
 					
@@ -780,9 +748,6 @@ func _exploring(delta: float) -> void:
 		pass
 
 		#new_minimap_image.fill(Color.WHITE)
-		#pass
-		#dialogue.add_text("Kami mendapatkan info dari beberapa orang bahwa stok di kota [wave]GURT[/wave] telah diisi kembali.", 20, "Radio") #[wave amp=15 freq=5]
-		#dialogue.add_text("[tornado radius=1.5 freq=3]Semoga Beruntung!", 15, "Radio") #[wave amp=15 freq=8]
 	
 	Global.player_tile = tile_map.local_to_map(player.position)
 	Global.player_chunk = pos_to_chunk(player.position)
@@ -895,11 +860,6 @@ func player_move_and_slide():
 
 	gerobak.move_and_slide()
 	player.move_and_slide()
-	
-	#gerobak.position = Vector2(clamp(gerobak.position.x, first_pos.x, last_pos.x), clamp(gerobak.position.y, first_pos.y, last_pos.y))
-
-	#if Global.cur_scene == "outside": player.position = Vector2(clamp(player.position.x, -boundary_player.x, boundary_player.x), clamp(player.position.y, -boundary_player.y, boundary_player.y))
-	#elif Global.cur_scene == "interior" and !Global.changing_scene: player.position = Vector2(clamp(player.position.x, first_pos.x, last_pos.x), clamp(player.position.y, first_pos.y, last_pos.y))
 		
 func _physics_process(delta: float) -> void:
 	if generating: return

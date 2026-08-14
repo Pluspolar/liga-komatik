@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bu2dhh3lgyhe8"
-path="res://.godot/imported/radio.png-92f909799cacdbedff840df336a58193.ctex"
+uid="uid://dnyeykn4uixhu"
+path="res://.godot/imported/WomanShadow.png-6c73e7ade0e948e19ed442e5c0bce8c0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/sprites/radio.png"
-dest_files=["res://.godot/imported/radio.png-92f909799cacdbedff840df336a58193.ctex"]
+source_file="res://textures/Cooking/WomanShadow.png"
+dest_files=["res://.godot/imported/WomanShadow.png-6c73e7ade0e948e19ed442e5c0bce8c0.ctex"]
 
 [params]
 

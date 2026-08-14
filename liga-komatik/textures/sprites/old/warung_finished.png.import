@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhvtww1psno0h"
-path="res://.godot/imported/terrain_palette_9.png-6d74734612b056eba8e06fcc6f434695.ctex"
+uid="uid://cbnnh8ovne1sb"
+path="res://.godot/imported/warung_finished.png-77683b0cd6136f1850174ba1cabc99a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/tiles/terrain_palette_9.png"
-dest_files=["res://.godot/imported/terrain_palette_9.png-6d74734612b056eba8e06fcc6f434695.ctex"]
+source_file="res://textures/sprites/old/warung_finished.png"
+dest_files=["res://.godot/imported/warung_finished.png-77683b0cd6136f1850174ba1cabc99a6.ctex"]
 
 [params]
 

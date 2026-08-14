@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3328hr7e2e2n"
-path="res://.godot/imported/gerobak.png-e0b868bcaf1db6457192b7ed8ea9d62e.ctex"
+uid="uid://c8j2sgwyinq0q"
+path="res://.godot/imported/icon.svg-97e7e551afdc13cf9b882aa503d4349e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/Pelanggang/gerobak.png"
-dest_files=["res://.godot/imported/gerobak.png-e0b868bcaf1db6457192b7ed8ea9d62e.ctex"]
+source_file="res://textures/sprites/old/icon.svg"
+dest_files=["res://.godot/imported/icon.svg-97e7e551afdc13cf9b882aa503d4349e.ctex"]
 
 [params]
 
@@ -38,3 +38,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

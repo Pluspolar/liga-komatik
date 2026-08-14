@@ -14,12 +14,9 @@ var chunks = {}
 var chunks_wall = {}
 var chunks_obj = {}
 var chunks_enemy = {}
-#var cur_chunk : Vector2i
 var backpack_inventory = {}
 var central_inventory = {}
 var cooking_inventory = {}
-
-#var temp_cooking_inventory = {}
 
 var cur_cam_cooking : Vector2 = Vector2(196.0, 108.0)
 var player_interior_out : Vector2 = Vector2(0,0)
@@ -65,11 +62,6 @@ enum state {
 	TALKING,
 	END
 }
-
-#var item_drop : Dictionary = {
-#	"can" : preload("res://scenes/__item_drop/can.tscn"), 
-#	"mie" : preload("res://scenes/__item_drop/mie.tscn")
-#} #scene, nutrition
 
 var _item_nutrition : Dictionary = {
 	"belalang" : [
@@ -130,7 +122,6 @@ func _ready() -> void:
 	add_preset_item("rumput", randi_range(2, 4))
 	for item_name in _item_nutrition:
 		central_inventory[item_name] = _item_nutrition[item_name][0].duplicate_deep()
-	#add_preset_item("kornet", randi_range(0, 1))
 
 func add_preset_item(item : String, amount : int):
 	cooking_inventory[item] = _item_nutrition[item][0].duplicate_deep()
@@ -138,12 +129,6 @@ func add_preset_item(item : String, amount : int):
 
 func _process(delta: float) -> void:
 	_timer += 1 * delta
-	#if Input.is_action_just_pressed("left-hand"):
-	#	change_scene_to("central_inventory")
-	#	print(central_inventory)
-	#if Input.is_action_just_pressed("right-hand"):
-	#	change_scene_to("outside")
-	#	print(backpack_inventory)
 	if mouse_cooldown > 0:
 		mouse_cooldown -= delta
 
@@ -172,7 +157,7 @@ func spawn_new_item(pos: Vector2, chunk_pos: Vector2i, item_name: String, item_n
 	item_id += 1
 	get_tree().current_scene.get_node("Ysort").add_child(drop_item)
 	
-func spawn_item(_item_id: String, pos: Vector2, chunk_pos: Vector2i, item_name: String, item_star: int, item_nutrition : float): #= -1.0): #item_weight: float):
+func spawn_item(_item_id: String, pos: Vector2, chunk_pos: Vector2i, item_name: String, item_star: int, item_nutrition : float):
 	var drop_item = item_drop.instantiate()
 	drop_item.position = pos
 	drop_item.item_name = item_name
@@ -190,7 +175,7 @@ func spawn_item(_item_id: String, pos: Vector2, chunk_pos: Vector2i, item_name: 
 		drop_item.interior = cur_interior
 	get_tree().current_scene.get_node("Ysort").add_child(drop_item)
 
-func add_item(object, chunk_pos : Vector2i, _item_id: String, item_name: String, item_star: int, item_nutrition: float): #item_weight: float):
+func add_item(object, chunk_pos : Vector2i, _item_id: String, item_name: String, item_star: int, item_nutrition: float):
 	var item_backpack = item_inventory.instantiate()
 	item_backpack.position = Vector2(randf_range(viewport_tree.size.x/2-20, viewport_tree.size.x/2+20), 0)
 	item_backpack.item_id = _item_id
@@ -264,10 +249,6 @@ func convert_to_central_inv():
 		item_obj.call_deferred("queue_free")
 	backpack_inventory.clear()
 	
-	#for cur_obj in cooking_inventory_list:
-	#	cur_obj.call_deferred("queue_free")
-	#cooking_inventory_list.clear()
-	
 	for _item_name in central_inventory:
 		var total_num : int = 0
 		for _item_star in central_inventory[_item_name]:
@@ -296,17 +277,6 @@ func central_item(item_name: String, amount: int) -> void:
 	central_inv_scene.call_deferred("add_child", item_central)
 	central_inv_scene.call_deferred("add_child", _sprite_counter)
 	central_item_list[item_name] = item_central
-
-#func central_item(item_name: String, item_star: int, amount: int) -> void:
-#	if amount <= 0: return
-#	var central_inv_scene = get_tree().current_scene.get_node("UI/central_inventory")
-#
-#	for i in range(amount):
-#		var item_central = item_inventory[item_name].instantiate()
-#		item_central.position = viewport_tree.size/2 + Vector2(randi_range(-80,80), randi_range(-80,80))
-#		item_central.modulate += Color(1,0,1) * (pow(1.3, item_star)-1)
-#		central_inv_scene.call_deferred("add_child", item_central)
-#		central_item_list.append(item_central)
 
 func rng_calculator(data):
 	var cur_place = data

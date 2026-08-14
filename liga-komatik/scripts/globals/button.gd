@@ -8,12 +8,9 @@ var cos_sprite_counter := preload("res://scenes/global/costume_sprite_counter.ts
 var counter := preload("res://scenes/global/counter.tscn")
 
 func _ready() -> void:
-	#button_up.connect(_button_up.bind("yellow"))
-	#connect("pressed", self, "_button_down")
 	button_down.connect(_button_down)
 
 func _process(delta: float) -> void:
-	#print(is_hovered())
 	if is_hovered(): 
 		scale.x += ((1.025+sin(Global._timer*3.1415)*0.05) - scale.x) * 15 * delta
 		scale.y = scale.x
@@ -23,7 +20,6 @@ func _process(delta: float) -> void:
 		rotation_degrees += (0 - rotation_degrees) * 20 * delta
 
 func _button_down():
-	#print(cur_central_count_list.is_empty())
 	if cur_central_count_list.is_empty(): return
 	Global.mouse_cooldown = 0.2
 	

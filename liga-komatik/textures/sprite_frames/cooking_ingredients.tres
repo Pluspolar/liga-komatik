@@ -1,6 +1,6 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://i2k82erxbvjx"]
 
-[ext_resource type="Texture2D" uid="uid://c8j2sgwyinq0q" path="res://textures/sprites/icon.svg" id="1_ki6rk"]
+[ext_resource type="Texture2D" uid="uid://c8j2sgwyinq0q" path="res://textures/sprites/old/icon.svg" id="1_ki6rk"]
 [ext_resource type="Texture2D" uid="uid://diqlpm0cs32ox" path="res://textures/sprites/item/can.png" id="1_u0vhr"]
 [ext_resource type="Texture2D" uid="uid://db713odxq0240" path="res://textures/sprites/item/belalang.png" id="1_xmur3"]
 [ext_resource type="Texture2D" uid="uid://blrhlltueqwt0" path="res://textures/sprites/UI/hand_1.png" id="2_eb8cb"]

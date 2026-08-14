@@ -20,7 +20,6 @@ var bigger_velocity : Array = ["y", 0]
 @export var follow_dur : float = 8
 
 func go_to_path():
-	#var target_pos = cur_path[-1] - global_position
 	if !raycast_1.enabled: for _ray in all_raycast: _ray.enabled = true
 	
 	if !cur_path.is_empty(): 
@@ -35,7 +34,6 @@ func go_to_path():
 	
 	var cur_rot_degree = rad_to_deg(cur_angle_to)-7.5
 	
-	#var ray_count : int = 0
 	for ray_ind in range(all_raycast.size()):
 		var ray_direction = deg_to_rad(cur_rot_degree+ray_ind*7.5)
 		all_raycast[ray_ind].target_position = Vector2(cos(ray_direction), sin(ray_direction)) * 125
@@ -44,10 +42,7 @@ func go_to_path():
 			if cur_collider.is_in_group("player"):
 				aggro_dur = follow_dur
 	
-	#var raycast_angles : Array = [0,0,0]
-	
 	if cur_path.is_empty(): 
-		#for _ray in all_raycast: _ray.enabled = false
 		return global_position
 	velocity = global_position.direction_to(cur_path[0])*speed
 	if _cur_tile == cur_path_tile[0]: 
@@ -56,7 +51,6 @@ func go_to_path():
 	
 	move_and_slide()
 	
-	#for _ray in all_raycast: _ray.enabled = false
 	return global_position
 	
 func _check_anim():
@@ -78,37 +72,3 @@ func _check_anim():
 	
 	var cur_sf = sprite.sprite_frames
 	cur_sf.set_animation_speed(sprite.animation, abs(velocity.length())*0.125)
-	#if velocity.length() < 7.0: is_idle()
-	#else: is_walking()
-	
-func is_walking():
-	if abs(velocity.x) >= abs(velocity.y): bigger_velocity = ["x", velocity.x]
-	else: bigger_velocity = ["y", velocity.y]
-	if bigger_velocity[0] == "x":
-		sprite.play(enemy_name + "_side")
-	elif bigger_velocity[0] == "y":
-		if velocity.y < 0:
-			sprite.play(enemy_name + "_up")
-		else:
-			sprite.play(enemy_name + "_down")
-			
-	if velocity.x > 0:
-		sprite.scale.x = 1
-	else:
-		sprite.scale.x = -1
-		
-	var cur_sf = sprite.sprite_frames
-	cur_sf.set_animation_speed(sprite.animation, abs(velocity.length())*0.085)
-	
-func is_idle():
-	var dir_cur_angle = Vector2(cos(cur_angle_to), sin(cur_angle_to))
-	if sprite.animation == (enemy_name + "_side") or (abs(dir_cur_angle.x) >= 0.5 and abs(dir_cur_angle.y) <= 0.5):
-		sprite.play(enemy_name + "_idle_side")
-		if dir_cur_angle.x > 0:
-			sprite.scale.x = 1
-		else:
-			sprite.scale.x = -1
-	elif sprite.animation == (enemy_name + "_down") or (abs(dir_cur_angle.x) < 0.5 and dir_cur_angle.y > 0.5):
-		sprite.play(enemy_name + "_idle_down")
-	elif sprite.animation == (enemy_name + "_up") or (abs(dir_cur_angle.x) < 0.5 and dir_cur_angle.y < -0.5) :
-		sprite.play(enemy_name + "_idle_up")

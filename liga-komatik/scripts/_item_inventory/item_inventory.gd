@@ -44,7 +44,7 @@ func in_item_inventory():
 func in_item_central(delta):
 	var global_mouse = get_global_mouse_position()
 	global_mouse = Vector2(clamp(global_mouse.x, -75, 450), clamp(global_mouse.y, -90, 310))
-	#print(global_mouse)
+	
 	if MousePointer.hovered == self:
 		linear_velocity = (global_mouse - global_position)*10 # 224+16, 288+16
 		left_hold += 1 * delta
