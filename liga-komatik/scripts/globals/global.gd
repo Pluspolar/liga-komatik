@@ -27,17 +27,15 @@ var is_mouse_dragging = false
 var changing_scene = false
 var is_interacting = false
 var is_opening_inventory = false
-var cur_interior
-var cur_interior_size
+var cur_interior : Object = null
+var cur_interior_size : int = 0
 var cur_scene : String = "outside"
 var is_exploring : bool = true
 var all_scenes = ["outside", "interior", "cooking", "central_inventory"]
-var player_pos : Vector2
-var player_tile : Vector2i
-var player_chunk : Vector2i
-var backpack_weight : float = 0
-var show_tiles : Array = []
-var _timer : float
+var player_pos : Vector2 = Vector2(0,0)
+var player_tile : Vector2i = Vector2i(0,0)
+var player_chunk : Vector2i = Vector2i(0,0)
+var _timer : float = 0
 var central_item_list : Dictionary = {}
 var cur_central_count_list : Array = []
 var item_count_central : Object = null
@@ -49,13 +47,14 @@ var cooking_inventory_list : Array = []
 var cooking_target : float = 0
 var cooking_obj : Array = []
 var target_nutrition : float = 0
+var player_max_health : float = 100
 var player_health : float = 100
-
 var mouse_cooldown : float = 0
 
 var skip_dialogue : bool = false
 var item_list_amount : int = 0
 var item_drop = preload("res://scenes/__item_drop/item_drop.tscn")
+var main_menu = preload("res://scenes/main/main_menu.tscn")
 
 enum state {
 	READY,
@@ -114,7 +113,55 @@ var sprite_counter = preload("res://scenes/global/counter.tscn")
 
 var item_inventory = preload("res://scenes/_item_inventory/item_inventory.tscn")
 
-func _ready() -> void:
+func reset_game():
+	generated_interior = {}
+	gen_wall_interior = {}
+	gen_obj_interior = {}
+	chunks = {}
+	chunks_wall = {}
+	chunks_obj = {}
+	chunks_enemy = {}
+	backpack_inventory = {}
+	central_inventory = {}
+	cooking_inventory = {}
+	
+	cur_cam_cooking = Vector2(196.0, 108.0)
+	player_interior_out = Vector2(0,0)
+	item_id = 0
+	cam_coords = Vector2(0,0)
+	player_last_loc = Vector2(0,0)
+	is_mouse_dragging = false
+	changing_scene = false
+	is_interacting = false
+	is_opening_inventory = false
+	cur_interior = null
+	cur_interior_size = 0
+	cur_scene = "outside"
+	is_exploring = true
+	player_pos = Vector2(0,0)
+	player_tile = Vector2i(0,0)
+	player_chunk = Vector2i(0,0)
+	_timer = 0
+	central_item_list = {}
+	cur_central_count_list = []
+	item_count_central = null
+	cooking_inventory_scene = null
+	dialogue = null
+	cooking_scene = null
+	pelanggan_scene = null
+	cooking_inventory_list = []
+	cooking_target = 0
+	cooking_obj = []
+	target_nutrition = 0
+	player_max_health = 100
+	player_health = 100
+	mouse_cooldown = 0
+
+	skip_dialogue = false
+	item_list_amount = 0
+	item_drop = preload("res://scenes/__item_drop/item_drop.tscn")
+	main_menu = preload("res://scenes/main/main_menu.tscn")
+	
 	add_preset_item("belalang", randi_range(2, 6))
 	add_preset_item("worm", randi_range(3, 5))
 	add_preset_item("sarden", randi_range(1, 3))
@@ -122,6 +169,9 @@ func _ready() -> void:
 	add_preset_item("rumput", randi_range(2, 4))
 	for item_name in _item_nutrition:
 		central_inventory[item_name] = _item_nutrition[item_name][0].duplicate_deep()
+		
+func _ready() -> void:
+	reset_game()
 
 func add_preset_item(item : String, amount : int):
 	cooking_inventory[item] = _item_nutrition[item][0].duplicate_deep()
@@ -131,6 +181,13 @@ func _process(delta: float) -> void:
 	_timer += 1 * delta
 	if mouse_cooldown > 0:
 		mouse_cooldown -= delta
+		
+	if Input.is_action_just_pressed("right-hand"):
+		player_health -= 10
+		
+	if player_health <= 0: 
+		reset_game()
+		get_tree().change_scene_to_packed(main_menu)
 
 func spawn_new_item(pos: Vector2, chunk_pos: Vector2i, item_name: String, item_nutrition : float = -1.0):
 	var drop_item = item_drop.instantiate()

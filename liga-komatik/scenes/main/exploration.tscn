@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://dnbe6vjwdojl5" path="res://scenes/inventory/item_count_central.tscn" id="11_ywco0"]
 [ext_resource type="PackedScene" uid="uid://dnw733uuasa1y" path="res://scenes/inventory/cooking_inventory.tscn" id="12_stgpn"]
 [ext_resource type="PackedScene" uid="uid://s52wyhn4tb6m" path="res://scenes/Pelanggang/Pelanggang.tscn" id="13_yedeh"]
+[ext_resource type="PackedScene" uid="uid://boepwbiw2njr7" path="res://scenes/UI/time_and_hp.tscn" id="14_l6jg2"]
 [ext_resource type="PackedScene" uid="uid://dspnds6ijsxr0" path="res://scenes/UI/loading_screen.tscn" id="15_lmvdy"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_iss55"]
@@ -198,6 +199,9 @@ texture_region_size = Vector2i(16, 32)
 15:0/0/texture_origin = Vector2i(0, 8)
 15:0/0/occlusion_layer_0/polygon_0/polygon = SubResource("OccluderPolygon2D_ou55u")
 15:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 8)
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSet" id="TileSet_htemk"]
 occlusion_layer_0/light_mask = 1
@@ -345,6 +349,8 @@ visible = false
 
 [node name="cooking_inventory" parent="UI" unique_id=1975286521 instance=ExtResource("12_stgpn")]
 visible = false
+
+[node name="time_and_hp" parent="UI" unique_id=762811169 instance=ExtResource("14_l6jg2")]
 
 [node name="pelanggan" parent="." unique_id=991122665 instance=ExtResource("13_yedeh")]
 visible = false

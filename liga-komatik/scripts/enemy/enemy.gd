@@ -16,18 +16,20 @@ var bigger_velocity : Array = ["y", 0]
 @onready var all_raycast = [raycast_1, raycast_2, raycast_3]
 
 @export var speed : float = 100
-@export var sight_range : float =75
+@export var sight_range : float = 75
+@export var turn_speed : float = 1.75 # x radian per second
 @export var follow_dur : float = 8
 
 func go_to_path():
 	if !raycast_1.enabled: for _ray in all_raycast: _ray.enabled = true
 	
 	if !cur_path.is_empty(): 
-		if aggro_dur > 0: cur_angle_to = global_position.angle_to_point(cur_path[-1])
-		else: 
-			if cur_path.size() == 1: cur_angle_to = global_position.angle_to_point(cur_path[0])
-			else: cur_angle_to = global_position.angle_to_point(cur_path[1])
-			non_aggro_dir = cur_angle_to
+		#if aggro_dur > 0: cur_angle_to = global_position.angle_to_point(cur_path[-1])
+		#else: 
+			#if cur_path.size() == 1: cur_angle_to = global_position.angle_to_point(cur_path[0])
+			#else: cur_angle_to = global_position.angle_to_point(cur_path[1])
+		cur_angle_to = global_position.angle_to_point(cur_path[0])
+		non_aggro_dir = cur_angle_to
 	else: 
 		cur_angle_to = non_aggro_dir
 		velocity = Vector2.ZERO

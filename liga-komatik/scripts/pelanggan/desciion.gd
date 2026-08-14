@@ -89,6 +89,7 @@ func rand_cooking_target():
 func _start() -> void:
 	times = 1
 	_char = char_convert[Global.pelanggan_scene.cur_pelanggan]
+	if Global.dialogue.visible: Global.skip_dialogue = true
 	Global.dialogue.add_text(dialogue_list[Global.pelanggan_scene.cur_pelanggan][0], 15, _char)
 	Global.pelanggan_scene.entered = true
 	$COOOOK.disabled = false #fixed a bug, don't move it
@@ -135,13 +136,12 @@ func _on_gossip_button_down() -> void:
 	if Global.dialogue.visible: Global.skip_dialogue = true
 	Global.dialogue.add_text(dialogue_gossips[Global.pelanggan_scene.cur_pelanggan],15,_char)
 	
-	
 func done()-> void:
 	if Global.target_nutrition >= Global.cooking_target:
 		var cur_dialogue = dialogue_done[Global.pelanggan_scene.cur_pelanggan][0]
 		cur_dialogue = cur_dialogue[randi_range(0, cur_dialogue.size()-1)]
-		Global.dialogue.add_text(cur_dialogue,15,_char)
+		Global.dialogue.add_text(cur_dialogue, randf_range(12, 20), _char)
 	else:
 		var cur_dialogue = dialogue_done[Global.pelanggan_scene.cur_pelanggan][1]
 		cur_dialogue = cur_dialogue[randi_range(0, cur_dialogue.size()-1)]
-		Global.dialogue.add_text(cur_dialogue,15,_char)
+		Global.dialogue.add_text(cur_dialogue, randf_range(12, 20), _char)

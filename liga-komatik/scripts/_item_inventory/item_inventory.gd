@@ -62,6 +62,6 @@ func in_item_central(delta):
 	else: sleeping = false
 	
 func _process(delta: float) -> void:
-	if is_in_group("item_inventory"): in_item_inventory()
-	elif is_in_group("item_central"): in_item_central(delta)
+	if is_in_group("item_inventory") and !Global.cur_scene == "central_inventory": in_item_inventory()
+	elif is_in_group("item_central") and Global.cur_scene == "central_inventory": in_item_central(delta)
 	

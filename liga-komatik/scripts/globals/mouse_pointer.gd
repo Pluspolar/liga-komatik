@@ -36,14 +36,14 @@ func _process(_delta: float) -> void:
 				hovered = null
 			break
 
-		elif _body.is_in_group("item_central") and !Global.item_count_central.visible:
+		elif _body.is_in_group("item_central") and !Global.item_count_central.visible and Global.cur_scene == "central_inventory":
 			new_hovered = _body
 			break
 		
 	for _area in areas:
 		if !_area.visible: continue
 		
-		if _area.is_in_group("item_central_interact") and Global.item_count_central.visible:
+		if _area.is_in_group("item_central_interact") and Global.item_count_central.visible and Global.cur_scene == "central_inventory":
 			new_hovered = _area
 			if Input.is_action_just_pressed("left_click"):
 				_area._mouse_pressed = "left"

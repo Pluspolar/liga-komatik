@@ -11,6 +11,7 @@ extends Node2D
 @onready var height_half : int = int(round(float(height)/2))
 @onready var interior_tile := Vector2i(boundary_x, boundary_y)+Vector2i(200,200)
 @onready var interior_pos : Vector2
+var explore_scene = ["outside", "interior"]
 
 @onready var player := $Ysort/player
 @onready var ysort := $Ysort
@@ -59,6 +60,7 @@ var tile_array = {}
 var generated_chunks = []
 var cur_chunk : Vector2i
 var cam_middle : Vector2 = Vector2(0,0)
+var check_accessibility_offset : float = 0
 
 @onready var boundary : Vector2 = Vector2(boundary_x*8 - get_viewport_rect().size.x/2, boundary_y*8 - get_viewport_rect().size.y/2)
 @onready var boundary_player : Vector2 = Vector2(boundary_x*8-6, boundary_y*8-6)
@@ -91,6 +93,7 @@ var tiles_color = {
 	"stone" : Color(0.35, 0.35, 0.35),
 	"asphalt" : Color(0.25, 0.25, 0.25),
 	"gravel" : Color(0.3, 0.3, 0.3),
+	"blue_concrete" : Color(0.0, 0.35, 0.68),
 }
 
 var walls_color = {
@@ -127,6 +130,7 @@ func rand_tiles_data():
 
 func rand_walls_data():
 	walls_data = {
+		"non" : Vector2i(0, 1),
 		"crate" : Vector2i(0, 0),
 		"blue_concrete_cut" : Vector2i(1, 0),
 		"blue_concrete" : Vector2i(2, 0),
@@ -192,8 +196,8 @@ var objects_data := {
 var objects := { #[x_size, y_vertical_size, how much free space under "y"], scene
 	"tree" : [[1,1,0], null, preload("res://scenes/structures/tree.tscn")],
 	"abandoned_house_1" : [[3,1,0], "1_aband_house", preload("res://scenes/structures/abandoned_house.tscn")],
-	"abandoned_apartment_1" : [[6,2,0], "1_aband_apart", preload("res://scenes/structures/abandoned_apartment_1.tscn")],
-	"abandoned_apartment_2" : [[6,2,0], "2_aband_apart", preload("res://scenes/structures/abandoned_apartment_2.tscn")],
+	"abandoned_apartment_1" : [[4,2,0], "1_aband_apart", preload("res://scenes/structures/abandoned_apartment_1.tscn")],
+	"abandoned_apartment_2" : [[4,2,0], "2_aband_apart", preload("res://scenes/structures/abandoned_apartment_2.tscn")],
 }
 
 var enemies := preload("res://scenes/enemy/enemy.tscn")
@@ -271,19 +275,19 @@ func generate_noise(freq : float, oct : int, noise_type: String, multiplier: flo
 	noise.noise_type = noisetype[noise_type.to_lower()]
 	var grid_noise = {}
 	if !is_abs:
-		for x in range(-width_half, width_half):
+		for x in range(-width_half-1, width_half):
 			for y in range(-height_half, height_half):
 				var cur_val = multiplier*(noise.get_noise_2d(x, y)+additive)
 				grid_noise[Vector2i(x,y)] = cur_val
 		return grid_noise
 	else:
-		for x in range(-width_half, width_half):
+		for x in range(-width_half-1, width_half):
 			for y in range(-height_half, height_half):
 				grid_noise[Vector2i(x,y)] = multiplier*(abs(noise.get_noise_2d(x, y))+additive)
 		return grid_noise
 		
 func setup_astargrid():
-	astargrid.region = Rect2i(-width_half-1, -height_half-1, width_half*2+2, height_half*2+2)
+	astargrid.region = Rect2i(-width_half-2, -height_half-2, width_half*2+4, height_half*2+4)
 	astargrid.cell_size = Vector2i(16,16)
 	astargrid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
 	astargrid.update()
@@ -296,24 +300,27 @@ func _set_tile():
 		for y in range(-18, 18+1):
 			objects_pos[Vector2i(x,y)] = "player"
 	
-	for x in range(-width_half-1, width_half+1):
-		for y in range(-height_half-1, height_half+1):
+	for x in range(-width_half-2, width_half+2):
+		for y in range(-height_half-2, height_half+2):
 			var pos = Vector2i(x, y)
-			if pos.x == (-width_half-1) or pos.y == (-height_half-1) or pos.x == width_half or pos.y == height_half:
+			cur_chunk = tile_to_chunk(pos)
+			
+			if !chunks.has(cur_chunk): chunks[cur_chunk] = []
+			if !chunks_wall.has(cur_chunk): chunks_wall[cur_chunk] = []
+			if !chunks_obj.has(cur_chunk): chunks_obj[cur_chunk] = []
+			
+			if pos.x <= -width_half-1 or pos.y <= (-height_half-1) or pos.x >= width_half or pos.y >= height_half:
 				astargrid.set_point_solid(pos, true)
+				chunks_wall[cur_chunk].append([pos, walls_data["non"]])
 				continue
+			
+			if !chunks_enemy.has(cur_chunk): chunks_enemy[cur_chunk] = []
 			
 			var alt = altitude[pos]
 			var temp = temperature[pos]
 			var _urban = urban[pos]
 			var _city = city[pos]
 			var _road = road[pos]
-			cur_chunk = tile_to_chunk(pos)
-			
-			if !chunks.has(cur_chunk): chunks[cur_chunk] = []
-			if !chunks_wall.has(cur_chunk): chunks_wall[cur_chunk] = []
-			if !chunks_obj.has(cur_chunk): chunks_obj[cur_chunk] = []
-			if !chunks_enemy.has(cur_chunk): chunks_enemy[cur_chunk] = []
 			
 			if _urban > 0:
 				if _road >= -0.08 and _road <= 0: place_tile_biome(pos, "city_road")
@@ -445,13 +452,16 @@ func check_accessibility(pos, random_obj):
 	for coords in temp_acc_coords: 
 		if astargrid.is_in_boundsv(coords): astargrid.set_point_solid(coords, true)
 		objects_pos[coords] = random_obj
+	
+	if obj_size[0] % 2 == 0: check_accessibility_offset = -8
+	else: check_accessibility_offset = 0
 	return true
 	
 func tile_to_map(pos, random_obj):
 	rand_interior_data()
 	var obj_data = objects[str(random_obj)]
 	var obj = obj_data[2].instantiate()
-	obj.position = tile_map.map_to_local(pos)
+	obj.position = tile_map.map_to_local(pos) + Vector2(check_accessibility_offset, 0)
 	var obj_behav = obj_data[1]
 	chunks_obj[cur_chunk].append(obj)
 	ysort.add_child(obj)
@@ -515,7 +525,7 @@ func create_interior(cur_interior_data, obj):
 			if !cur_interior.has(n_p_t): continue
 			
 			rand_tiles_data()
-			if y == 1 and (x == -1 or x == 0): tile = "water"
+			if y == 1 and (x == -1 or x == 0): tile = "gravel"
 			else: tile = rng_calculator(floor_palette)
 			var find_new_sort = new_sorted.find(cur_interior[n_p_t])
 			
@@ -616,13 +626,20 @@ func change_to_outside():
 func update_player_location():
 	return player.position
 
+func hide_stuff():
+	_central_inventory.hide()
+	_cooking_inv_scene.hide()
+	_customer_scene.hide()
+	_cooking_scene.hide()
+	if !explore_scene.has(Global.cur_scene):
+		backpack.hide()
+		Global.is_opening_inventory = false
+		mini_map_root.hide()
+
 func _load_scene():
 	while true:
 		if Global.changing_scene:
-			_central_inventory.hide()
-			_cooking_inv_scene.hide()
-			_customer_scene.hide()
-			_cooking_scene.hide()
+			hide_stuff()
 			if Global.is_exploring: 
 				darker_area.show()
 			else:
@@ -737,7 +754,8 @@ func _exploring(delta: float) -> void:
 	camera.position += (player.global_position - camera.position) * 10 * delta
 	
 	if Global.cur_scene == "outside": 
-		camera.position = Vector2(clamp(camera.position.x, -boundary.x, boundary.x), clamp(camera.position.y, -boundary.y, boundary.y))
+		var half_viewport_x = Global.viewport_tree.size.x/2
+		camera.position = Vector2(clamp(camera.position.x, -boundary.x-half_viewport_x+16, boundary.x+half_viewport_x-16), clamp(camera.position.y, -boundary.y, boundary.y))
 	else: 
 		camera.position = cam_middle
 	
@@ -772,7 +790,7 @@ func _enemy_ai(delta):
 			var cur_chunk_before : Vector2i = pos_to_chunk(enemy_global_pos)
 			if _enemy.pathing_interval > 0: _enemy.pathing_interval -= delta
 			if _enemy.aggro_dur > 0: _enemy.aggro_dur -= delta
-			else: _enemy.non_aggro_dir += randf_range(0.0, 2.5) * delta
+			else: _enemy.non_aggro_dir += _enemy.turn_speed * delta
 			
 			if _enemy.pathing_interval <= 0 and _enemy.aggro_dur > 0:
 				var path_data = find_path_to(enemy_global_pos, player.global_position)
@@ -792,8 +810,18 @@ func _enemy_ai(delta):
 			_enemy._cur_tile = tile_map.local_to_map(_enemy.global_position)
 			
 			if cur_chunk_before != cur_chunk_after:
-				chunks_enemy[cur_chunk_before].erase(_enemy)
-				chunks_enemy[cur_chunk_after].append(_enemy)
+				if chunks_enemy.has(cur_chunk_after):
+					chunks_enemy[cur_chunk_before].erase(_enemy)
+					chunks_enemy[cur_chunk_after].append(_enemy)
+				elif chunks.has(cur_chunk_before): 
+					var temp_chunk = chunks[cur_chunk_before]
+					_enemy.position = temp_chunk[int(temp_chunk.size()/2)][0]
+					#chunks[cur_chunk].append([pos, tiles_data[tile]])
+				else: 
+					print("ENTITY REMOVED, pos: " + str(_enemy.position) + "\nchunk_before: " + str(cur_chunk_before))
+					chunks_enemy[cur_chunk_before].erase(_enemy)
+					_enemy.queue_free()
+					
 				if !generated_chunks.has(cur_chunk_after):
 					for _ray in _enemy.all_raycast: _ray.enabled = false
 					_enemy.hide()
@@ -810,7 +838,10 @@ func find_path_to(cur_pos, target_pos):
 	point_solid_return(cur_point_solid_y, cur_pos_tile)
 	point_solid_return(target_point_solid_y, cur_target_tile)
 		
+	if !path_taken.is_empty(): path_taken.remove_at(0)
+	
 	var path_taken_tile = path_taken.duplicate()
+	
 	for i in range(path_taken.size()):
 		#tile_map.set_cell(path_taken[i], 0, tiles_data["grass"])
 		path_taken[i] = tile_map.map_to_local(path_taken[i])
@@ -821,6 +852,9 @@ func find_path_to(cur_pos, target_pos):
 	
 func point_solid_check(_tile):
 	var point_solid_y = -1
+	if !astargrid.is_in_boundsv(_tile) or !astargrid.is_in_boundsv(_tile+Vector2i(0,-1)):
+		return point_solid_y
+	
 	if astargrid.is_point_solid(_tile):
 		point_solid_y += 1
 		astargrid.set_point_solid(_tile, false)  
@@ -887,7 +921,7 @@ func camera_follow_mouse(delta: float) -> void:
 	Global.cam_coords = camera.position
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("inventory"):
+	if event.is_action_pressed("inventory") and explore_scene.has(Global.cur_scene):
 		Global.spawn_new_item(Global.player_pos, Global.player_chunk, rng_calculator({"can" : 0.1, "mie" : 0.1, "belalang" : 0.1, "kornet" : 0.1, "ubi" : 0.1, "sarden" : 0.1, "worm" : 0.1, "sawdust" : 0.1, "sosis" : 0.1, "udang" : 0.1}))
 		if Global.is_opening_inventory: 
 			backpack.hide()
@@ -895,7 +929,17 @@ func _input(event: InputEvent) -> void:
 		else: 
 			backpack.show()
 			Global.is_opening_inventory = true
-	if event.is_action_pressed("map"):
-		if mini_map_root.visible: mini_map_root.hide()
-		else: mini_map_root.show()
+			
+			if mini_map_root.visible: 
+				mini_map_root.hide()
+			
+	if event.is_action_pressed("map") and explore_scene.has(Global.cur_scene):
+		if mini_map_root.visible: 
+			mini_map_root.hide()
+		else: 
+			mini_map_root.show()
+			
+			if Global.is_opening_inventory: 
+				backpack.hide()
+				Global.is_opening_inventory = false
 		

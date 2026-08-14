@@ -39,6 +39,12 @@ shader_parameter/color_gardient = SubResource("GradientTexture1D_kqym7")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ugcl7"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hiibk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_swlpu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bxtry"]
+
 [sub_resource type="Gradient" id="Gradient_w6ykx"]
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
 
@@ -138,7 +144,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_ugcl7")
 script = ExtResource("2_byqcc")
 id = "start"
 
-[node name="mulai" type="RichTextLabel" parent="start" unique_id=1145360063]
+[node name="text" type="RichTextLabel" parent="start" unique_id=1145360063]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 8
@@ -168,6 +174,7 @@ fit_content = true
 scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="quit" type="Button" parent="." unique_id=786832469]
 anchors_preset = 7
@@ -190,7 +197,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_ugcl7")
 script = ExtResource("2_byqcc")
 id = "quit"
 
-[node name="mulai" type="RichTextLabel" parent="quit" unique_id=1714346487]
+[node name="text" type="RichTextLabel" parent="quit" unique_id=1714346487]
 clip_contents = false
 layout_mode = 1
 anchors_preset = 8
@@ -220,6 +227,56 @@ fit_content = true
 scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="screen_mode" type="Button" parent="." unique_id=1099826447]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 13.0
+offset_top = -50.0
+offset_right = 119.0
+offset_bottom = -12.0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hiibk")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_swlpu")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_bxtry")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_pj0hq")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ugcl7")
+script = ExtResource("2_byqcc")
+id = "screen_mode"
+
+[node name="text" type="RichTextLabel" parent="screen_mode" unique_id=2115484315]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -49.0
+offset_top = -21.0
+offset_right = 58.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(64, 7)
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("2_5vafy")
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[tornado radius=0.8 freq=4.0]MODE:
+WINDOWED"
+fit_content = true
+scroll_active = false
+vertical_alignment = 2
+metadata/_edit_lock_ = true
 
 [node name="vignette" type="Sprite2D" parent="." unique_id=1389884604]
 position = Vector2(191.00002, 108)

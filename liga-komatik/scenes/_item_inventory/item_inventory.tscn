@@ -16,10 +16,6 @@ size = Vector2(23, 40)
 radius = 7.0
 height = 42.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_14cdr"]
-radius = 3.0
-height = 28.0
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q4lci"]
 radius = 4.468734
 height = 30.492031
@@ -40,7 +36,7 @@ can_sleep = false
 script = ExtResource("1_1s4xt")
 
 [node name="costume_sprite" parent="." unique_id=1991779528 instance=ExtResource("2_7g5pd")]
-animation = &"worm"
+animation = &"sawdust"
 
 [node name="belalang" type="CollisionShape2D" parent="." unique_id=1043071412]
 visible = false
@@ -78,11 +74,9 @@ rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_1s4xt")
 disabled = true
 
-[node name="sawdust" type="CollisionShape2D" parent="." unique_id=1564302205]
+[node name="sawdust" type="CollisionPolygon2D" parent="." unique_id=1191018704]
 visible = false
-position = Vector2(0, 4)
-rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_14cdr")
+polygon = PackedVector2Array(-13, 4, -8, 6, 0, 7, 9, 6, 15, 3, 0, -2)
 disabled = true
 
 [node name="sosis" type="CollisionPolygon2D" parent="." unique_id=502342891]

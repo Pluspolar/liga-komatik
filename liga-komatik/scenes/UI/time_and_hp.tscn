@@ -1,15 +1,26 @@
 [gd_scene format=3 uid="uid://boepwbiw2njr7"]
 
 [ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="1_ii1gk"]
+[ext_resource type="Texture2D" uid="uid://dvmsvn0jugo4k" path="res://textures/sprites/UI/heart_outline_real.png" id="2_bcm6b"]
+[ext_resource type="Script" uid="uid://cojwrpu8fy5et" path="res://scripts/UI/heart.gd" id="2_ibcp2"]
+[ext_resource type="Shader" uid="uid://f7ld0hsjydpe" path="res://scripts/gdshaders/hp.gdshader" id="3_ibcp2"]
+[ext_resource type="Texture2D" uid="uid://52wewjii8s8y" path="res://textures/sprites/UI/heart_real.png" id="4_vifu0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_htemk"]
+shader = ExtResource("3_ibcp2")
+shader_parameter/player_health = 1.0
 
 [node name="time_and_hp" type="CanvasLayer" unique_id=762811169]
 
-[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=225040880]
+[node name="coins" type="RichTextLabel" parent="." unique_id=225040880]
 clip_contents = false
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
 offset_left = 3.0
-offset_top = 3.0
-offset_right = 80.0
-offset_bottom = 23.0
+offset_top = -20.0
+offset_right = 103.0
+grow_vertical = 0
 mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -18,8 +29,20 @@ theme_override_constants/outline_size = 4
 theme_override_fonts/normal_font = ExtResource("1_ii1gk")
 theme_override_font_sizes/normal_font_size = 10
 bbcode_enabled = true
-text = "[wave](*):100"
+text = "(*):100"
 fit_content = true
 scroll_active = false
-horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="heart" type="Node2D" parent="." unique_id=1252322277]
+position = Vector2(14, 188)
+script = ExtResource("2_ibcp2")
+
+[node name="heart_outline" type="Sprite2D" parent="heart" unique_id=1836808658]
+texture = ExtResource("2_bcm6b")
+metadata/_edit_lock_ = true
+
+[node name="heart" type="Sprite2D" parent="heart" unique_id=338185792]
+material = SubResource("ShaderMaterial_htemk")
+texture = ExtResource("4_vifu0")
+metadata/_edit_lock_ = true
