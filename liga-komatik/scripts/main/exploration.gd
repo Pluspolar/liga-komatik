@@ -2,7 +2,7 @@ extends Node2D
 
 @export var boundary_x : int = 800
 @export var map_detail : int = 1 #from 256, higher value better
-@export var speed : float = 1000
+@export var speed : float = 2000
 
 @onready var boundary_y : int = int(float(boundary_x)/16*9)
 @onready var width : int = boundary_x
@@ -249,14 +249,15 @@ func _ready() -> void:
 	generating = false
 	
 	await get_tree().create_timer(0.1).timeout
-	done_loading()
+	_loading_screen.fade_out(40)
 	Global.change_scene_to("customer")
+	#done_loading()
 	
-func done_loading():
-	for i in range(60):
-		_loading_screen.offset.x += (400 - _loading_screen.offset.x) * 0.1
-		await get_tree().process_frame
-	_loading_screen.queue_free()
+#func done_loading():
+	#for i in range(60):
+	#	_loading_screen.offset.x += (400 - _loading_screen.offset.x) * 0.1
+	#	await get_tree().process_frame
+	#_loading_screen.fade_out()
 	
 func _exit_tree() -> void:
 	thread_1.wait_to_finish()
@@ -308,13 +309,12 @@ func _set_tile():
 			if !chunks.has(cur_chunk): chunks[cur_chunk] = []
 			if !chunks_wall.has(cur_chunk): chunks_wall[cur_chunk] = []
 			if !chunks_obj.has(cur_chunk): chunks_obj[cur_chunk] = []
+			if !chunks_enemy.has(cur_chunk): chunks_enemy[cur_chunk] = []
 			
 			if pos.x <= -width_half-1 or pos.y <= (-height_half-1) or pos.x >= width_half or pos.y >= height_half:
 				astargrid.set_point_solid(pos, true)
 				chunks_wall[cur_chunk].append([pos, walls_data["non"]])
 				continue
-			
-			if !chunks_enemy.has(cur_chunk): chunks_enemy[cur_chunk] = []
 			
 			var alt = altitude[pos]
 			var temp = temperature[pos]
@@ -755,7 +755,8 @@ func _exploring(delta: float) -> void:
 	
 	if Global.cur_scene == "outside": 
 		var half_viewport_x = Global.viewport_tree.size.x/2
-		camera.position = Vector2(clamp(camera.position.x, -boundary.x-half_viewport_x+16, boundary.x+half_viewport_x-16), clamp(camera.position.y, -boundary.y, boundary.y))
+		#camera.position = Vector2(clamp(camera.position.x, -boundary.x-half_viewport_x+16, boundary.x+half_viewport_x-16), clamp(camera.position.y, -boundary.y, boundary.y))
+		camera.position = Vector2(clamp(camera.position.x, -boundary.x, boundary.x), clamp(camera.position.y, -boundary.y, boundary.y))
 	else: 
 		camera.position = cam_middle
 	
@@ -781,6 +782,7 @@ func _exploring(delta: float) -> void:
 	
 func _enemy_ai(delta):
 	for _chunk_enemy in generated_chunks:
+		if !chunks_enemy.has(_chunk_enemy): continue
 		for _enemy in chunks_enemy[_chunk_enemy]:
 			if !_enemy.visible:
 				_enemy.show()

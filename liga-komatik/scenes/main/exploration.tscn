@@ -258,7 +258,6 @@ color_ramp = SubResource("Gradient_stgpn")
 
 [node name="exploration" type="Node2D" unique_id=1527149665]
 script = ExtResource("1_gh8vw")
-speed = 2000.0
 
 [node name="background" type="CanvasLayer" parent="." unique_id=2111901761]
 layer = -1

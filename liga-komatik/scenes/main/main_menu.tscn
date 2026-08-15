@@ -95,7 +95,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.272)
 
-[node name="mulai2" type="RichTextLabel" parent="." unique_id=1730653221]
+[node name="Titile" type="RichTextLabel" parent="." unique_id=1730653221]
 clip_contents = false
 anchors_preset = 5
 anchor_left = 0.5

@@ -50,6 +50,7 @@ var target_nutrition : float = 0
 var player_max_health : float = 100
 var player_health : float = 100
 var mouse_cooldown : float = 0
+var heart : Object = null
 
 var skip_dialogue : bool = false
 var item_list_amount : int = 0
@@ -156,6 +157,7 @@ func reset_game():
 	player_max_health = 100
 	player_health = 100
 	mouse_cooldown = 0
+	heart = null
 
 	skip_dialogue = false
 	item_list_amount = 0
@@ -183,7 +185,9 @@ func _process(delta: float) -> void:
 		mouse_cooldown -= delta
 		
 	if Input.is_action_just_pressed("right-hand"):
-		player_health -= 10
+		heart.change_hp(-7.25)
+	elif Input.is_action_just_pressed("left-hand"):
+		heart.change_hp(10)
 		
 	if player_health <= 0: 
 		reset_game()

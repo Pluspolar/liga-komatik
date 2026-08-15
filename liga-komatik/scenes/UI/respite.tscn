@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://b3hlvoyp4udgt"]
+
+[ext_resource type="Shader" uid="uid://b8v83d66jo0j3" path="res://scripts/gdshaders/fade_out_noise.gdshader" id="1_uuwxh"]
+[ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="2_g35yb"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pp1to"]
+noise_type = 4
+seed = 5
+frequency = 0.0288
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uuwxh"]
+width = 384
+height = 216
+noise = SubResource("FastNoiseLite_pp1to")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wn4hl"]
+noise_type = 3
+seed = 6
+frequency = 0.0221
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_g35yb"]
+width = 384
+height = 216
+noise = SubResource("FastNoiseLite_wn4hl")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_htemk"]
+shader = ExtResource("1_uuwxh")
+shader_parameter/noise_texture_1 = SubResource("NoiseTexture2D_uuwxh")
+shader_parameter/noise_texture_2 = SubResource("NoiseTexture2D_g35yb")
+shader_parameter/pixel_size = 64.0
+shader_parameter/fade = 1.0
+
+[node name="respite" type="CanvasLayer" unique_id=1790368681]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=651026753]
+material = SubResource("ShaderMaterial_htemk")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="text" type="RichTextLabel" parent="ColorRect" unique_id=673052231]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -10.0
+offset_right = 50.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("2_g35yb")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "test"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
