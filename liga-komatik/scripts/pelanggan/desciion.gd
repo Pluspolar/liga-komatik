@@ -141,7 +141,11 @@ func done()-> void:
 		var cur_dialogue = dialogue_done[Global.pelanggan_scene.cur_pelanggan][0]
 		cur_dialogue = cur_dialogue[randi_range(0, cur_dialogue.size()-1)]
 		Global.dialogue.add_text(cur_dialogue, randf_range(12, 20), _char)
+		var target_nutri_sqr = pow(1+Global.target_nutrition, 2)
+		Global.spawn_coins(ceil(target_nutri_sqr*7.5*(1+Global.cooking_target)))
 	else:
 		var cur_dialogue = dialogue_done[Global.pelanggan_scene.cur_pelanggan][1]
 		cur_dialogue = cur_dialogue[randi_range(0, cur_dialogue.size()-1)]
 		Global.dialogue.add_text(cur_dialogue, randf_range(12, 20), _char)
+		var target_nutri_change = pow(1+Global.target_nutrition, 1.75)
+		Global.spawn_coins(ceil((target_nutri_change-1)*5))

@@ -249,8 +249,9 @@ func _ready() -> void:
 	generating = false
 	
 	await get_tree().create_timer(0.1).timeout
-	_loading_screen.fade_out(40)
-	Global.change_scene_to("customer")
+	if Global.first_time_story: _loading_screen.hide_text(1.5)
+	else: _loading_screen.hide_text(0)
+	#Global.change_scene_to("customer")
 	#done_loading()
 	
 #func done_loading():
@@ -893,9 +894,12 @@ func player_move_and_slide():
 	
 	if old_pos.x != player.position.x: player.velocity.x = 0
 	if old_pos.y != player.position.y: player.velocity.y = 0
-
+	
+	var old_player_pos = player.global_position
 	gerobak.move_and_slide()
 	player.move_and_slide()
+	
+	Global.distance_traveled += abs(player.global_position - old_player_pos)
 		
 func _physics_process(delta: float) -> void:
 	if generating: return

@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://b3hlvoyp4udgt"]
 
+[ext_resource type="Script" uid="uid://tsww61s5tjly" path="res://scripts/UI/respite.gd" id="1_g35yb"]
 [ext_resource type="Shader" uid="uid://b8v83d66jo0j3" path="res://scripts/gdshaders/fade_out_noise.gdshader" id="1_uuwxh"]
-[ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="2_g35yb"]
+[ext_resource type="FontFile" uid="uid://cgjcoqw87qeuk" path="res://textures/fonts/HomeVideo-Regular.ttf" id="2_uuwxh"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_pp1to"]
 noise_type = 4
@@ -32,9 +33,14 @@ shader_parameter/noise_texture_2 = SubResource("NoiseTexture2D_g35yb")
 shader_parameter/pixel_size = 64.0
 shader_parameter/fade = 1.0
 
-[node name="respite" type="CanvasLayer" unique_id=1790368681]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_htemk"]
+bg_color = Color(1, 1, 1, 1)
+border_width_top = 1
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=651026753]
+[node name="respite" type="CanvasLayer" unique_id=1790368681]
+script = ExtResource("1_g35yb")
+
+[node name="background" type="ColorRect" parent="." unique_id=651026753]
 material = SubResource("ShaderMaterial_htemk")
 anchors_preset = 15
 anchor_right = 1.0
@@ -43,31 +49,143 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
 
-[node name="text" type="RichTextLabel" parent="ColorRect" unique_id=673052231]
-clip_contents = false
-layout_mode = 1
-anchors_preset = 8
+[node name="separator" type="HSeparator" parent="." unique_id=616134932]
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -10.0
-offset_right = 50.0
-offset_bottom = 10.0
+offset_left = -174.0
+offset_top = 29.0
+offset_right = 174.0
+offset_bottom = 45.0
 grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/outline_size = 4
-theme_override_fonts/normal_font = ExtResource("2_g35yb")
-theme_override_font_sizes/normal_font_size = 10
+theme_override_styles/separator = SubResource("StyleBoxFlat_htemk")
+
+[node name="day" type="RichTextLabel" parent="." unique_id=1778485309]
+clip_contents = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -34.5
+offset_top = 11.0
+offset_right = 34.5
+offset_bottom = 25.25
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("2_uuwxh")
+theme_override_font_sizes/normal_font_size = 15
 bbcode_enabled = true
-text = "test"
+text = "hARI 1"
 fit_content = true
 scroll_active = false
 horizontal_alignment = 1
+
+[node name="customer" type="RichTextLabel" parent="." unique_id=1844813825]
+clip_contents = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -174.0
+offset_top = 43.0
+offset_right = -21.0
+offset_bottom = 57.25
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("2_uuwxh")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "pelanggan dilayani: 100"
+fit_content = true
+scroll_active = false
+vertical_alignment = 1
+
+[node name="item_picked_up" type="RichTextLabel" parent="." unique_id=1644554704]
+clip_contents = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -174.0
+offset_top = 65.0
+offset_right = -24.0
+offset_bottom = 83.0
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("2_uuwxh")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "Barang/Bahan yang didapatkan:
+"
+fit_content = true
+scroll_active = false
+vertical_alignment = 1
+
+[node name="item_cooked" type="RichTextLabel" parent="." unique_id=1569398493]
+clip_contents = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -174.0
+offset_top = 91.0
+offset_right = -1.0
+offset_bottom = 109.0
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("2_uuwxh")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "Bahan yang dimasak:"
+fit_content = true
+scroll_active = false
+vertical_alignment = 1
+
+[node name="distance" type="RichTextLabel" parent="." unique_id=75559160]
+clip_contents = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -174.0
+offset_top = 117.0
+offset_right = -1.0
+offset_bottom = 135.0
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("2_uuwxh")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "Jarak yang dituju:"
+fit_content = true
+scroll_active = false
+vertical_alignment = 1
+
+[node name="coins_gained" type="RichTextLabel" parent="." unique_id=214883026]
+clip_contents = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -174.0
+offset_top = 142.0
+offset_right = -1.0
+offset_bottom = 160.0
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("2_uuwxh")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "uang yang didapatkan:"
+fit_content = true
+scroll_active = false
+vertical_alignment = 1
+
+[node name="distance2" type="RichTextLabel" parent="." unique_id=767522431]
+clip_contents = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 95.0
+offset_top = 43.0
+offset_right = 174.0
+offset_bottom = 61.0
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("2_uuwxh")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "Beli Obat"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 2
 vertical_alignment = 1

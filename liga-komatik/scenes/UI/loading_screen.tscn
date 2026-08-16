@@ -3,6 +3,7 @@
 [ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="1_pe18t"]
 [ext_resource type="Script" uid="uid://b6pcqc08kpf0b" path="res://scripts/UI/loading.gd" id="2_2t34d"]
 [ext_resource type="Shader" uid="uid://b8v83d66jo0j3" path="res://scripts/gdshaders/fade_out_noise.gdshader" id="2_85qbq"]
+[ext_resource type="FontFile" uid="uid://cgjcoqw87qeuk" path="res://textures/fonts/HomeVideo-Regular.ttf" id="4_85qbq"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_pp1to"]
 noise_type = 4
@@ -64,6 +65,27 @@ text = "[wave]MEMUAT MAP"
 fit_content = true
 scroll_active = false
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="story_text" type="RichTextLabel" parent="." unique_id=43126776]
+visible = false
+clip_contents = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -103.0
+offset_top = -19.25
+offset_right = 103.0
+offset_bottom = 19.25
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("4_85qbq")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
 vertical_alignment = 1
 
 [node name="dot_loading" type="Label" parent="." unique_id=1799469100]

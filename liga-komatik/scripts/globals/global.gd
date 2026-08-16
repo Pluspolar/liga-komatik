@@ -47,15 +47,25 @@ var cooking_inventory_list : Array = []
 var cooking_target : float = 0
 var cooking_obj : Array = []
 var target_nutrition : float = 0
-var player_max_health : float = 100
-var player_health : float = 100
+var days_left : float = 5
+var coins : int = 0
 var mouse_cooldown : float = 0
 var heart : Object = null
+var coin_icon : Object = null
+var item_put_backpack = []
 
+var customer_done : int = 0
+var item_pickup_count : int = 0
+var coins_earned : int = 0
+var distance_traveled : float = 0
+var item_cooked : int = 0
+
+var first_time_story : bool = true #special, first time
 var skip_dialogue : bool = false
 var item_list_amount : int = 0
 var item_drop = preload("res://scenes/__item_drop/item_drop.tscn")
 var main_menu = preload("res://scenes/main/main_menu.tscn")
+var coins_drop = preload("res://scenes/UI/coins_drop.tscn")
 
 enum state {
 	READY,
@@ -114,6 +124,13 @@ var sprite_counter = preload("res://scenes/global/counter.tscn")
 
 var item_inventory = preload("res://scenes/_item_inventory/item_inventory.tscn")
 
+func stats_reset():
+	customer_done = 0
+	item_pickup_count = 0
+	coins_earned = 0
+	distance_traveled = 0
+	item_cooked = 0
+
 func reset_game():
 	generated_interior = {}
 	gen_wall_interior = {}
@@ -154,15 +171,16 @@ func reset_game():
 	cooking_target = 0
 	cooking_obj = []
 	target_nutrition = 0
-	player_max_health = 100
-	player_health = 100
+	days_left = 5
+	coins = 0
 	mouse_cooldown = 0
 	heart = null
+	coin_icon = null
+	item_put_backpack = []
+	stats_reset()
 
 	skip_dialogue = false
 	item_list_amount = 0
-	item_drop = preload("res://scenes/__item_drop/item_drop.tscn")
-	main_menu = preload("res://scenes/main/main_menu.tscn")
 	
 	add_preset_item("belalang", randi_range(2, 6))
 	add_preset_item("worm", randi_range(3, 5))
@@ -185,11 +203,13 @@ func _process(delta: float) -> void:
 		mouse_cooldown -= delta
 		
 	if Input.is_action_just_pressed("right-hand"):
-		heart.change_hp(-7.25)
+		if coin_icon != null: coin_icon.change_coin(-1)
+		#if heart != null: heart.change_day(-1.0)
 	elif Input.is_action_just_pressed("left-hand"):
-		heart.change_hp(10)
+		if coin_icon != null: coin_icon.change_coin(1)
+		#if heart != null: heart.change_day(-1.0)
 		
-	if player_health <= 0: 
+	if days_left <= 0: 
 		reset_game()
 		get_tree().change_scene_to_packed(main_menu)
 
@@ -218,6 +238,8 @@ func spawn_new_item(pos: Vector2, chunk_pos: Vector2i, item_name: String, item_n
 	item_id += 1
 	get_tree().current_scene.get_node("Ysort").add_child(drop_item)
 	
+	
+	
 func spawn_item(_item_id: String, pos: Vector2, chunk_pos: Vector2i, item_name: String, item_star: int, item_nutrition : float):
 	var drop_item = item_drop.instantiate()
 	drop_item.position = pos
@@ -244,6 +266,10 @@ func add_item(object, chunk_pos : Vector2i, _item_id: String, item_name: String,
 	item_backpack.modulate += Color(1,0,1) * (pow(1.3, item_star)-1)
 	backpack_inventory[_item_id] = [item_name, item_star, item_nutrition, item_backpack]
 	chunks_obj[chunk_pos].erase(object)
+	if !item_put_backpack.has(_item_id):
+		item_put_backpack.append(_item_id)
+		item_pickup_count += 1
+		
 	get_tree().current_scene.get_node("UI/backpack").call_deferred("add_child", item_backpack)
 
 func remove_item(_item_id: String):
@@ -309,6 +335,7 @@ func convert_to_central_inv():
 		central_inventory[item_name][item_star][0] += 1
 		item_obj.call_deferred("queue_free")
 	backpack_inventory.clear()
+	item_put_backpack.clear()
 	
 	for _item_name in central_inventory:
 		var total_num : int = 0
@@ -347,3 +374,12 @@ func rng_calculator(data):
 		chance += cur_place[cur_data]
 		if rand_num <= chance:
 			return cur_data
+			
+func spawn_coins(amount: int, should_add : bool = true):
+	if amount <= 0: return
+	var cur_coin = coins_drop.instantiate()
+	cur_coin.global_position = viewport_tree.size/2 + Vector2(randf_range(-20, 20), randf_range(-20, 20))
+	cur_coin.coin_amount = amount
+	cur_coin.target_pos = Vector2(15, 205)
+	cur_coin.should_add = should_add
+	get_tree().current_scene.add_child(cur_coin)

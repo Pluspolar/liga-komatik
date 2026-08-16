@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://cfai5qx3ldbv0"]
+
+[ext_resource type="Script" uid="uid://4mb2egefahp5" path="res://scripts/UI/coins_drop.gd" id="1_cvgh3"]
+[ext_resource type="Texture2D" uid="uid://3vh7amehtxob" path="res://textures/sprites/UI/gurt_coins.png" id="2_3ym8h"]
+[ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="3_n5wuq"]
+
+[node name="coins" type="Node2D" unique_id=2054576367]
+script = ExtResource("1_cvgh3")
+
+[node name="icon" type="Sprite2D" parent="." unique_id=795321413]
+texture = ExtResource("2_3ym8h")
+
+[node name="coins_count" type="RichTextLabel" parent="." unique_id=850306896]
+clip_contents = false
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_top = -10.0
+offset_right = 46.0
+offset_bottom = 10.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(1, 0.8823829, 0.25766784, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("3_n5wuq")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "0"
+fit_content = true
+scroll_active = false
+vertical_alignment = 1

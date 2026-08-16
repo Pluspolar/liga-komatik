@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://cojwrpu8fy5et" path="res://scripts/UI/heart.gd" id="2_ibcp2"]
 [ext_resource type="Shader" uid="uid://f7ld0hsjydpe" path="res://scripts/gdshaders/hp.gdshader" id="3_ibcp2"]
 [ext_resource type="Texture2D" uid="uid://52wewjii8s8y" path="res://textures/sprites/UI/heart_real.png" id="4_vifu0"]
+[ext_resource type="Script" uid="uid://517i1ovoc4qi" path="res://scripts/UI/coins.gd" id="6_lbeyb"]
+[ext_resource type="Texture2D" uid="uid://3vh7amehtxob" path="res://textures/sprites/UI/gurt_coins.png" id="6_vifu0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_htemk"]
 shader = ExtResource("3_ibcp2")
@@ -13,30 +15,8 @@ shader_parameter/cur_modulate = Vector4(1, 1, 1, 1)
 
 [node name="time_and_hp" type="CanvasLayer" unique_id=762811169]
 
-[node name="coins" type="RichTextLabel" parent="." unique_id=225040880]
-clip_contents = false
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 3.0
-offset_top = -20.0
-offset_right = 103.0
-grow_vertical = 0
-mouse_filter = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/outline_size = 4
-theme_override_fonts/normal_font = ExtResource("1_ii1gk")
-theme_override_font_sizes/normal_font_size = 10
-bbcode_enabled = true
-text = "(*):100"
-fit_content = true
-scroll_active = false
-vertical_alignment = 1
-
 [node name="heart" type="Node2D" parent="." unique_id=1252322277]
-position = Vector2(14, 188)
+position = Vector2(15, 184)
 script = ExtResource("2_ibcp2")
 
 [node name="heart_outline" type="Sprite2D" parent="heart" unique_id=1836808658]
@@ -48,25 +28,57 @@ material = SubResource("ShaderMaterial_htemk")
 texture = ExtResource("4_vifu0")
 metadata/_edit_lock_ = true
 
-[node name="health_count" type="RichTextLabel" parent="heart" unique_id=1256213012]
+[node name="days_left" type="RichTextLabel" parent="heart" unique_id=1256213012]
 clip_contents = false
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 13.0
+offset_left = 14.0
 offset_top = -12.0
-offset_right = 69.0
-offset_bottom = 8.0
+offset_right = 73.0
+offset_bottom = 12.0
 grow_vertical = 0
 mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 2
-theme_override_constants/outline_size = 4
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("1_ii1gk")
+theme_override_font_sizes/normal_font_size = 7
+bbcode_enabled = true
+text = "[wave amp=5][color=#ff1f00]5 [color=#ffffff]Hari"
+fit_content = true
+scroll_active = false
+vertical_alignment = 1
+
+[node name="coins" type="Node2D" parent="." unique_id=1053958884]
+script = ExtResource("6_lbeyb")
+
+[node name="icon" type="Sprite2D" parent="coins" unique_id=1459465736]
+position = Vector2(15, 205)
+texture = ExtResource("6_vifu0")
+
+[node name="coins_count" type="RichTextLabel" parent="coins" unique_id=225040880]
+clip_contents = false
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = 195.0
+offset_right = 91.0
+offset_bottom = 215.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_colors/default_color = Color(1, 0.8823829, 0.25766784, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/outline_size = 3
 theme_override_fonts/normal_font = ExtResource("1_ii1gk")
 theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
-text = "[wave amp=5][color=#ff1f00]100[color=#ffaaaa]%"
+text = "0"
 fit_content = true
 scroll_active = false
-vertical_alignment = 2
+vertical_alignment = 1

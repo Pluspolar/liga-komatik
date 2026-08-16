@@ -3,6 +3,7 @@ signal entered
 signal done
 
 func getOut() -> void:
+	Global.customer_done += 1
 	position = Vector2(211.0, 102.0) 
 	var tween = create_tween()
 	tween.set_trans(Tween.TRANS_CUBIC)
