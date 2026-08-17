@@ -65,6 +65,8 @@ func is_walking():
 	player_sf.set_animation_speed(player_sprite.animation, abs(velocity.length())*0.085)
 	
 func _input(event: InputEvent) -> void:
+	if Global.is_on_ui: return
+	
 	if event.is_action_pressed("interact") and Global.cur_scene == "interior" and global_position.distance_to(Global.player_interior_out) <= 23:
 		Global.change_scene_to("outside")
 	elif event.is_action_pressed("interact") and area_interact != null and Global.cur_scene == "outside" and Global.is_interacting:

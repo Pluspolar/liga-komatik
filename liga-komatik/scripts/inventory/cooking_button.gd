@@ -10,4 +10,14 @@ func _process(delta: float) -> void:
 	else: modulate = Color(1, 1, 1)
 	
 func _button_down():
-	Global.change_scene_to("customer")
+	if Global.cooking_inventory.is_empty():
+		Global.change_scene_to("outside")
+	else:
+		var total_amount = 0
+		for obj in Global.cooking_inventory:
+			for star in Global.cooking_inventory[obj]:
+				total_amount += Global.cooking_inventory[obj][star][0]
+		
+		if total_amount <= 0: 
+			Global.change_scene_to("outside")
+		else: Global.change_scene_to("customer")

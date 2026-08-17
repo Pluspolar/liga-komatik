@@ -3,7 +3,6 @@ extends CanvasLayer
 var is_button_hovering : bool = false
 @onready var vignette = $vignette
 
-
 func _process(delta: float) -> void:
 	if is_button_hovering: 
 		is_button_hovering = false

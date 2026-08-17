@@ -230,7 +230,7 @@ offset_right = 334.0
 offset_bottom = 154.0
 theme_override_fonts/normal_font = ExtResource("2_uuwxh")
 theme_override_font_sizes/normal_font_size = 13
-text = "100"
+text = "30"
 horizontal_alignment = 1
 vertical_alignment = 1
 
