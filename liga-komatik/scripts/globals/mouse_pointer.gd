@@ -27,7 +27,7 @@ func _process(_delta: float) -> void:
 	for _body in bodies:
 		if !_body.visible: continue
 		
-		if _body.is_in_group("item_inventory") and Global.is_opening_inventory:
+		if _body.is_in_group("item_inventory") and !Global.is_on_ui and Global.is_opening_inventory:
 			new_hovered = _body
 			if Input.is_action_pressed("right_click") and not is_dragging:
 				Global._drop_item(_body.item_id)
@@ -36,7 +36,7 @@ func _process(_delta: float) -> void:
 				hovered = null
 			break
 
-		elif _body.is_in_group("item_central") and !Global.item_count_central.visible and Global.cur_scene == "central_inventory":
+		elif _body.is_in_group("item_central") and !Global.is_on_ui and !Global.item_count_central.visible and Global.cur_scene == "central_inventory":
 			new_hovered = _body
 			break
 		

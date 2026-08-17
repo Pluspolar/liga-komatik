@@ -29,6 +29,7 @@ var explore_scene = ["outside", "interior"]
 @onready var darker_area := $darker_area
 @onready var _central_inventory := $UI/central_inventory
 @onready var _cooking_inv_scene := $UI/cooking_inventory
+@onready var _hp_coins := $time_and_hp
 @onready var _customer_scene := $pelanggan
 @onready var _cooking_scene := $Cooking
 @onready var _loading_screen := $loading_screen
@@ -632,6 +633,7 @@ func hide_stuff():
 	_cooking_inv_scene.hide()
 	_customer_scene.hide()
 	_cooking_scene.hide()
+	_hp_coins.hide()
 	if !explore_scene.has(Global.cur_scene):
 		backpack.hide()
 		Global.is_opening_inventory = false
@@ -641,6 +643,8 @@ func _load_scene():
 	while true:
 		if Global.changing_scene:
 			hide_stuff()
+			if !Global.cur_scene == "central_inventory": _hp_coins.show()
+			
 			if Global.is_exploring: 
 				darker_area.show()
 			else:
@@ -746,7 +750,8 @@ func is_in_water():
 func _exploring(delta: float) -> void:
 	var _is_in_water = is_in_water()
 	
-	player.velocity += speed * delta * Vector2(float(Input.is_action_pressed("right")) - float(Input.is_action_pressed("left")), float(Input.is_action_pressed("down")) - float(Input.is_action_pressed("up"))).normalized()
+	if !Global.is_on_ui:
+		player.velocity += speed * delta * Vector2(float(Input.is_action_pressed("right")) - float(Input.is_action_pressed("left")), float(Input.is_action_pressed("down")) - float(Input.is_action_pressed("up"))).normalized()
 	
 	if _is_in_water: player.velocity *= pow(0.4, delta*60)
 	else: player.velocity *= pow(0.85, delta*60)
@@ -782,6 +787,7 @@ func _exploring(delta: float) -> void:
 	_enemy_ai(delta)
 	
 func _enemy_ai(delta):
+	if Global.is_on_ui: return
 	for _chunk_enemy in generated_chunks:
 		if !chunks_enemy.has(_chunk_enemy): continue
 		for _enemy in chunks_enemy[_chunk_enemy]:
@@ -899,7 +905,7 @@ func player_move_and_slide():
 	gerobak.move_and_slide()
 	player.move_and_slide()
 	
-	Global.distance_traveled += abs(player.global_position - old_player_pos).length()
+	Global.distance_traveled += abs(player.global_position - old_player_pos).length()/16000
 		
 func _physics_process(delta: float) -> void:
 	if generating: return

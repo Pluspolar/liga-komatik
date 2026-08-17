@@ -5,32 +5,32 @@
 [ext_resource type="Shader" uid="uid://b8v83d66jo0j3" path="res://scripts/gdshaders/fade_out_noise.gdshader" id="2_85qbq"]
 [ext_resource type="FontFile" uid="uid://cgjcoqw87qeuk" path="res://textures/fonts/HomeVideo-Regular.ttf" id="4_85qbq"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_pp1to"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_epvqu"]
 noise_type = 4
-seed = 5
-frequency = 0.0288
+seed = 4
+frequency = 0.0481
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ugcl7"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jdsq4"]
 width = 384
 height = 216
-noise = SubResource("FastNoiseLite_pp1to")
+noise = SubResource("FastNoiseLite_epvqu")
 seamless = true
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_wn4hl"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xxxwk"]
 noise_type = 3
-seed = 6
-frequency = 0.0221
+seed = 2
+frequency = 0.0144
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0kyq7"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bfgj2"]
 width = 384
 height = 216
-noise = SubResource("FastNoiseLite_wn4hl")
+noise = SubResource("FastNoiseLite_xxxwk")
 seamless = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_htemk"]
 shader = ExtResource("2_85qbq")
-shader_parameter/noise_texture_1 = SubResource("NoiseTexture2D_ugcl7")
-shader_parameter/noise_texture_2 = SubResource("NoiseTexture2D_0kyq7")
+shader_parameter/noise_texture_1 = SubResource("NoiseTexture2D_jdsq4")
+shader_parameter/noise_texture_2 = SubResource("NoiseTexture2D_bfgj2")
 shader_parameter/pixel_size = 64.0
 shader_parameter/fade = 1.0
 

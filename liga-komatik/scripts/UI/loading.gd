@@ -11,7 +11,7 @@ var fading : bool = false
 var tween : Tween
 
 var story_array : Array = [
-	"Saya tuff santoso. saya dapat menghidupi diri saya dengan menjual makanan pada gerobak saya sebagai pedagang kaki lima.",
+	"Saya tuff santoso. saya dapat menghidupi diri saya dengan menjual makanan pada gerobak sebagai pedagang kaki lima.",
 	"Beberapa hari lalu, sebuah kejadian yang tidak terduga telah terjadi.",
 	"Perang telah melanda tempat tinggal saya.",
 	"Saya tidak dapat menghidupi diri saya tanpa memulung di banyak tempat.",
@@ -31,6 +31,8 @@ func fade_out(start_timer: float, tick : int, to_scene : String) -> void:
 	for i in range(tick+1):
 		background.material.set_shader_parameter("fade", 1.0-(float(i)/float(tick)))
 		await get_tree().process_frame
+		
+	Global.is_on_ui = false
 	queue_free()
 
 func _process(delta: float) -> void:

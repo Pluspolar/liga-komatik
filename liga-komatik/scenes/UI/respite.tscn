@@ -60,6 +60,7 @@ metadata/_edit_use_anchors_ = true
 metadata/_edit_lock_ = true
 
 [node name="separator" type="HSeparator" parent="." unique_id=616134932]
+visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -71,6 +72,7 @@ grow_horizontal = 2
 theme_override_styles/separator = SubResource("StyleBoxFlat_htemk")
 
 [node name="day" type="RichTextLabel" parent="." unique_id=1778485309]
+visible = false
 clip_contents = false
 anchors_preset = 5
 anchor_left = 0.5
@@ -89,6 +91,7 @@ scroll_active = false
 horizontal_alignment = 1
 
 [node name="customer" type="RichTextLabel" parent="." unique_id=1844813825]
+visible = false
 clip_contents = false
 anchors_preset = 5
 anchor_left = 0.5
@@ -101,12 +104,13 @@ grow_horizontal = 2
 theme_override_fonts/normal_font = ExtResource("2_uuwxh")
 theme_override_font_sizes/normal_font_size = 10
 bbcode_enabled = true
-text = "pelanggan dilayani: 100"
+text = "pelanggan dilayani: "
 fit_content = true
 scroll_active = false
 vertical_alignment = 1
 
 [node name="item_picked_up" type="RichTextLabel" parent="." unique_id=1644554704]
+visible = false
 clip_contents = false
 anchors_preset = 5
 anchor_left = 0.5
@@ -119,13 +123,14 @@ grow_horizontal = 2
 theme_override_fonts/normal_font = ExtResource("2_uuwxh")
 theme_override_font_sizes/normal_font_size = 10
 bbcode_enabled = true
-text = "Barang/Bahan yang didapatkan:
+text = "Barang/Bahan yang didapatkan: 
 "
 fit_content = true
 scroll_active = false
 vertical_alignment = 1
 
 [node name="item_cooked" type="RichTextLabel" parent="." unique_id=1569398493]
+visible = false
 clip_contents = false
 anchors_preset = 5
 anchor_left = 0.5
@@ -138,12 +143,13 @@ grow_horizontal = 2
 theme_override_fonts/normal_font = ExtResource("2_uuwxh")
 theme_override_font_sizes/normal_font_size = 10
 bbcode_enabled = true
-text = "Bahan yang dimasak:"
+text = "Bahan yang dimasak: "
 fit_content = true
 scroll_active = false
 vertical_alignment = 1
 
 [node name="distance" type="RichTextLabel" parent="." unique_id=75559160]
+visible = false
 clip_contents = false
 anchors_preset = 5
 anchor_left = 0.5
@@ -156,12 +162,13 @@ grow_horizontal = 2
 theme_override_fonts/normal_font = ExtResource("2_uuwxh")
 theme_override_font_sizes/normal_font_size = 10
 bbcode_enabled = true
-text = "Jarak yang dituju:"
+text = "Jarak yang dituju: "
 fit_content = true
 scroll_active = false
 vertical_alignment = 1
 
 [node name="coins_gained" type="RichTextLabel" parent="." unique_id=214883026]
+visible = false
 clip_contents = false
 anchors_preset = 5
 anchor_left = 0.5
@@ -174,12 +181,13 @@ grow_horizontal = 2
 theme_override_fonts/normal_font = ExtResource("2_uuwxh")
 theme_override_font_sizes/normal_font_size = 10
 bbcode_enabled = true
-text = "uang yang didapatkan:"
+text = "uang yang didapatkan: "
 fit_content = true
 scroll_active = false
 vertical_alignment = 1
 
 [node name="buy_medicine" type="Button" parent="." unique_id=2033903653]
+visible = false
 offset_left = 266.0
 offset_top = 45.0
 offset_right = 366.0
@@ -191,6 +199,7 @@ text = "BELI OBAT"
 icon_alignment = 2
 
 [node name="medicine_cost" type="RichTextLabel" parent="." unique_id=1644825136]
+visible = false
 offset_left = 296.0
 offset_top = 68.0
 offset_right = 334.0
@@ -201,16 +210,41 @@ text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="buy_arang" type="Button" parent="." unique_id=957375295]
+visible = false
+offset_left = 266.0
+offset_top = 111.0
+offset_right = 366.0
+offset_bottom = 134.0
+theme_override_fonts/font = ExtResource("2_uuwxh")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_hej43")
+text = "BELI Arang"
+icon_alignment = 2
+
+[node name="arang_cost" type="RichTextLabel" parent="." unique_id=785160786]
+visible = false
+offset_left = 296.0
+offset_top = 134.0
+offset_right = 334.0
+offset_bottom = 154.0
+theme_override_fonts/normal_font = ExtResource("2_uuwxh")
+theme_override_font_sizes/normal_font_size = 13
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="continue" type="Button" parent="." unique_id=1045244964]
+visible = false
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -36.5
-offset_top = -37.0
+offset_top = -39.0
 offset_right = 36.5
-offset_bottom = -14.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("2_uuwxh")

@@ -32,7 +32,7 @@ func _shake():
 		var modulate_change_total = abs(modulate_change.r)+abs(modulate_change.g)+abs(modulate_change.b)
 		random_rad = randf_range(-PI, PI)
 		position = org_position + 5 * Vector2(cos(random_rad), sin(random_rad)) * (modulate_change_total)
-		await get_tree().create_timer(0.05).timeout
+		if get_tree() != null: await get_tree().create_timer(0.05).timeout
 	
 func change_day(amount : float):
 	Global.days_left += amount

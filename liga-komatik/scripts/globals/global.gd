@@ -7,6 +7,7 @@ extends Node
 @onready var viewport_x_chunk : int = round(float(viewport_x_tile)/chunk_size)+1
 @onready var viewport_y_chunk : int = round(float(viewport_y_tile)/chunk_size)+1
 
+var is_reset = false
 var generated_interior = {}
 var gen_wall_interior = {}
 var gen_obj_interior = {}
@@ -54,6 +55,7 @@ var heart : Object = null
 var coin_icon : Object = null
 var item_put_backpack = []
 var is_on_ui : bool = true
+var cur_day : int = 0
 
 var customer_done : int = 0
 var item_pickup_count : int = 0
@@ -133,6 +135,7 @@ func stats_reset():
 	item_cooked = 0
 
 func reset_game():
+	is_reset = false
 	generated_interior = {}
 	gen_wall_interior = {}
 	gen_obj_interior = {}
@@ -179,6 +182,7 @@ func reset_game():
 	coin_icon = null
 	item_put_backpack = []
 	is_on_ui = true
+	cur_day = 0
 	stats_reset()
 
 	skip_dialogue = false
@@ -211,9 +215,10 @@ func _process(delta: float) -> void:
 		if coin_icon != null: coin_icon.change_coin(1)
 		#if heart != null: heart.change_day(-1.0)
 		
-	if days_left <= 0: 
+	if is_reset:
 		reset_game()
 		get_tree().change_scene_to_packed(main_menu)
+	
 
 func spawn_new_item(pos: Vector2, chunk_pos: Vector2i, item_name: String, item_nutrition : float = -1.0):
 	var drop_item = item_drop.instantiate()
@@ -239,8 +244,6 @@ func spawn_new_item(pos: Vector2, chunk_pos: Vector2i, item_name: String, item_n
 		drop_item.interior = cur_interior
 	item_id += 1
 	get_tree().current_scene.get_node("Ysort").add_child(drop_item)
-	
-	
 	
 func spawn_item(_item_id: String, pos: Vector2, chunk_pos: Vector2i, item_name: String, item_star: int, item_nutrition : float):
 	var drop_item = item_drop.instantiate()
@@ -284,6 +287,7 @@ func _drop_item(_item_id: String):
 	spawn_item(_item_id, player_pos, player_chunk, item_desc[0], item_desc[1], item_desc[2])
 
 func change_scene_to(to_scene, interior = null):	
+	#is_on_ui = false
 	if to_scene == "interior" or to_scene == "outside": is_exploring = true
 	else: 
 		if is_exploring: 

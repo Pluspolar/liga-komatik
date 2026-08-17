@@ -7,6 +7,8 @@ var player_sf
 var bigger_velocity : Array = ["x", 0]
 var can_cook : bool = false
 
+var respite = preload("res://scenes/UI/respite.tscn")
+
 func _ready() -> void:
 	player_sf = player_sprite.sprite_frames
 
@@ -69,7 +71,7 @@ func _input(event: InputEvent) -> void:
 		Global.change_scene_to("interior", area_interact)
 	elif event.is_action_pressed("interact") and can_cook and Global.cur_scene == "outside":
 		Global.player_last_loc = global_position
-		Global.change_scene_to("central_inventory")
+		get_tree().current_scene.get_node("UI").add_child(respite.instantiate())
 
 func get_to_staticbody(_area):
 	var cur_area = _area
