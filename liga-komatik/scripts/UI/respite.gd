@@ -18,8 +18,12 @@ var gameover = preload("res://scenes/UI/gameover.tscn")
 	"coins_gained" : [$coins_gained, Global.coins_earned, "Uang yang didapatkan: "],
 }
 
-@onready var button_array : Array = [
-	medicine_button, medicine_cost, arang_button, arang_cost
+@onready var medicine_array : Array = [
+	medicine_button, medicine_cost
+]	
+
+@onready var arang_array : Array = [
+	arang_button, arang_cost
 ]
 
 func fade_in():
@@ -61,8 +65,8 @@ func _start():
 		tween.tween_property(text_array[obj][0], "visible_ratio", 1, randf_range(1.5, 4))
 		tween.play()
 	await get_tree().create_timer(randf_range(1.2, 2)).timeout
-	for obj in button_array:
-		obj.show()
+	if Global.coins >= 100: for obj in medicine_array: obj.show()
+	if Global.coins >= 30: for obj in arang_array: obj.show()
 		
 	await get_tree().create_timer(randf_range(1.5, 3)).timeout
 	continue_button.show()
@@ -70,8 +74,8 @@ func _start():
 func hide_all():
 	for obj in text_array:
 		text_array[obj][0].hide()
-	for obj in button_array:
-		obj.hide()
+	for obj in medicine_array: obj.hide()
+	for obj in arang_array: obj.hide()
 		
 	$separator.hide()
 	continue_button.hide()
@@ -85,9 +89,12 @@ func _button_continue():
 	fade_out()
 	
 func _medicine_button(): 
-	for obj in button_array:
-		obj.hide()
-		
+	for obj in medicine_array: obj.hide()
+	if Global.coins >= 100: Global.days_left += 2
+	Global.coin_icon.change_coin(-100)
+	
 func _arang_button(): 
-	for obj in button_array:
-		obj.hide()
+	for obj in arang_array: obj.hide()
+	if Global.coins >= 30: Global.days_left += 0.5
+	Global.coin_icon.change_coin(-30)
+	

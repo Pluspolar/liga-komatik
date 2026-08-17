@@ -27,4 +27,4 @@ func _on_shadow_done() -> void:
 	Global.cooking_scene.done.visible = true
 
 func _on_shadow_entered() -> void:
-	des._start()
+	if Global.cur_scene == "customer": des._start()

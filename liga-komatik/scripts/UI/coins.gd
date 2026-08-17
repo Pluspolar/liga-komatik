@@ -26,9 +26,12 @@ func _shake():
 		await get_tree().create_timer(0.05).timeout
 
 func change_coin(amount: int):
-	Global.coins += amount
-	if amount < 0: cur_modulate = Color(1,0,0,1)
+	if amount < 0 and Global.coins >= abs(amount): 
+		Global.coins += amount
+		cur_modulate = Color(1,0,0,1)
+	
 	elif amount > 0: 
+		Global.coins += amount
 		Global.coins_earned += amount
 		cur_modulate = Color(0,1,0,1)
 	
