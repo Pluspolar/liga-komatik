@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://boepwbiw2njr7" path="res://scenes/UI/time_and_hp.tscn" id="14_l6jg2"]
 [ext_resource type="PackedScene" uid="uid://dspnds6ijsxr0" path="res://scenes/UI/loading_screen.tscn" id="15_lmvdy"]
 [ext_resource type="PackedScene" uid="uid://5678lloyemyb" path="res://scenes/Cooking/day_start.tscn" id="16_kqym7"]
+[ext_resource type="PackedScene" uid="uid://dnmukjr3qdc6x" path="res://scenes/UI/sound.tscn" id="19_0p8jo"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_iss55"]
 tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 1)
@@ -362,3 +363,5 @@ visible = false
 [node name="time_and_hp" parent="." unique_id=762811169 instance=ExtResource("14_l6jg2")]
 
 [node name="loading_screen" parent="." unique_id=705293710 instance=ExtResource("15_lmvdy")]
+
+[node name="sound" parent="." unique_id=1166998298 instance=ExtResource("19_0p8jo")]

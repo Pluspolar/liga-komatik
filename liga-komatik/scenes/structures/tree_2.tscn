@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dn1hlge80alag"]
+
+[ext_resource type="Texture2D" uid="uid://d074x6sfu2byf" path="res://textures/sprites/structures/tree.png" id="1_88ks0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_htemk"]
+size = Vector2(5, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_14cdr"]
+size = Vector2(14, 14)
+
+[node name="tree" type="StaticBody2D" unique_id=1753390028]
+visible = false
+z_as_relative = false
+y_sort_enabled = true
+collision_layer = 2
+
+[node name="sprite" type="Sprite2D" parent="." unique_id=569358984]
+texture_filter = 1
+texture = ExtResource("1_88ks0")
+offset = Vector2(0, -10)
+
+[node name="static_col" type="CollisionShape2D" parent="." unique_id=1746158076]
+position = Vector2(-0.565, 2)
+shape = SubResource("RectangleShape2D_htemk")
+
+[node name="interaction" type="Area2D" parent="." unique_id=862871199]
+metadata/_edit_lock_ = true
+
+[node name="area_col" type="CollisionShape2D" parent="interaction" unique_id=1294136418]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_14cdr")
+debug_color = Color(0.99967283, 0.02300573, 9.62615e-07, 0.41960785)

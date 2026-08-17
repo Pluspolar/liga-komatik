@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cbdf1ygk8t0nx"
+path="res://.godot/imported/No thanks man 2.wav-d200fe0fbfc37a0f1b0b2355ee95f7ce.sample"
+
+[deps]
+
+source_file="res://textures/sound/man_2/No thanks man 2.wav"
+dest_files=["res://.godot/imported/No thanks man 2.wav-d200fe0fbfc37a0f1b0b2355ee95f7ce.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

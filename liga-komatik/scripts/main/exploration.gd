@@ -173,12 +173,12 @@ var biomes_wall_data := {
 }
 
 var biomes_enemy_data := {
-	"plains" : {"enemy_1" : 0.001},
+	"plains" : {"enemy_1" : 0.0005},
 	"beach" : {},
 	"ocean" : {},
 	"eucalyptus" : {},
 	"urban" : {},
-	"city" : {"enemy_1" : 0.001},
+	"city" : {"enemy_1" : 0.0005_, "soldier" : 0.0005},
 	"city_transition" : {},
 	"city_road" : {},
 }
@@ -189,7 +189,7 @@ var objects_data := {
 	"ocean" : {},
 	"eucalyptus" : {"tree" : 0.01},
 	"urban" : {},
-	"city" : {"abandoned_apartment_1" : 0.005, "abandoned_apartment_2" : 0.005},
+	"city" : {"abandoned_apartment_1" : 0.0035, "abandoned_apartment_2" : 0.0035, "gov_building" : 0.0005},
 	"city_transition" : {},
 	"city_road" : {},
 }
@@ -199,15 +199,21 @@ var objects := { #[x_size, y_vertical_size, how much free space under "y"], scen
 	"abandoned_house_1" : [[3,1,0], "1_aband_house", preload("res://scenes/structures/abandoned_house.tscn")],
 	"abandoned_apartment_1" : [[4,2,0], "1_aband_apart", preload("res://scenes/structures/abandoned_apartment_1.tscn")],
 	"abandoned_apartment_2" : [[4,2,0], "2_aband_apart", preload("res://scenes/structures/abandoned_apartment_2.tscn")],
+	"gov_building" : [[4,2,0], "3_aband_apart", preload("res://scenes/structures/abandoned_apartment_3.tscn")],
 }
 
 var enemies := preload("res://scenes/enemy/enemy.tscn")
+var enemy_stats : Dictionary = { #speed, signt_range, turn_speed, follow_dur
+	"enemy_1" : [100, 60, 1.5, 7],
+	"soldier" : [150, 80, 2, 9],
+}
 
 func rand_interior_data():
 	interior_data = {
-	"1_aband_house" : [0.2, [randi_range(10,20), randi_range(10,20)], {"oak_planks" : 0.9, "red_soil" : 0.1}, {"wooden_board" : 1}, 0.125, {"can" : 0.5, "mie": 0.5}], 
-	"1_aband_apart" : [0.1, [randi_range(20,35), randi_range(20,35)], {"cyanish_concrete" : 0.85, "cyanish_concrete_cracked" : 0.075, "red_soil" : 0.075}, {"dark_gray_concrete" : 0.89, "dark_gray_concrete_cracked" : 0.1, "dark_gray_concrete_cut" : 0.01}, 0.06, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}],
-	"2_aband_apart" : [0.1, [randi_range(25,40), randi_range(25,40)], {"spruce_planks" : 0.85, "dirt" : 0.075, "red_soil" : 0.075}, {"dark_gray_concrete" : 0.89, "dark_gray_concrete_cracked" : 0.1, "dark_gray_concrete_cut" : 0.01}, 0.06, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}],
+	"1_aband_house" : [0.2, [randi_range(10,20), randi_range(10,20)], {"oak_planks" : 0.9, "red_soil" : 0.1}, {"wooden_board" : 1}, 0.225, {"can" : 0.5, "mie": 0.5}], 
+	"1_aband_apart" : [0.1, [randi_range(20,35), randi_range(20,35)], {"cyanish_concrete" : 0.85, "cyanish_concrete_cracked" : 0.075, "red_soil" : 0.075}, {"dark_gray_concrete" : 0.89, "dark_gray_concrete_cracked" : 0.1, "dark_gray_concrete_cut" : 0.01}, 0.1, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}],
+	"2_aband_apart" : [0.1, [randi_range(25,40), randi_range(25,40)], {"spruce_planks" : 0.85, "dirt" : 0.075, "red_soil" : 0.075}, {"crate_3" : 1}, 0.1, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}],
+	"3_aband_apart" : [0.1, [randi_range(30,45), randi_range(30,45)], {"oak_planks" : 0.85, "dirt" : 0.075, "red_soil" : 0.075}, {"spruce_planks" : 1}, 0.135, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}],
 } #room_abundance, [x_size, y_size], tiles, chance_item_per_tile, item_list
 
 var objects_pos := {}
@@ -418,6 +424,10 @@ func place_enemy_biome(pos, _biome: String) -> void:
 	obj.global_position = tile_map.map_to_local(pos)
 	obj._cur_tile = pos
 	obj.enemy_name = cur_enemy
+	obj.speed = enemy_stats[cur_enemy][0]
+	obj.sight_range = enemy_stats[cur_enemy][1]
+	obj.turn_speed = enemy_stats[cur_enemy][2]
+	obj.follow_dur = enemy_stats[cur_enemy][3]
 	objects_pos[pos] = "enemy"
 
 	chunks_enemy[cur_chunk].append(obj)
@@ -753,6 +763,9 @@ func _exploring(delta: float) -> void:
 	
 	if !Global.is_on_ui:
 		player.velocity += speed * delta * Vector2(float(Input.is_action_pressed("right")) - float(Input.is_action_pressed("left")), float(Input.is_action_pressed("down")) - float(Input.is_action_pressed("up"))).normalized()
+		if Input.is_action_pressed("left") or Input.is_action_pressed("right") or Input.is_action_pressed("up") or Input.is_action_pressed("down"): 
+			if player.velocity.length() > 5:
+				Global.sound_play("footstep")
 	
 	if _is_in_water: player.velocity *= pow(0.4, delta*60)
 	else: player.velocity *= pow(0.85, delta*60)
@@ -800,6 +813,7 @@ func _enemy_ai(delta):
 			var cur_chunk_before : Vector2i = pos_to_chunk(enemy_global_pos)
 			if _enemy.pathing_interval > 0: _enemy.pathing_interval -= delta
 			if _enemy.aggro_dur > 0: _enemy.aggro_dur -= delta
+			if _enemy.cur_cooldown > 0: _enemy.cur_cooldown -= delta
 			else: _enemy.non_aggro_dir += _enemy.turn_speed * delta
 			
 			if _enemy.pathing_interval <= 0 and _enemy.aggro_dur > 0:
@@ -935,7 +949,6 @@ func camera_follow_mouse(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("inventory") and explore_scene.has(Global.cur_scene):
-		Global.spawn_new_item(Global.player_pos, Global.player_chunk, rng_calculator({"can" : 0.1, "mie" : 0.1, "belalang" : 0.1, "kornet" : 0.1, "ubi" : 0.1, "sarden" : 0.1, "worm" : 0.1, "sawdust" : 0.1, "sosis" : 0.1, "udang" : 0.1}))
 		if Global.is_opening_inventory: 
 			backpack.hide()
 			Global.is_opening_inventory = false

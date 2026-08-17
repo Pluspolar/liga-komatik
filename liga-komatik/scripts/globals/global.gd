@@ -7,6 +7,8 @@ extends Node
 @onready var viewport_x_chunk : int = round(float(viewport_x_tile)/chunk_size)+1
 @onready var viewport_y_chunk : int = round(float(viewport_y_tile)/chunk_size)+1
 
+var old_sound : String = ""
+var is_captured = false
 var is_reset = false
 var generated_interior = {}
 var gen_wall_interior = {}
@@ -58,6 +60,7 @@ var is_on_ui : bool = true
 var cur_day : int = 0
 var day_start : Object = null
 var cur_cam : Object = null
+var sound_obj : Object = null
 
 var customer_done : int = 0
 var item_pickup_count : int = 0
@@ -137,6 +140,7 @@ func stats_reset():
 	item_cooked = 0
 
 func reset_game():
+	is_captured = false
 	is_reset = false
 	generated_interior = {}
 	gen_wall_interior = {}
@@ -187,6 +191,7 @@ func reset_game():
 	cur_day = 0
 	day_start = null
 	cur_cam = null
+	old_sound = ""
 	stats_reset()
 
 	skip_dialogue = false
@@ -212,17 +217,34 @@ func _process(delta: float) -> void:
 	if mouse_cooldown > 0:
 		mouse_cooldown -= delta
 		
-	if Input.is_action_just_pressed("right-hand"):
-		if coin_icon != null: coin_icon.change_coin(-1)
-		#if heart != null: heart.change_day(-1.0)
-	elif Input.is_action_just_pressed("left-hand"):
-		if coin_icon != null: coin_icon.change_coin(1)
-		#if heart != null: heart.change_day(-1.0)
-		
 	if is_reset:
 		reset_game()
 		get_tree().change_scene_to_packed(main_menu)
 	
+var sound_pitch : Array = ["footstep", "junk", "sizzling"]
+var sound_multiple : Array = ["junk", "sizzling"]
+
+func sound_play(sound: String):
+	if !sound_obj.has_node(sound): return
+	var cur_sound = sound_obj.get_node(sound)
+	if !cur_sound.playing or sound_multiple.has(sound): 
+		if sound_pitch.has(sound): 
+			cur_sound.pitch_scale = randf_range(0.8, 1.2)
+		cur_sound.play()
+
+func dialogue_play(sound: String):
+	if !sound_obj.has_node(sound): return
+	
+	var cur_sound = sound_obj.get_node(sound)
+	var cur_old_sound
+	
+	if sound_obj.has_node(old_sound):
+		cur_old_sound = sound_obj.get_node(old_sound)
+		if cur_old_sound.playing: cur_old_sound.stop()
+		
+	if !cur_sound.playing: 
+		cur_sound.play()
+		old_sound = sound
 
 func spawn_new_item(pos: Vector2, chunk_pos: Vector2i, item_name: String, item_nutrition : float = -1.0):
 	var drop_item = item_drop.instantiate()

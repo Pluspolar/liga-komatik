@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d02m86g1vqq4"
+path="res://.godot/imported/Man_2 repeat1.wav-21cb66bb0a4ec215e3e3fa96f5cbb347.sample"
+
+[deps]
+
+source_file="res://textures/sound/man_2/Man_2 repeat1.wav"
+dest_files=["res://.godot/imported/Man_2 repeat1.wav-21cb66bb0a4ec215e3e3fa96f5cbb347.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

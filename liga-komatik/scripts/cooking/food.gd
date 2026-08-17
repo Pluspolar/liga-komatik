@@ -36,6 +36,7 @@ func _ready() -> void:
 func dirty(junk)-> void:
 	if junk == self:
 		if Global.cooking_obj.has(self): Global.cooking_obj.erase(self)
+		Global.sound_play("junk")
 		queue_free()
 
 func _physics_process(delta: float) -> void:
@@ -53,6 +54,7 @@ func _on_timer_timeout() -> void:
 
 func mulai(junk):
 	if junk == self: 
+		Global.sound_play("sizzling")
 		time.start()
 
 func _on_body_entered(body: Node) -> void:

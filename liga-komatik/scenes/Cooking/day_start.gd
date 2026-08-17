@@ -24,7 +24,11 @@ func _ready() -> void:
 	Global.day_start = self
 
 func radio() -> int :
-	return Global.cur_day-1 % radio_text.size()
+	if Global.is_captured: 
+		Global.is_captured = false
+		return Global.cur_day-2 % radio_text.size()
+	else: return Global.cur_day-1 % radio_text.size()
+
 # Called when the node enters the scene tree for the first time.
 func _start() -> void:
 	global_position = Global.cur_cam.global_position - Global.viewport_tree.size/2

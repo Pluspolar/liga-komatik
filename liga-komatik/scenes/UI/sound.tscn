@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://dnmukjr3qdc6x"]
+
+[ext_resource type="AudioStream" uid="uid://ba1mmit8t43jf" path="res://textures/sound/ketangkep.wav" id="1_6x7bv"]
+[ext_resource type="Script" uid="uid://knqsms4uisi7" path="res://scenes/UI/sound.gd" id="1_nrnr4"]
+[ext_resource type="AudioStream" uid="uid://mahpavyd76a" path="res://textures/sound/keDetect.wav" id="3_walf4"]
+[ext_resource type="AudioStream" uid="uid://b5m3pjcnv88og" path="res://textures/sound/footstep.wav" id="4_5l2go"]
+[ext_resource type="AudioStream" uid="uid://cded6xe4fqgg8" path="res://textures/sound/junk.wav" id="5_0rnp2"]
+[ext_resource type="AudioStream" uid="uid://v5vgoqaivhev" path="res://textures/sound/sizzling.wav" id="6_xvj1n"]
+[ext_resource type="AudioStream" uid="uid://cnv5iwobmg0mu" path="res://textures/sound/man_2/Makasih man 2.wav" id="7_lrklb"]
+[ext_resource type="AudioStream" uid="uid://c3e2o7j44ioow" path="res://textures/sound/man_2/Man_2 gossip.wav" id="8_s2tid"]
+[ext_resource type="AudioStream" uid="uid://d02m86g1vqq4" path="res://textures/sound/man_2/Man_2 repeat1.wav" id="9_8m3yg"]
+[ext_resource type="AudioStream" uid="uid://bgl5eq3e4ufuc" path="res://textures/sound/man_2/Man_2_repeat3.wav" id="10_jyufq"]
+[ext_resource type="AudioStream" uid="uid://ciurupceadsjh" path="res://textures/sound/man_2/man_2_thanks.wav" id="11_46g1c"]
+[ext_resource type="AudioStream" uid="uid://bjfxmh4rd6efj" path="res://textures/sound/man_2/Man_repeat2.wav" id="12_esf7q"]
+[ext_resource type="AudioStream" uid="uid://cbdf1ygk8t0nx" path="res://textures/sound/man_2/No thanks man 2.wav" id="13_sf7sk"]
+[ext_resource type="AudioStream" uid="uid://b78hawqy2yw3y" path="res://textures/sound/man_1/Man1gossip.wav" id="14_gy2hv"]
+[ext_resource type="AudioStream" uid="uid://dwygehylkt8mt" path="res://textures/sound/man_1/Man1nothanks1.wav" id="15_hnbi6"]
+[ext_resource type="AudioStream" uid="uid://ci47jeoslun7r" path="res://textures/sound/man_1/Man1nothanks2.wav" id="16_7dtjs"]
+[ext_resource type="AudioStream" uid="uid://b8p8hgdw1d217" path="res://textures/sound/man_1/Man1speech1.wav" id="17_s4jh6"]
+[ext_resource type="AudioStream" uid="uid://67ugmdb5b6o1" path="res://textures/sound/man_1/Man1speech2.wav" id="18_oicrm"]
+[ext_resource type="AudioStream" uid="uid://bed5eogf2f3oj" path="res://textures/sound/man_1/Man1speech3.wav" id="19_lxt8f"]
+[ext_resource type="AudioStream" uid="uid://de3bu76s4wigj" path="res://textures/sound/man_1/Man1thanks1.wav" id="20_gouk2"]
+[ext_resource type="AudioStream" uid="uid://bfdjvewdpynp8" path="res://textures/sound/man_1/Man1thanks2.wav" id="21_qdkgj"]
+
+[node name="sound" type="Node2D" unique_id=1166998298]
+script = ExtResource("1_nrnr4")
+
+[node name="captured" type="AudioStreamPlayer" parent="." unique_id=200070141]
+stream = ExtResource("1_6x7bv")
+pitch_scale = 0.55
+
+[node name="detect" type="AudioStreamPlayer" parent="." unique_id=2082317975]
+stream = ExtResource("3_walf4")
+pitch_scale = 0.5
+
+[node name="footstep" type="AudioStreamPlayer" parent="." unique_id=450924256]
+stream = ExtResource("4_5l2go")
+volume_db = -3.0
+
+[node name="junk" type="AudioStreamPlayer" parent="." unique_id=508558485]
+stream = ExtResource("5_0rnp2")
+volume_db = -10.363
+pitch_scale = 1.56
+
+[node name="sizzling" type="AudioStreamPlayer" parent="." unique_id=596883190]
+stream = ExtResource("6_xvj1n")
+volume_db = -10.48
+
+[node name="MakasihMan2" type="AudioStreamPlayer" parent="." unique_id=2039141900]
+stream = ExtResource("7_lrklb")
+
+[node name="Man2Gossip" type="AudioStreamPlayer" parent="." unique_id=1253632118]
+stream = ExtResource("8_s2tid")
+
+[node name="Man2Repeat1" type="AudioStreamPlayer" parent="." unique_id=1736617443]
+stream = ExtResource("9_8m3yg")
+
+[node name="Man2Repeat3" type="AudioStreamPlayer" parent="." unique_id=332749937]
+stream = ExtResource("10_jyufq")
+
+[node name="Man2Thanks" type="AudioStreamPlayer" parent="." unique_id=1868884927]
+stream = ExtResource("11_46g1c")
+
+[node name="ManRepeat2" type="AudioStreamPlayer" parent="." unique_id=1709707111]
+stream = ExtResource("12_esf7q")
+
+[node name="NoThanksMan2" type="AudioStreamPlayer" parent="." unique_id=586507538]
+stream = ExtResource("13_sf7sk")
+
+[node name="Man1Gossip" type="AudioStreamPlayer" parent="." unique_id=1324063829]
+stream = ExtResource("14_gy2hv")
+
+[node name="Man1Nothanks1" type="AudioStreamPlayer" parent="." unique_id=1825933461]
+stream = ExtResource("15_hnbi6")
+
+[node name="Man1Nothanks2" type="AudioStreamPlayer" parent="." unique_id=1485105259]
+stream = ExtResource("16_7dtjs")
+
+[node name="Man1Speech1" type="AudioStreamPlayer" parent="." unique_id=49299887]
+stream = ExtResource("17_s4jh6")
+
+[node name="Man1Speech2" type="AudioStreamPlayer" parent="." unique_id=595699936]
+stream = ExtResource("18_oicrm")
+
+[node name="Man1Speech3" type="AudioStreamPlayer" parent="." unique_id=34012105]
+stream = ExtResource("19_lxt8f")
+
+[node name="Man1Thanks1" type="AudioStreamPlayer" parent="." unique_id=1005603355]
+stream = ExtResource("20_gouk2")
+
+[node name="Man1Thanks2" type="AudioStreamPlayer" parent="." unique_id=1741441203]
+stream = ExtResource("21_qdkgj")

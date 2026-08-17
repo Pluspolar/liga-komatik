@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://d31nkv4dlxeav" path="res://scripts/UI/main_menu.gd" id="1_w6ykx"]
 [ext_resource type="FontFile" uid="uid://bpmogubtg5vj" path="res://textures/fonts/Snowbell-Wp4g9.ttf" id="2_5vafy"]
 [ext_resource type="Script" uid="uid://cybkx43bx3u6w" path="res://scripts/globals/main_menu_button.gd" id="2_byqcc"]
+[ext_resource type="PackedScene" uid="uid://dnmukjr3qdc6x" path="res://scenes/UI/sound.tscn" id="5_hiibk"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_5vafy"]
 
@@ -282,3 +283,6 @@ metadata/_edit_lock_ = true
 position = Vector2(191.00002, 108)
 scale = Vector2(6.1250005, 3.4999998)
 texture = SubResource("GradientTexture2D_htemk")
+
+[node name="sound" parent="." unique_id=1166998298 instance=ExtResource("5_hiibk")]
+position = Vector2(51, 33)

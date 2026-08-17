@@ -33,6 +33,38 @@ var dialogue_list = {
 		"Aku mau porsi [wave]JUMBO[/wave]"],
 }
 
+var dialogue_sound_list := {
+	"woman_1" : [],
+	"woman_2" : [],
+	"man_1" : ["Man1Speech1", "Man1Speech2", "Man1Speech3"],
+	"man_2" : ["Man2Repeat1", "ManRepeat2", "Man2Repeat3"],
+	"man_3" : [],
+}
+
+var gossip_list := {
+	"woman_1" : [],
+	"woman_2" : [],
+	"man_1" : ["Man1Gossip"],
+	"man_2" : ["Man2Gossip"],
+	"man_3" : [],
+}
+
+var thank_list := {
+	"woman_1" : [],
+	"woman_2" : [],
+	"man_1" : ["Man1Thanks1", "Man1Thanks2"],
+	"man_2" : ["Man2Thanks", "MakasihMan2", ""],
+	"man_3" : [],
+}
+
+var no_thank_list := {
+	"woman_1" : [],
+	"woman_2" : [],
+	"man_1" : ["Man1Nothanks1", "Man1Nothanks2"],
+	"man_2" : ["NoThanksMan2"],
+	"man_3" : [],
+}
+
 var char_convert = {
 	"woman_1" : "Woman",
 	"woman_2" : "Woman",
@@ -91,6 +123,8 @@ func _start() -> void:
 	_char = char_convert[Global.pelanggan_scene.cur_pelanggan]
 	if Global.dialogue.visible: Global.skip_dialogue = true
 	Global.dialogue.add_text(dialogue_list[Global.pelanggan_scene.cur_pelanggan][0], 15, _char)
+	if !dialogue_sound_list[Global.pelanggan_scene.cur_pelanggan].is_empty():
+		Global.dialogue_play(dialogue_sound_list[Global.pelanggan_scene.cur_pelanggan][0])
 	Global.pelanggan_scene.entered = true
 	$COOOOK.disabled = false #fixed a bug, don't move it
 	$COOOOK.visible = true #fixed a bug, don't move it
@@ -126,6 +160,8 @@ func _on_repeat_button_down() -> void:
 	if times < cur_dialogue_list.size():
 		if Global.dialogue.visible: Global.skip_dialogue = true
 		Global.dialogue.add_text(dialogue_list[Global.pelanggan_scene.cur_pelanggan][times],15,_char)
+		if times < dialogue_sound_list[Global.pelanggan_scene.cur_pelanggan].size():
+			Global.dialogue_play(dialogue_sound_list[Global.pelanggan_scene.cur_pelanggan][times])
 		times += 1
 		
 		if times >= cur_dialogue_list.size(): 
@@ -135,17 +171,28 @@ func _on_gossip_button_down() -> void:
 	if Global.cur_scene != "customer" and !Global.pelanggan_scene.entered: return
 	if Global.dialogue.visible: Global.skip_dialogue = true
 	Global.dialogue.add_text(dialogue_gossips[Global.pelanggan_scene.cur_pelanggan],15,_char)
+	if !gossip_list[Global.pelanggan_scene.cur_pelanggan].is_empty():
+		Global.dialogue_play(gossip_list[Global.pelanggan_scene.cur_pelanggan][0])
 	
 func done()-> void:
 	if Global.target_nutrition >= Global.cooking_target:
 		var cur_dialogue = dialogue_done[Global.pelanggan_scene.cur_pelanggan][0]
-		cur_dialogue = cur_dialogue[randi_range(0, cur_dialogue.size()-1)]
+		var cur_dialogue_index = randi_range(0, cur_dialogue.size()-1)
+		cur_dialogue = cur_dialogue[cur_dialogue_index]
 		Global.dialogue.add_text(cur_dialogue, randf_range(12, 20), _char)
+		if cur_dialogue_index < thank_list[Global.pelanggan_scene.cur_pelanggan].size():
+			Global.dialogue_play(thank_list[Global.pelanggan_scene.cur_pelanggan][cur_dialogue_index])
+		
 		var target_nutri_sqr = pow(1+Global.target_nutrition, 2)
 		Global.spawn_coins(ceil(target_nutri_sqr*7.5*(1+Global.cooking_target)))
 	else:
 		var cur_dialogue = dialogue_done[Global.pelanggan_scene.cur_pelanggan][1]
-		cur_dialogue = cur_dialogue[randi_range(0, cur_dialogue.size()-1)]
+		var cur_dialogue_index = randi_range(0, cur_dialogue.size()-1)
+		cur_dialogue = cur_dialogue[cur_dialogue_index]
 		Global.dialogue.add_text(cur_dialogue, randf_range(12, 20), _char)
+		
+		if cur_dialogue_index < no_thank_list[Global.pelanggan_scene.cur_pelanggan].size():
+			Global.dialogue_play(no_thank_list[Global.pelanggan_scene.cur_pelanggan][cur_dialogue_index])
+			
 		var target_nutri_change = pow(1+Global.target_nutrition, 1.75)
 		Global.spawn_coins(ceil((target_nutri_change-1)*5))

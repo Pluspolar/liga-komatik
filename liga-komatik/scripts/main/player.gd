@@ -19,7 +19,17 @@ func _physics_process(delta: float) -> void:
 	area_interact = null
 	can_cook = false
 	for _area in _areas:
-		if _area.is_in_group("gerobak"):
+		if !Global.is_captured and _area.is_in_group("enemy") and _area.get_parent().cur_cooldown <= 0:
+			_area.hide()
+			_area.get_parent().cur_cooldown = 30
+			Global.clear_inv()
+			Global.is_captured = true
+			Global.player_last_loc = Vector2(0,0)
+			global_position = Global.player_last_loc
+			Global.sound_play("captured")
+			get_tree().current_scene.get_node("UI").add_child(respite.instantiate())
+			break
+		elif _area.is_in_group("gerobak"):
 			_area.get_parent().velocity = velocity
 			_area.get_parent().velocity += velocity*20*delta
 		elif _area.is_in_group("gerobak_interact"):

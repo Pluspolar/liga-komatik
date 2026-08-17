@@ -36,6 +36,7 @@ cooking_interact=""
 gerobak=""
 gerobak_interact=""
 player=""
+enemy=""
 
 [input]
 

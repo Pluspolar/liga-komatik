@@ -4,6 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://d1hg8qmdlae63" path="res://textures/sprites/enemy_1/enemy_1_down.png" id="2_v31qn"]
 [ext_resource type="Texture2D" uid="uid://blls1qn5s2vv4" path="res://textures/sprites/enemy_1/enemy_1_side.png" id="3_co5vk"]
 [ext_resource type="Texture2D" uid="uid://8r4njbx7l5q3" path="res://textures/sprites/enemy_1/enemy_1_up.png" id="4_p8wfw"]
+[ext_resource type="Texture2D" uid="uid://dfgql5auptqox" path="res://textures/sprites/enemy_2/soldier_down.png" id="5_nbhyu"]
+[ext_resource type="Texture2D" uid="uid://bvkaolfy7vj8k" path="res://textures/sprites/enemy_2/soldier_side.png" id="6_13gj6"]
+[ext_resource type="Texture2D" uid="uid://p7glyssddvsy" path="res://textures/sprites/enemy_2/soldier_up.png" id="7_4efjx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s6epj"]
 atlas = ExtResource("2_v31qn")
@@ -39,6 +42,42 @@ region = Rect2(16, 0, 16, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w627b"]
 atlas = ExtResource("4_p8wfw")
+region = Rect2(32, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hvxgb"]
+atlas = ExtResource("5_nbhyu")
+region = Rect2(16, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_peoo5"]
+atlas = ExtResource("5_nbhyu")
+region = Rect2(32, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2f3il"]
+atlas = ExtResource("5_nbhyu")
+region = Rect2(0, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dtxhd"]
+atlas = ExtResource("6_13gj6")
+region = Rect2(0, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_so3kp"]
+atlas = ExtResource("7_4efjx")
+region = Rect2(0, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5woo5"]
+atlas = ExtResource("6_13gj6")
+region = Rect2(16, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pb0yv"]
+atlas = ExtResource("6_13gj6")
+region = Rect2(32, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_prup0"]
+atlas = ExtResource("7_4efjx")
+region = Rect2(16, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dxjon"]
+atlas = ExtResource("7_4efjx")
 region = Rect2(32, 0, 16, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_htemk"]
@@ -99,6 +138,63 @@ animations = [{
 "loop": 1,
 "name": &"enemy_1_up",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hvxgb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_peoo5")
+}],
+"loop": 1,
+"name": &"soldier_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2f3il")
+}],
+"loop": 1,
+"name": &"soldier_idle_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dtxhd")
+}],
+"loop": 1,
+"name": &"soldier_idle_side",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_so3kp")
+}],
+"loop": 1,
+"name": &"soldier_idle_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5woo5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pb0yv")
+}],
+"loop": 1,
+"name": &"soldier_side",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prup0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dxjon")
+}],
+"loop": 1,
+"name": &"soldier_up",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_htemk"]
@@ -115,7 +211,7 @@ script = ExtResource("1_trh57")
 [node name="sprite" type="AnimatedSprite2D" parent="." unique_id=1171042792]
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_htemk")
-animation = &"enemy_1_down"
+animation = &"soldier_up"
 
 [node name="col_shape" type="CollisionShape2D" parent="." unique_id=1742114711]
 position = Vector2(0, 5.5)
@@ -139,7 +235,8 @@ collision_mask = 2082
 hit_from_inside = true
 collide_with_areas = true
 
-[node name="area_interact" type="Area2D" parent="." unique_id=1635109706]
+[node name="area_interact" type="Area2D" parent="." unique_id=1635109706 groups=["enemy"]]
+collision_layer = 4097
 
 [node name="col_shape" type="CollisionShape2D" parent="area_interact" unique_id=1280141642]
 position = Vector2(0, -2)

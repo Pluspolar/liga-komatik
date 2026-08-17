@@ -19,6 +19,7 @@ var bigger_velocity : Array = ["y", 0]
 @export var sight_range : float = 75
 @export var turn_speed : float = 1.75 # x radian per second
 @export var follow_dur : float = 8
+var cur_cooldown : float = 0
 
 func go_to_path():
 	if !raycast_1.enabled: for _ray in all_raycast: _ray.enabled = true
@@ -42,10 +43,11 @@ func go_to_path():
 		var cur_collider = all_raycast[ray_ind].get_collider()
 		if cur_collider != null:
 			if cur_collider.is_in_group("player"):
+				if aggro_dur <= 0: Global.sound_play("detect")
 				aggro_dur = follow_dur
 	
-	if cur_path.is_empty(): 
-		return global_position
+	if cur_path.is_empty() or cur_cooldown > 0: return global_position
+	
 	velocity = global_position.direction_to(cur_path[0])*speed
 	if _cur_tile == cur_path_tile[0]: 
 		cur_path.remove_at(0)

@@ -59,6 +59,7 @@ func _start():
 		text_array[obj][0].text = text_array[obj][2]
 		text_array[obj][0].text += str(text_array[obj][1])
 		if obj == "distance": text_array[obj][0].text += " KM"
+		if obj == "day" and Global.is_captured: text_array[obj][0].text += " (TERTANGKAP)"
 		tween = create_tween()
 		text_array[obj][0].visible_ratio = 0
 		text_array[obj][0].show()
@@ -82,9 +83,13 @@ func hide_all():
 	
 func _button_continue():
 	hide_all()
-	Global.heart.change_day(-1)
+	if Global.is_captured:
+		Global.heart.change_day(-2)
+		Global.cur_day += 2
+	else: 
+		Global.heart.change_day(-1)
+		Global.cur_day += 1
 	Global.stats_reset()
-	Global.cur_day += 1
 	await get_tree().create_timer(1.0).timeout
 	fade_out()
 	
