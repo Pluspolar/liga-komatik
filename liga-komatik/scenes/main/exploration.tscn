@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://s52wyhn4tb6m" path="res://scenes/Pelanggang/Pelanggang.tscn" id="13_yedeh"]
 [ext_resource type="PackedScene" uid="uid://boepwbiw2njr7" path="res://scenes/UI/time_and_hp.tscn" id="14_l6jg2"]
 [ext_resource type="PackedScene" uid="uid://dspnds6ijsxr0" path="res://scenes/UI/loading_screen.tscn" id="15_lmvdy"]
+[ext_resource type="PackedScene" uid="uid://5678lloyemyb" path="res://scenes/Cooking/day_start.tscn" id="16_kqym7"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_iss55"]
 tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 1)
@@ -327,6 +328,9 @@ visible = false
 modulate = Color(0.5811619, 0.34237343, 0, 1)
 position = Vector2(-260, -68)
 texture = SubResource("NoiseTexture2D_0s8lr")
+
+[node name="day_start" parent="." unique_id=2013758228 instance=ExtResource("16_kqym7")]
+visible = false
 
 [node name="UI" type="Node2D" parent="." unique_id=564675393]
 

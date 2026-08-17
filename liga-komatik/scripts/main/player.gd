@@ -34,6 +34,8 @@ func _physics_process(delta: float) -> void:
 	if Global.cur_scene == "interior" and global_position.distance_to(Global.player_interior_out) <= 23:
 		Global.is_interacting = true
 
+	if Global.is_interacting and Global.is_on_ui:
+		Global.is_interacting = false
 	if velocity.length() < 4.0: is_idle()
 	else: is_walking()
 

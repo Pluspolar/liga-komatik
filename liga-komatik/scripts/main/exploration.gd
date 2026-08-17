@@ -230,6 +230,7 @@ func _ready_rand():
 	rand_interior_data()
 
 func _ready() -> void:
+	Global.cur_cam = $cam
 	await get_tree().create_timer(0.1).timeout
 	_ready_rand()
 	minimap_img_explore.fill(Color.BLACK)

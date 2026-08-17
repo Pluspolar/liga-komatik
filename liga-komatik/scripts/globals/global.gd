@@ -56,6 +56,8 @@ var coin_icon : Object = null
 var item_put_backpack = []
 var is_on_ui : bool = true
 var cur_day : int = 0
+var day_start : Object = null
+var cur_cam : Object = null
 
 var customer_done : int = 0
 var item_pickup_count : int = 0
@@ -183,6 +185,8 @@ func reset_game():
 	item_put_backpack = []
 	is_on_ui = true
 	cur_day = 0
+	day_start = null
+	cur_cam = null
 	stats_reset()
 
 	skip_dialogue = false

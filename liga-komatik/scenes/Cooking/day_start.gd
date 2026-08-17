@@ -1,9 +1,9 @@
 extends Node2D
-@onready var dialog = $dialogue
+
 var radio_text : Array = [
 "Tentara-tentara mulai melandas di daerah IKN, pesawat AU mulai melewati langit IKN",
-"Sekolah muhhamdiyah 67 kena bomb di hari ini. 420 dari 1260 siswa-siswi ditemukan wafat.",
-"Negara musuh mengebom pipa Sumber Air Jaya, IKN tidak memiliki sumber air yang lain, Pemerintah mengirim truk air keluar dalam IKN",
+"Sekolah 67 kena bomb di hari ini. 420 dari 1260 siswa-siswi ditemukan wafat.",
+"Negara musuh mengebom pipa air, IKN tidak memiliki sumber air yang lain, Pemerintah mengirim truk air keluar dalam IKN",
 "Pemerintah menyatakan Tentara musuh mulai melandas di pesisir-pesisir kalimantan, jendral Sutarjo menyatan bahwa IKN terlindungi",
 "Jaringan listrik dan telekomunikasi di pusat IKN lumpuh total akibat serangan rudal yang menargetkan Gardu Induk Sepaku.",
 
@@ -19,18 +19,22 @@ var radio_text : Array = [
 
 "Pasukan gabungan TNI dan sukarelawan lokal mendirikan garis pertahanan terakhir di Km 38 Tol Balikpapan-Samarinda."
 ]
+
+func _ready() -> void:
+	Global.day_start = self
+
 func radio() -> int :
-	return Global.cur_day % radio_text.size()
+	return Global.cur_day-1 % radio_text.size()
 # Called when the node enters the scene tree for the first time.
-func start() -> void:
-	dialog.add_text(radio_text[radio()], 15.0, "Radio")
-	
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
+func _start() -> void:
+	global_position = Global.cur_cam.global_position - Global.viewport_tree.size/2
+	$start.hide()
+	show()
+	await get_tree().create_timer(1).timeout
+	$start.show()
+	Global.dialogue.add_text(radio_text[radio()], 15.0, "Radio")
 
 func _on_start_button_down() -> void:
-	pass
+	Global.is_on_ui = false
+	hide()
+	Global.change_scene_to("central_inventory")

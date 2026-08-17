@@ -39,12 +39,12 @@ func fade_out():
 		get_tree().current_scene.add_child(gameover.instantiate())
 		queue_free()
 		
-	Global.change_scene_to("central_inventory")
+	Global.day_start._start()
+	
 	for i in range(31):
 		background.material.set_shader_parameter("fade", 1.0-(float(i)/float(30)))
 		await get_tree().process_frame
-	
-	Global.is_on_ui = false
+
 	queue_free()
 
 func _ready() -> void:
