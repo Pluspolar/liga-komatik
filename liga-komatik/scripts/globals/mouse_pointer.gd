@@ -64,6 +64,7 @@ func _process(_delta: float) -> void:
 				break
 			
 			elif _area.is_in_group("cooking_item_list"):
+				_area.target_scale = Vector2(1.75, 1.75)
 				if Input.is_action_just_pressed("left_click"):
 					_area.create_sprite()
 				break

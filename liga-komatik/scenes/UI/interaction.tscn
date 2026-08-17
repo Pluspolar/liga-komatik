@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ckj6wchsv4182"]
 
 [ext_resource type="Texture2D" uid="uid://blrhlltueqwt0" path="res://textures/sprites/UI/hand_1.png" id="1_hu61p"]
+[ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="2_jn7hm"]
 
 [node name="interaction" type="CanvasLayer" unique_id=817276631]
 
@@ -10,3 +11,15 @@ texture_filter = 1
 position = Vector2(351.865, 108)
 scale = Vector2(2, 2)
 texture = ExtResource("1_hu61p")
+
+[node name="Label" type="Label" parent="hand" unique_id=889165072]
+modulate = Color(0, 0, 0, 1)
+offset_left = -4.932495
+offset_top = -1.5
+offset_right = 5.567505
+offset_bottom = 8.0
+theme_override_fonts/font = ExtResource("2_jn7hm")
+theme_override_font_sizes/font_size = 6
+text = "F"
+horizontal_alignment = 1
+vertical_alignment = 1

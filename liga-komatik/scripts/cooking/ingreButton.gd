@@ -5,6 +5,7 @@ var cur_key = null
 var cur_sprite : Object
 var total_count : int = 1
 var label_text : Object
+var target_scale := Vector2(1.5, 1.5)
 
 @onready var root = $".."
 
@@ -23,6 +24,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var cooking_inv_length : int = Global.cooking_inventory.size()-1
 	var cur_index = int(self.name)
+	var cur_sprite_child = self.get_child(0)
+	cur_sprite_child.scale += (target_scale - cur_sprite_child.scale) * 20 * delta
+	target_scale = Vector2(1.5,1.5)
 	if cur_index > cooking_inv_length:
 		self.get_child(1).disabled = true
 		visible = false
