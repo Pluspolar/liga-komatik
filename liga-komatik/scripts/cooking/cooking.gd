@@ -55,7 +55,6 @@ func bigger(nutri):
 	tween.set_trans(Tween.TRANS_SINE)
 	total_nutrition += nutrition
 	
-	#nutrition sizes indicator
 	
 	Global.target_nutrition = total_nutrition
 	if Global.target_nutrition >= Global.cooking_target: 

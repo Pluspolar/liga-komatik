@@ -27,7 +27,6 @@ var nutrition : float
 
 func _ready() -> void:
 	if !Global.cooking_obj.has(self): Global.cooking_obj.append(self)
-	# Disable the default global Y-down gravity on this body
 	gravity_scale = 0.0
 	
 	wajan.body_exited.connect(dirty)
