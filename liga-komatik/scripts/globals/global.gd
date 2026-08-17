@@ -53,6 +53,7 @@ var mouse_cooldown : float = 0
 var heart : Object = null
 var coin_icon : Object = null
 var item_put_backpack = []
+var is_on_ui : bool = true
 
 var customer_done : int = 0
 var item_pickup_count : int = 0
@@ -177,6 +178,7 @@ func reset_game():
 	heart = null
 	coin_icon = null
 	item_put_backpack = []
+	is_on_ui = true
 	stats_reset()
 
 	skip_dialogue = false
@@ -351,6 +353,12 @@ func convert_to_central_inv():
 				cur_obj.show()
 				
 		else: central_item(_item_name, total_num)
+	
+func clear_inv():
+	for _item_id in backpack_inventory:
+		var item_obj = backpack_inventory[_item_id][3]
+		item_obj.call_deferred("queue_free")
+	backpack_inventory.clear()
 	
 func central_item(item_name: String, amount: int) -> void:
 	if amount <= 0: return

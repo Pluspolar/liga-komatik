@@ -34,6 +34,7 @@ func _process(_delta: float) -> void:
 				if !Global.skip_dialogue:
 					text.visible_ratio = 1.0
 					end_text.visible_ratio = 1.0
+					
 				tween.stop()
 				cur_state = state.END
 		state.END:
@@ -46,8 +47,9 @@ func _process(_delta: float) -> void:
 func display_text():
 	cur_state = state.TALKING
 	text.text = text_array[0][0]
+	text.text += " (SPASI)"
 	char_text.text = text_array[0][2]
-	text.visible_ratio= 0
+	text.visible_ratio = 0
 	end_text.visible_ratio = 0
 	var text_len = text.get_total_character_count()
 	

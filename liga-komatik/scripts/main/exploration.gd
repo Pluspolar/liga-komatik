@@ -899,7 +899,7 @@ func player_move_and_slide():
 	gerobak.move_and_slide()
 	player.move_and_slide()
 	
-	Global.distance_traveled += abs(player.global_position - old_player_pos)
+	Global.distance_traveled += abs(player.global_position - old_player_pos).length()
 		
 func _physics_process(delta: float) -> void:
 	if generating: return

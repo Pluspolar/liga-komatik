@@ -88,6 +88,28 @@ fit_content = true
 scroll_active = false
 vertical_alignment = 1
 
+[node name="spasi" type="RichTextLabel" parent="." unique_id=747015197]
+visible = false
+clip_contents = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -29.5
+offset_right = 32.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/normal_font = ExtResource("4_85qbq")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "(SPASI)"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="dot_loading" type="Label" parent="." unique_id=1799469100]
 anchors_preset = 8
 anchor_left = 0.5

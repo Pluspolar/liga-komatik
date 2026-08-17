@@ -10,7 +10,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	global_position += (target_pos - global_position) * 3 * delta
 	
-	if global_position.distance_to(target_pos) < 5:
+	if global_position.distance_to(target_pos) < 7:
 		if should_add: Global.coin_icon.change_coin(coin_amount)
 		queue_free()
 		
