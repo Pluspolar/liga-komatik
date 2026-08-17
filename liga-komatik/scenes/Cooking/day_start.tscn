@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://5678lloyemyb"]
+
+[ext_resource type="Texture2D" uid="uid://hlnqmfraimml" path="res://textures/Cooking/home.png" id="1_uwk1n"]
+[ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="2_dlwhr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8pker"]
+font = ExtResource("2_dlwhr")
+font_size = 9
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(1.5, 1.5)
+
+[node name="day_start" type="Node2D" unique_id=2013758228]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=127974147]
+position = Vector2(192.00002, 107.49999)
+scale = Vector2(1.5, 0.91796875)
+texture = ExtResource("1_uwk1n")
+
+[node name="start" type="Button" parent="." unique_id=970736069]
+offset_left = 2.0
+offset_top = 189.0
+offset_right = 103.0
+offset_bottom = 211.0
+focus_mode = 0
+
+[node name="Label" type="Label" parent="start" unique_id=1155017195]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.5
+offset_top = -11.5
+offset_right = 34.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Mulai Hari"
+label_settings = SubResource("LabelSettings_8pker")
+horizontal_alignment = 1
+vertical_alignment = 1
