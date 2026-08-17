@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://5678lloyemyb"]
 
+[ext_resource type="Script" uid="uid://1ue4hjv2ix84" path="res://scenes/Cooking/day_start.gd" id="1_dmi2b"]
 [ext_resource type="Texture2D" uid="uid://hlnqmfraimml" path="res://textures/Cooking/home.png" id="1_uwk1n"]
 [ext_resource type="FontFile" uid="uid://c37s520murvaq" path="res://textures/fonts/PressStart2P-vaV7.ttf" id="2_dlwhr"]
+[ext_resource type="PackedScene" uid="uid://cw23mt2nx3v4p" path="res://scenes/UI/dialogue.tscn" id="3_vuj83"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8pker"]
 font = ExtResource("2_dlwhr")
@@ -13,17 +15,20 @@ shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(1.5, 1.5)
 
 [node name="day_start" type="Node2D" unique_id=2013758228]
+script = ExtResource("1_dmi2b")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=127974147]
 position = Vector2(192.00002, 107.49999)
 scale = Vector2(1.5, 0.91796875)
 texture = ExtResource("1_uwk1n")
 
+[node name="dialogue" parent="." unique_id=31305971 instance=ExtResource("3_vuj83")]
+
 [node name="start" type="Button" parent="." unique_id=970736069]
-offset_left = 2.0
-offset_top = 189.0
-offset_right = 103.0
-offset_bottom = 211.0
+offset_left = 145.0
+offset_top = 5.0
+offset_right = 246.0
+offset_bottom = 27.0
 focus_mode = 0
 
 [node name="Label" type="Label" parent="start" unique_id=1155017195]
@@ -43,3 +48,5 @@ text = "Mulai Hari"
 label_settings = SubResource("LabelSettings_8pker")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="button_down" from="start" to="." method="_on_start_button_down"]
