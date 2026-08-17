@@ -14,6 +14,8 @@ var radio_text : Array = [
 "Pasukan gabungan TNI dan sukarelawan lokal mendirikan garis pertahanan terakhir di Km 38 Tol Charlie-Kirk."
 ]
 
+
+
 func _ready() -> void:
 	Global.day_start = self
 
@@ -24,14 +26,17 @@ func radio() -> int :
 	else: return Global.cur_day-1 % radio_text.size()
 
 # Called when the node enters the scene tree for the first time.
+
 func _start() -> void:
 	global_position = Global.cur_cam.global_position - Global.viewport_tree.size/2
 	$start.hide()
 	show()
+	var cur_radio_index = radio()
+	Global.dialogue_play(str(cur_radio_index+1))
 	await get_tree().create_timer(1).timeout
 	$start.show()
-	Global.dialogue.add_text(radio_text[radio()], 15.0, "Radio")
-
+	Global.dialogue.add_text(radio_text[cur_radio_index], 15.0, "Radio")
+	
 func _on_start_button_down() -> void:
 	Global.is_on_ui = false
 	hide()

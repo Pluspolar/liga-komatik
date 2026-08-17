@@ -182,7 +182,7 @@ func reset_game():
 	cooking_obj = []
 	target_nutrition = 0
 	days_left = 5
-	coins = 0
+	coins = 10000
 	mouse_cooldown = 0
 	heart = null
 	coin_icon = null
@@ -221,8 +221,8 @@ func _process(delta: float) -> void:
 		reset_game()
 		get_tree().change_scene_to_packed(main_menu)
 	
-var sound_pitch : Array = ["footstep", "junk", "sizzling"]
-var sound_multiple : Array = ["junk", "sizzling"]
+var sound_pitch : Array = ["footstep", "junk", "sizzling", "added", "damaged", "coin_pickup", "healing"]
+var sound_multiple : Array = ["junk", "sizzling", "added"]
 
 func sound_play(sound: String):
 	if !sound_obj.has_node(sound): return
@@ -245,6 +245,11 @@ func dialogue_play(sound: String):
 	if !cur_sound.playing: 
 		cur_sound.play()
 		old_sound = sound
+
+func stop_old_sound():
+	if sound_obj.has_node(old_sound):
+		var cur_old_sound = sound_obj.get_node(old_sound)
+		if cur_old_sound.playing: cur_old_sound.stop()
 
 func spawn_new_item(pos: Vector2, chunk_pos: Vector2i, item_name: String, item_nutrition : float = -1.0):
 	var drop_item = item_drop.instantiate()
@@ -327,6 +332,7 @@ func change_scene_to(to_scene, interior = null):
 	dialogue.cur_state = state.READY
 	dialogue.text_array.clear()
 	var cooking_scene_list = ["customer", "cooking"]
+	
 	if !cooking_scene_list.has(to_scene) and cooking_scene_list.has(cur_scene) and !cooking_inventory.is_empty():
 		add_cookinginv_centralinv()
 		
@@ -339,6 +345,9 @@ func change_scene_to(to_scene, interior = null):
 		
 	if to_scene == "cooking":
 		get_tree().call_group("cooking_item_list", "_recount")
+	
+	if cur_scene != to_scene:
+		stop_old_sound()
 		
 	if interior != null: cur_interior = interior
 	cur_scene = to_scene

@@ -34,32 +34,32 @@ var dialogue_list = {
 }
 
 var dialogue_sound_list := {
-	"woman_1" : [],
-	"woman_2" : [],
+	"woman_1" : ["Woman1Speech1", "Woman1Speech2", "Woman1Speech3"],
+	"woman_2" : ["Woman2Speech1", "Woman2Speech2", "Woman2Speech3"],
 	"man_1" : ["Man1Speech1", "Man1Speech2", "Man1Speech3"],
 	"man_2" : ["Man2Repeat1", "ManRepeat2", "Man2Repeat3"],
-	"man_3" : [],
+	"man_3" : ["Man3Speech1", "Man3Speech2", "Man3Speech3"],
 }
 
 var gossip_list := {
-	"woman_1" : [],
-	"woman_2" : [],
+	"woman_1" : ["Woman1Gossip"],
+	"woman_2" : ["Woman2Gossip"],
 	"man_1" : ["Man1Gossip"],
 	"man_2" : ["Man2Gossip"],
-	"man_3" : [],
+	"man_3" : ["Man3Gossip"],
 }
 
 var thank_list := {
-	"woman_1" : [],
-	"woman_2" : [],
+	"woman_1" : ["Woman1Thanks1", "Woman1Thanks2", "Woman1Thanks3"],
+	"woman_2" : ["Woman2Thanks1"],
 	"man_1" : ["Man1Thanks1", "Man1Thanks2"],
 	"man_2" : ["Man2Thanks", "MakasihMan2", ""],
 	"man_3" : [],
 }
 
 var no_thank_list := {
-	"woman_1" : [],
-	"woman_2" : [],
+	"woman_1" : ["Woman1Sorry1", "Woman1Sorry2"],
+	"woman_2" : ["Woman2Thanks2"],
 	"man_1" : ["Man1Nothanks1", "Man1Nothanks2"],
 	"man_2" : ["NoThanksMan2"],
 	"man_3" : [],

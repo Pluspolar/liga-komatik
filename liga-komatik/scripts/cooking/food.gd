@@ -34,8 +34,9 @@ func _ready() -> void:
 	
 func dirty(junk)-> void:
 	if junk == self:
-		if Global.cooking_obj.has(self): Global.cooking_obj.erase(self)
-		Global.sound_play("junk")
+		if Global.cooking_obj.has(self): 
+			Global.sound_play("junk")
+			Global.cooking_obj.erase(self)
 		queue_free()
 
 func _physics_process(delta: float) -> void:
@@ -46,7 +47,9 @@ func _physics_process(delta: float) -> void:
 func _on_timer_timeout() -> void:
 	if timePass > cookTime:
 		done.emit(nutrition)
-		if Global.cooking_obj.has(self): Global.cooking_obj.erase(self)
+		if Global.cooking_obj.has(self): 
+			Global.sound_play("added")
+			Global.cooking_obj.erase(self)
 		queue_free()
 	else: 
 		timePass += 1

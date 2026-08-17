@@ -39,7 +39,7 @@ func fade_out():
 		get_tree().current_scene.add_child(gameover.instantiate())
 		queue_free()
 		
-	Global.day_start._start()
+	else: Global.day_start._start()
 	
 	for i in range(31):
 		background.material.set_shader_parameter("fade", 1.0-(float(i)/float(30)))
@@ -95,11 +95,11 @@ func _button_continue():
 	
 func _medicine_button(): 
 	for obj in medicine_array: obj.hide()
-	if Global.coins >= 100: Global.days_left += 2
+	if Global.coins >= 100: Global.heart.change_day(2)
 	Global.coin_icon.change_coin(-100)
 	
 func _arang_button(): 
 	for obj in arang_array: obj.hide()
-	if Global.coins >= 30: Global.days_left += 0.5
+	if Global.coins >= 30: Global.heart.change_day(0.5)
 	Global.coin_icon.change_coin(-30)
 	

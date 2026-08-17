@@ -37,5 +37,10 @@ func _shake():
 func change_day(amount : float):
 	Global.days_left += amount
 	if Global.days_left < 0: Global.days_left = 0
-	if amount < 0: cur_modulate = Color(-0.5,-1,-1,1)
-	elif amount > 0: cur_modulate = Color(-1,0.8,-1,1)
+	if amount < 0:
+		Global.sound_play("damaged") 
+		cur_modulate = Color(-0.5,-1,-1,1)
+		
+	elif amount > 0:
+		Global.sound_play("healing")  
+		cur_modulate = Color(-1,0.8,-1,1)

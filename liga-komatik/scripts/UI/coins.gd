@@ -29,8 +29,10 @@ func change_coin(amount: int):
 	if amount < 0 and Global.coins >= abs(amount): 
 		Global.coins += amount
 		cur_modulate = Color(1,0,0,1)
+		Global.sound_play("damaged")
 	
 	elif amount > 0: 
+		Global.sound_play("coin_pickup")
 		Global.coins += amount
 		Global.coins_earned += amount
 		cur_modulate = Color(0,1,0,1)

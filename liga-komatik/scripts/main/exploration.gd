@@ -185,7 +185,7 @@ var biomes_enemy_data := {
 
 var objects_data := {
 	"plains" : {"tree" : 0.025, "abandoned_house_1" : 0.0012},
-	"beach" : {},
+	"beach" : {"coconut_tree" : 0.02},
 	"ocean" : {},
 	"eucalyptus" : {"tree" : 0.01},
 	"urban" : {},
@@ -196,6 +196,7 @@ var objects_data := {
 
 var objects := { #[x_size, y_vertical_size, how much free space under "y"], scene
 	"tree" : [[1,1,0], null, preload("res://scenes/structures/tree.tscn")],
+	"coconut_tree" : [[1,1,0], null, preload("res://scenes/structures/coconut_tree.tscn")],
 	"abandoned_house_1" : [[3,1,0], "1_aband_house", preload("res://scenes/structures/abandoned_house.tscn")],
 	"abandoned_apartment_1" : [[4,2,0], "1_aband_apart", preload("res://scenes/structures/abandoned_apartment_1.tscn")],
 	"abandoned_apartment_2" : [[4,2,0], "2_aband_apart", preload("res://scenes/structures/abandoned_apartment_2.tscn")],
@@ -210,10 +211,10 @@ var enemy_stats : Dictionary = { #speed, signt_range, turn_speed, follow_dur
 
 func rand_interior_data():
 	interior_data = {
-	"1_aband_house" : [0.2, [randi_range(10,20), randi_range(10,20)], {"oak_planks" : 0.9, "red_soil" : 0.1}, {"wooden_board" : 1}, 0.225, {"can" : 0.5, "mie": 0.5}], 
-	"1_aband_apart" : [0.1, [randi_range(20,35), randi_range(20,35)], {"cyanish_concrete" : 0.85, "cyanish_concrete_cracked" : 0.075, "red_soil" : 0.075}, {"dark_gray_concrete" : 0.89, "dark_gray_concrete_cracked" : 0.1, "dark_gray_concrete_cut" : 0.01}, 0.1, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}],
-	"2_aband_apart" : [0.1, [randi_range(25,40), randi_range(25,40)], {"spruce_planks" : 0.85, "dirt" : 0.075, "red_soil" : 0.075}, {"crate_3" : 1}, 0.1, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}],
-	"3_aband_apart" : [0.1, [randi_range(30,45), randi_range(30,45)], {"oak_planks" : 0.85, "dirt" : 0.075, "red_soil" : 0.075}, {"spruce_planks" : 1}, 0.135, {"can" : 0.25, "belalang" : 0.1, "kornet" : 0.05, "worm" : 0.2, "udang" : 0.4}],
+	"1_aband_house" : [0.2, [randi_range(10,20), randi_range(10,20)], {"oak_planks" : 0.9, "red_soil" : 0.1}, {"wooden_board" : 1}, 0.225, {"rumput" : 0.15, "ubi" : 0.3, "sarden" : 0.1, "mie": 0.2, "belalang" : 0.15, "sosis" : 0.1}], 
+	"1_aband_apart" : [0.1, [randi_range(20,35), randi_range(20,35)], {"cyanish_concrete" : 0.85, "cyanish_concrete_cracked" : 0.075, "red_soil" : 0.075}, {"dark_gray_concrete" : 0.89, "dark_gray_concrete_cracked" : 0.1, "dark_gray_concrete_cut" : 0.01}, 0.1, {"can" : 0.1, "kornet" : 0.15, "worm" : 0.35, "udang" : 0.2, "sarden" : 0.2}],
+	"2_aband_apart" : [0.1, [randi_range(25,40), randi_range(25,40)], {"spruce_planks" : 0.85, "dirt" : 0.075, "red_soil" : 0.075}, {"crate_3" : 1}, 0.1, {"can" : 0.15, "kornet" : 0.1, "belalang" : 0.15, "worm" : 0.2, "sawdust" : 0.4}],
+	"3_aband_apart" : [0.1, [randi_range(30,45), randi_range(30,45)], {"oak_planks" : 0.85, "dirt" : 0.075, "red_soil" : 0.075}, {"spruce_planks" : 1}, 0.135, {"sarden" : 0.1, "kornet" : 0.1, "sosis" : 0.1, "worm" : 0.2, "ubi" : 0.3, "udang" : 0.1, "mie" : 0.1}],
 } #room_abundance, [x_size, y_size], tiles, chance_item_per_tile, item_list
 
 var objects_pos := {}
@@ -857,7 +858,9 @@ func find_path_to(cur_pos, target_pos):
 	var cur_point_solid_y = point_solid_check(cur_pos_tile)
 	var target_point_solid_y = point_solid_check(cur_target_tile)
 	
-	var path_taken = astargrid.get_id_path(cur_pos_tile, cur_target_tile)
+	var path_taken = []
+	if astargrid.is_in_boundsv(cur_target_tile):
+		path_taken = astargrid.get_id_path(cur_pos_tile, cur_target_tile)
 		
 	point_solid_return(cur_point_solid_y, cur_pos_tile)
 	point_solid_return(target_point_solid_y, cur_target_tile)

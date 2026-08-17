@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dieahdtlcoflx"]
 
-[ext_resource type="Texture2D" uid="uid://d074x6sfu2byf" path="res://textures/sprites/structures/tree.png" id="1_avsvi"]
+[ext_resource type="Texture2D" uid="uid://3v7at0dlwp7m" path="res://textures/sprites/structures/tree1.png" id="1_fk1xd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_htemk"]
-size = Vector2(5, 8)
+size = Vector2(3.935, 12)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_14cdr"]
 size = Vector2(14, 14)
@@ -16,11 +16,13 @@ collision_layer = 2
 
 [node name="sprite" type="Sprite2D" parent="." unique_id=569358984]
 texture_filter = 1
-texture = ExtResource("1_avsvi")
-offset = Vector2(0, -10)
+position = Vector2(0, -3)
+scale = Vector2(2, 2)
+texture = ExtResource("1_fk1xd")
+offset = Vector2(0, -7.5)
 
 [node name="static_col" type="CollisionShape2D" parent="." unique_id=1746158076]
-position = Vector2(-0.565, 2)
+position = Vector2(-0.03249997, 0)
 shape = SubResource("RectangleShape2D_htemk")
 
 [node name="interaction" type="Area2D" parent="." unique_id=862871199]

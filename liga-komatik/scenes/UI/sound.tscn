@@ -21,6 +21,41 @@
 [ext_resource type="AudioStream" uid="uid://bed5eogf2f3oj" path="res://textures/sound/man_1/Man1speech3.wav" id="19_lxt8f"]
 [ext_resource type="AudioStream" uid="uid://de3bu76s4wigj" path="res://textures/sound/man_1/Man1thanks1.wav" id="20_gouk2"]
 [ext_resource type="AudioStream" uid="uid://bfdjvewdpynp8" path="res://textures/sound/man_1/Man1thanks2.wav" id="21_qdkgj"]
+[ext_resource type="AudioStream" uid="uid://bsqyagqavqhuv" path="res://textures/sound/woman_1/Woman1Gossip.wav" id="22_4u7n3"]
+[ext_resource type="AudioStream" uid="uid://cffejbd5qlv35" path="res://textures/sound/woman_1/woman1sorry1.wav" id="23_7l4fu"]
+[ext_resource type="AudioStream" uid="uid://ci54bfa4bkjjt" path="res://textures/sound/woman_1/woman1sorry2.wav" id="24_vdpub"]
+[ext_resource type="AudioStream" uid="uid://ywyp2d78eoch" path="res://textures/sound/woman_1/Woman1Speech1.wav" id="25_tsum5"]
+[ext_resource type="AudioStream" uid="uid://cksg0jqot2rjp" path="res://textures/sound/woman_1/Woman1Speech2.wav" id="26_vr3r7"]
+[ext_resource type="AudioStream" uid="uid://dxp3ufmp6bwlf" path="res://textures/sound/woman_1/Woman1Speech3.wav" id="27_cuxlq"]
+[ext_resource type="AudioStream" uid="uid://cuafyhdidnrry" path="res://textures/sound/woman_1/Woman1Thanks1.wav" id="28_h63u6"]
+[ext_resource type="AudioStream" uid="uid://ca2fcwuxpu8f4" path="res://textures/sound/woman_1/Woman1Thanks2.wav" id="29_3bfay"]
+[ext_resource type="AudioStream" uid="uid://kj0ldvsg5t4q" path="res://textures/sound/woman_1/Woman1Thanks3.wav" id="30_d1a8y"]
+[ext_resource type="AudioStream" uid="uid://deef5767kkv8s" path="res://textures/sound/woman_2/Woman2Gossip.wav" id="31_4a0mx"]
+[ext_resource type="AudioStream" uid="uid://cr30h7ommrgjd" path="res://textures/sound/woman_2/Woman2Speech1.wav" id="32_ixysk"]
+[ext_resource type="AudioStream" uid="uid://d4ctakjbgoco1" path="res://textures/sound/woman_2/Woman2Speech2.wav" id="33_ckfke"]
+[ext_resource type="AudioStream" uid="uid://vh8o5dphkfi4" path="res://textures/sound/woman_2/Woman2Speech3.wav" id="34_3cale"]
+[ext_resource type="AudioStream" uid="uid://dclnjkcuqvjq2" path="res://textures/sound/woman_2/Woman2Thanks1.wav" id="35_wef3b"]
+[ext_resource type="AudioStream" uid="uid://b1vncy0wlovj1" path="res://textures/sound/woman_2/Woman2Thanks2.wav" id="36_klfbq"]
+[ext_resource type="AudioStream" uid="uid://bklp52g7v3xou" path="res://textures/sound/radio/1.wav" id="37_ckfke"]
+[ext_resource type="AudioStream" uid="uid://dxb1bnqus82de" path="res://textures/sound/man_3/Man3gossip.wav" id="37_xwxgp"]
+[ext_resource type="AudioStream" uid="uid://c0h7q0irxjgh" path="res://textures/sound/radio/2.wav" id="38_3cale"]
+[ext_resource type="AudioStream" uid="uid://h2hvlfhvkhwj" path="res://textures/sound/man_3/Man3speech1.wav" id="38_n6exd"]
+[ext_resource type="AudioStream" uid="uid://qor4wbr5a0bg" path="res://textures/sound/man_3/Man3speech2.wav" id="39_iqlmq"]
+[ext_resource type="AudioStream" uid="uid://dn4dd0r383b5b" path="res://textures/sound/radio/3.wav" id="39_wef3b"]
+[ext_resource type="AudioStream" uid="uid://br2hfm4syt7j1" path="res://textures/sound/radio/4.wav" id="40_klfbq"]
+[ext_resource type="AudioStream" uid="uid://n0qr5mylbnl2" path="res://textures/sound/man_3/Man3speech3.wav" id="40_u1wla"]
+[ext_resource type="AudioStream" uid="uid://udf0xm3l0rf" path="res://textures/sound/radio/5.wav" id="41_xwxgp"]
+[ext_resource type="AudioStream" uid="uid://dhp2prvvtfm7v" path="res://textures/sound/radio/6.wav" id="42_n6exd"]
+[ext_resource type="AudioStream" uid="uid://bu50sn3x8c7dn" path="res://textures/sound/radio/8.wav" id="44_u1wla"]
+[ext_resource type="AudioStream" uid="uid://c4ulsicuvitmb" path="res://textures/sound/radio/9.wav" id="45_j7ty2"]
+[ext_resource type="AudioStream" uid="uid://xv774g1m4f5r" path="res://textures/sound/radio/10.wav" id="46_44dx3"]
+[ext_resource type="AudioStream" uid="uid://cw1r2nlqgt6be" path="res://textures/sound/radio/7.wav" id="47_44dx3"]
+[ext_resource type="AudioStream" uid="uid://dqdvq3xo5u41j" path="res://textures/sound/radio/11.wav" id="47_ajk1p"]
+[ext_resource type="AudioStream" uid="uid://xdinojsoltoy" path="res://textures/sound/damaged.wav" id="47_n6exd"]
+[ext_resource type="AudioStream" uid="uid://biaexufyqymfd" path="res://textures/sound/selecting.wav" id="52_iqlmq"]
+[ext_resource type="AudioStream" uid="uid://kemar3r7ugw5" path="res://textures/sound/pickupCoin (1).wav" id="52_j7ty2"]
+[ext_resource type="AudioStream" uid="uid://bs3avjvk28i71" path="res://textures/sound/added.wav" id="53_iqlmq"]
+[ext_resource type="AudioStream" uid="uid://c4o2kxck170nr" path="res://textures/sound/healing.wav" id="54_u1wla"]
 
 [node name="sound" type="Node2D" unique_id=1166998298]
 script = ExtResource("1_nrnr4")
@@ -90,3 +125,114 @@ stream = ExtResource("20_gouk2")
 
 [node name="Man1Thanks2" type="AudioStreamPlayer" parent="." unique_id=1741441203]
 stream = ExtResource("21_qdkgj")
+
+[node name="Woman1Gossip" type="AudioStreamPlayer" parent="." unique_id=356643617]
+stream = ExtResource("22_4u7n3")
+
+[node name="Woman1Sorry1" type="AudioStreamPlayer" parent="." unique_id=759228353]
+stream = ExtResource("23_7l4fu")
+
+[node name="Woman1Sorry2" type="AudioStreamPlayer" parent="." unique_id=2489311]
+stream = ExtResource("24_vdpub")
+
+[node name="Woman1Speech1" type="AudioStreamPlayer" parent="." unique_id=114430862]
+stream = ExtResource("25_tsum5")
+
+[node name="Woman1Speech2" type="AudioStreamPlayer" parent="." unique_id=468640269]
+stream = ExtResource("26_vr3r7")
+
+[node name="Woman1Speech3" type="AudioStreamPlayer" parent="." unique_id=1524500270]
+stream = ExtResource("27_cuxlq")
+
+[node name="Woman1Thanks1" type="AudioStreamPlayer" parent="." unique_id=2069288139]
+stream = ExtResource("28_h63u6")
+
+[node name="Woman1Thanks2" type="AudioStreamPlayer" parent="." unique_id=2088821776]
+stream = ExtResource("29_3bfay")
+
+[node name="Woman1Thanks3" type="AudioStreamPlayer" parent="." unique_id=1918484474]
+stream = ExtResource("30_d1a8y")
+
+[node name="Woman2Gossip" type="AudioStreamPlayer" parent="." unique_id=1553020082]
+stream = ExtResource("31_4a0mx")
+
+[node name="Woman2Speech1" type="AudioStreamPlayer" parent="." unique_id=103795326]
+stream = ExtResource("32_ixysk")
+
+[node name="Woman2Speech2" type="AudioStreamPlayer" parent="." unique_id=675194627]
+stream = ExtResource("33_ckfke")
+
+[node name="Woman2Speech3" type="AudioStreamPlayer" parent="." unique_id=681314786]
+stream = ExtResource("34_3cale")
+
+[node name="Woman2Thanks1" type="AudioStreamPlayer" parent="." unique_id=1400699211]
+stream = ExtResource("35_wef3b")
+
+[node name="Woman2Thanks2" type="AudioStreamPlayer" parent="." unique_id=1014980855]
+stream = ExtResource("36_klfbq")
+
+[node name="Man3Gossip" type="AudioStreamPlayer" parent="." unique_id=201363654]
+stream = ExtResource("37_xwxgp")
+
+[node name="Man3Speech1" type="AudioStreamPlayer" parent="." unique_id=174741945]
+stream = ExtResource("38_n6exd")
+
+[node name="Man3Speech2" type="AudioStreamPlayer" parent="." unique_id=163358258]
+stream = ExtResource("39_iqlmq")
+
+[node name="Man3Speech3" type="AudioStreamPlayer" parent="." unique_id=2088614659]
+stream = ExtResource("40_u1wla")
+
+[node name="1" type="AudioStreamPlayer" parent="." unique_id=419595181]
+stream = ExtResource("37_ckfke")
+
+[node name="2" type="AudioStreamPlayer" parent="." unique_id=170418099]
+stream = ExtResource("38_3cale")
+
+[node name="3" type="AudioStreamPlayer" parent="." unique_id=335762068]
+stream = ExtResource("39_wef3b")
+
+[node name="4" type="AudioStreamPlayer" parent="." unique_id=1514559267]
+stream = ExtResource("40_klfbq")
+
+[node name="5" type="AudioStreamPlayer" parent="." unique_id=755489925]
+stream = ExtResource("41_xwxgp")
+
+[node name="6" type="AudioStreamPlayer" parent="." unique_id=1940017815]
+stream = ExtResource("42_n6exd")
+
+[node name="7" type="AudioStreamPlayer" parent="." unique_id=33325948]
+stream = ExtResource("47_44dx3")
+
+[node name="8" type="AudioStreamPlayer" parent="." unique_id=1271863691]
+stream = ExtResource("44_u1wla")
+
+[node name="9" type="AudioStreamPlayer" parent="." unique_id=286613083]
+stream = ExtResource("45_j7ty2")
+
+[node name="10" type="AudioStreamPlayer" parent="." unique_id=1759854401]
+stream = ExtResource("46_44dx3")
+
+[node name="11" type="AudioStreamPlayer" parent="." unique_id=1849842448]
+stream = ExtResource("47_ajk1p")
+
+[node name="coin_pickup" type="AudioStreamPlayer" parent="." unique_id=1102839554]
+stream = ExtResource("52_j7ty2")
+volume_db = -14.726
+
+[node name="selecting" type="AudioStreamPlayer" parent="." unique_id=2071345000]
+stream = ExtResource("52_iqlmq")
+volume_db = -12.885
+pitch_scale = 2.56
+
+[node name="damaged" type="AudioStreamPlayer" parent="." unique_id=1270035597]
+stream = ExtResource("47_n6exd")
+volume_db = -13.805
+
+[node name="added" type="AudioStreamPlayer" parent="." unique_id=1129798710]
+stream = ExtResource("53_iqlmq")
+volume_db = -16.566
+
+[node name="healing" type="AudioStreamPlayer" parent="." unique_id=736350596]
+stream = ExtResource("54_u1wla")
+volume_db = -15.646
